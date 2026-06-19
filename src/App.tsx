@@ -4,7 +4,7 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div>
+    <div className="min-h-dvh">
       <Header />
       <Main />
       <Footer />

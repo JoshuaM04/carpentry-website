@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+    --color-svgLeftHandle: #E15649;
+    --color-svgLeftToolTip: #C3C7CB;
+    --color-svgLeftToolBar: #E0E0E0;
+    --color-svgLeftHandleTrim: #BC342E;
+    --color-svgLeftToolCasing: #E15649;
+    --color-svgRightHandle: #7F7C79;
+    --color-svgRightToolBar: #855151;
+}
