@@ -1,5 +1,7 @@
-export default function Main() {
-    return (
+export default function Home() {
+
+  return (
+    <div className="home-container">
         <main className="flex flex-col gap-20 items-center">
             <section id="video-showcase">
                 <video autoPlay loop muted>
@@ -162,9 +164,12 @@ export default function Main() {
                     </div>
                 </div>
 
-
                 <hr />
+
+                <p className="text-2xl font-bold">Nightstands</p>
+
             </section>
         </main>
-    );
+    </div>
+  );
 }

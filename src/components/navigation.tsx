@@ -1,17 +1,22 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-export default function Header() {
+export default function navigation() {
     const [navHover, setNavHover] = useState(["false", "false", "false", "false"]);
+    const location = useLocation();
+
+    const isAboutPage = location.pathname === '/about';
+    const textColor = isAboutPage ? 'text-black' : 'text-white';
 
     return (
         <header>
-            <nav className="absolute top-0 left-[50%] translate-x-[-50%] w-full text-white text-sm font-semibold uppercase p-2">
+            <nav className={`absolute top-0 left-[50%] translate-x-[-50%] w-full ${textColor} text-sm font-semibold uppercase p-2`}>
                 <ul className="flex justify-around items-center gap-5">
                     <li>
-                        <a onMouseEnter={() => { console.log(navHover[0]); setNavHover(["true", "false", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative" href="">
+                        <Link to="/home" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["true", "false", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
                             <span>home</span>
                             <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[0] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                        </a>
+                        </Link>
                     </li> 
                     <li>
                         <a onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "true", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative" href="">
@@ -30,13 +35,13 @@ export default function Header() {
                         </a>
                     </li> 
                     <li>
-                        <a onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "true"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative" href="">
+                        <Link to="/about" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "true"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
                             <span>about</span>
                             <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[3] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                        </a>
+                        </Link>
                     </li>
-                </ul>
-            </nav>
+                </ul>  
+            </nav>    
         </header>
     );
 }

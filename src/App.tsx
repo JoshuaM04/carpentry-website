@@ -1,13 +1,19 @@
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import Home from './pages/Home'
+import About from './pages/About'
+import NavBar from './components/navigation';
+import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
+
   return (
-    <div className="min-h-dvh">
-      <Header />
-      <Main />
-      <Footer />
+    <div className="root-container min-h-dvh">
+      <NavBar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   );
 }
