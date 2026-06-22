@@ -9,7 +9,7 @@ export default function Home() {
                 </video>
 
                 <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute">
-                    <h1 className="font-bold flex flex-col gap-2 text-6xl text-center">
+                    <h1 className="font-bold flex flex-col gap-4 text-6xl text-center">
                         <div>Hand Crafted</div>
                         <div>Real Materials</div>
                         <div>Family Owned</div>

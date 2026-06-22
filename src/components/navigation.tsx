@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { DialogTrigger, Modal, Dialog, Heading, Button } from 'react-aria-components/Modal';
 
 export default function navigation() {
     const [navHover, setNavHover] = useState(["false", "false", "false", "false"]);
@@ -53,13 +54,37 @@ export default function navigation() {
 
                 <div className="mobile-layout bg-black flex justify-between items-center gap-10 2md:hidden 2md:aria-hidden">
                     <div className="flex flex-col items-center text-xl font-bold border-t-4 border-b-4 pt-2 pb-2 pl-6 pr-6">
-                        <p>WoodWork </p>
+                        <p>WoodWork</p>
                         <p>Creations</p>
                     </div>
 
-                    <button>
-                        <svg className="w-10 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L4 7" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 12L4 12" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 17L4 17" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
-                    </button>
+                    <DialogTrigger>
+                        <Button>
+                            <svg className="w-10 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L4 7" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 12L4 12" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 17L4 17" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                        </Button>
+
+                        <Modal className="z-2 bg-black fixed left-[50%] top-[50%] translate-[-50%] w-full h-full p-10">
+                            <Dialog className="flex flex-col gap-20">
+                                <div className="flex justify-between">
+                                    <Heading className="text-white uppercase flex flex-col items-center text-xl font-bold border-t-4 border-b-4 pt-2 pb-2 pl-6 pr-6">
+                                        <p>WoodWork</p>
+                                        <p>Creations</p>
+                                    </Heading>
+
+                                    <Button slot="close">
+                                        <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                    </Button>
+                                </div>
+
+                                <div className="text-white font-semibold text-xl uppercase flex flex-col gap-10">
+                                    <Link to="/home">home</Link>
+                                    <Link to="/home">gallery</Link>
+                                    <Link to="/contact">contact</Link>
+                                    <Link to="/about">about</Link>
+                                </div>
+                            </Dialog>
+                        </Modal>
+                    </DialogTrigger>
                 </div>  
             </nav>    
         </header>
