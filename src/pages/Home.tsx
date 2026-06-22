@@ -1,30 +1,11 @@
-import { useEffect, useRef } from 'react';
-
 export default function Home() {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const handleContextMenu = (e: React.MouseEvent<HTMLVideoElement>) => {
-        e.preventDefault();
-    };
-
-    useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.playsInline = true;
-
-            videoRef.current.play().catch((error) => {
-                console.log("Autoplay was prevented by the browser:", error);
-            });
-        }
-    }, []);
 
     return (
         <div className="home-container">
             <main className="flex flex-col gap-50 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
-                        className="top-0 left-0 w-full h-full object-cover pointer-events-none" autoPlay loop muted
-                        onContextMenu={handleContextMenu}
-                    >
+                        className="top-0 left-0 w-full h-full object-cover pointer-events-none" autoPlay loop muted>
                         <source src="woodWorkSample.mp4" type="video/mp4"></source>
                     </video>
 
