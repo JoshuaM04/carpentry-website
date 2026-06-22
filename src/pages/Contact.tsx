@@ -3,7 +3,7 @@ export default function Contact() {
     return (
         <div className="contact-container">
             <main className="flex flex-col items-center gap-20 min-h-dvh">
-                <div className="flex flex-col gap-5 text-center w-full p-5 mt-30">
+                <div className="flex flex-col gap-5 text-center w-full p-5 mt-30 max-2md:mt-40">
                     <h2 className="text-4xl font-semibold">Contact Us</h2>              
                 </div>
 

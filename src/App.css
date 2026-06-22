@@ -8,6 +8,21 @@
     --color-svgLeftToolCasing: #E15649;
     --color-svgRightHandle: #7F7C79;
     --color-svgRightToolBar: #855151;
+    --breakpoint-2md: 56.25rem;
+}
+
+h1 {
+    font-size: clamp(1.4rem, 3vw, 3.75rem);
+}
+
+.explore-text {
+    font-size: clamp(.8rem, 3vw, 1rem);
+}
+
+.explore-arrow-container {
+    width: clamp(1.8rem, 3vw, 2.5rem);
+    height: clamp(1.8rem, 3vw, 2.5rem);
+    padding: clamp(.2rem, 3vw, .5rem);
 }
 
 form {
