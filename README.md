@@ -1,1 +1,1 @@
-Live Website: https://carpentry-website-eight.vercel.app/home
+Live Website: https://carpentry-website-eight.vercel.app/
