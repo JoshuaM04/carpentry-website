@@ -9,6 +9,8 @@ export default function Home() {
     useEffect(() => {
         if (videoRef.current) {
             videoRef.current.muted = true;
+            videoRef.current.playsInline = true;
+
             videoRef.current.play().catch((error) => {
                 console.log("Autoplay was prevented by the browser:", error);
             });
@@ -20,7 +22,7 @@ export default function Home() {
             <main className="flex flex-col gap-50 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
-                        className="top-0 left-0 w-full h-full object-cover" autoPlay loop muted
+                        className="top-0 left-0 w-full h-full object-cover pointer-events-none" autoPlay loop muted
                         onContextMenu={handleContextMenu}
                     >
                         <source src="woodWorkSample.mp4" type="video/mp4"></source>
