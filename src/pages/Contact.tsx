@@ -7,16 +7,16 @@ export default function Contact() {
                     <h2 className="text-4xl font-semibold">Contact Us</h2>              
                 </div>
 
-                <form className="flex flex-col items-start gap-10 w-350">
-                    <div className="flex justify-between w-full">
-                        <div className="flex flex-col gap-2">
+                <form className="flex flex-col items-start gap-10">
+                    <div className="flex flex-wrap justify-between gap-10 w-full">
+                        <div className="input-container flex flex-col gap-2">
                             <label>Name</label>
-                            <input className="border border-slate-400 w-170 p-2" type="name" name="full-name" placeholder="Name" />
+                            <input className="border border-slate-400 p-2 w-full" type="name" name="full-name" placeholder="Name" />
                         </div>
 
-                        <div className="flex flex-col gap-2">
+                        <div className="input-container flex flex-col gap-2">
                             <label>Email*</label>
-                            <input className="border border-slate-400 w-170 p-2" type="email" name="email" placeholder="Email" required />
+                            <input className="border border-slate-400 p-2 w-full" type="email" name="email" placeholder="Email" required />
                         </div>
                     </div>
 

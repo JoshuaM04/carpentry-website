@@ -9,3 +9,11 @@
     --color-svgRightHandle: #7F7C79;
     --color-svgRightToolBar: #855151;
 }
+
+form {
+    width: clamp(1rem, 50vw, 87.5rem);
+}
+
+.input-container {
+    width: clamp(15rem, 24vw, 42.5rem);
+}
