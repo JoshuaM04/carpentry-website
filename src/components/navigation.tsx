@@ -7,8 +7,7 @@ export default function navigation() {
     const location = useLocation();
 
     const isHomePage = location.pathname === '/' || location.pathname === '/home';
-    const textColor = isHomePage ? 'text-white' : 'text-black bg-slate-200';
-    const divColor = isHomePage ? 'bg-white' : 'bg-black';
+    const textColor = isHomePage ? 'text-white' : 'text-white bg-black';
 
     return (
         <header>
@@ -46,7 +45,7 @@ export default function navigation() {
                         <div>
                             <Link to="/about" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "true"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
                                 <span>about</span>
-                                <div className={`absolute bottom-0 left-0 ${divColor} w-0 h-0.5 ${navHover[3] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
+                                <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[3] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
                             </Link>
                         </div>
                     </div>
@@ -76,11 +75,11 @@ export default function navigation() {
                                     </Button>
                                 </div>
 
-                                <div className="text-white font-semibold text-xl uppercase flex flex-col gap-10">
-                                    <Link to="/home">home</Link>
-                                    <Link to="/home">gallery</Link>
-                                    <Link to="/contact">contact</Link>
-                                    <Link to="/about">about</Link>
+                                <div className="text-white text-xl font-semibold flex flex-col gap-10">
+                                    <Button className="uppercase w-fit" slot="close"><Link to="/home">home</Link></Button>
+                                    <Button className="uppercase w-fit" slot="close"><Link to="/home">gallery</Link></Button>
+                                    <Button className="uppercase w-fit" slot="close"><Link to="/contact">contact</Link></Button>
+                                    <Button className="uppercase w-fit" slot="close"><Link to="/about">about</Link></Button>
                                 </div>
                             </Dialog>
                         </Modal>
