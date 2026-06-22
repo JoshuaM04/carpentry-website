@@ -5,7 +5,7 @@ export default function navigation() {
     const [navHover, setNavHover] = useState(["false", "false", "false", "false"]);
     const location = useLocation();
 
-    const isHomePage = location.pathname === '/home';
+    const isHomePage = location.pathname === '/' || location.pathname === '/home';
     const textColor = isHomePage ? 'text-white' : 'text-black bg-slate-200';
     const divColor = isHomePage ? 'bg-white' : 'bg-black';
 
