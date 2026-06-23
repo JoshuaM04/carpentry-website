@@ -6,7 +6,7 @@ export default function Home() {
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
                         className="top-0 left-0 w-full h-full object-cover pointer-events-none max-2md:hidden max-2md:aria-hidden" autoPlay loop muted>
-                        <source src="woodWorkSample.mp4" type="video/mp4"></source>
+                        <source className="max-2md:hidden max-2md:aria-hidden" src="woodWorkSample.mp4" type="video/mp4"></source>
                     </video>
 
                     <div className="h-screen w-full overflow-hidden mt-40"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
