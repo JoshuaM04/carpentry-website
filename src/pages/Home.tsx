@@ -5,9 +5,11 @@ export default function Home() {
             <main className="flex flex-col gap-50 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
-                        className="top-0 left-0 w-full h-full object-cover pointer-events-none" autoPlay loop muted>
+                        className="top-0 left-0 w-full h-full object-cover pointer-events-none max-2md:hidden max-2md:aria-hidden" autoPlay loop muted>
                         <source src="woodWorkSample.mp4" type="video/mp4"></source>
                     </video>
+
+                    <div className="h-screen w-full overflow-hidden mt-40"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
 
                     <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute">
                         <h1 className="font-bold flex flex-col gap-4 text-6xl text-center">
@@ -31,7 +33,7 @@ export default function Home() {
 
                     <div className="flex flex-wrap gap-10">
                         <div className="w-50 h-60">
-                            <img src="/furniture/tables/furnitureOne.webp" alt="" />
+                            <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Table #1</p>
@@ -49,7 +51,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img src="/furniture/tables/furtnitureTwo.jpg" alt="" />
+                            <img src="/furniture/catalog/tables/furtnitureTwo.jpg" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Table #2</p>
@@ -67,7 +69,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img src="/furniture/tables/furnitureThree.jpg" alt="" />
+                            <img src="/furniture/catalog/tables/furnitureThree.jpg" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Table #3</p>
@@ -85,7 +87,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img src="/furniture/tables/furnitureFour.jpg" alt="" />
+                            <img src="/furniture/catalog/tables/furnitureFour.jpg" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Table #4</p>
@@ -109,7 +111,7 @@ export default function Home() {
 
                     <div className="flex flex-wrap gap-10">
                         <div className="w-50 h-60">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/chairs/chairOne.webp" alt="" />
+                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairOne.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Chair #1</p>
@@ -127,7 +129,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/chairs/chairTwo.webp" alt="" />
+                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairTwo.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Chair #2</p>
@@ -145,7 +147,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/chairs/chairThree.webp" alt="" />
+                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairThree.webp" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Chair #3</p>
@@ -163,7 +165,7 @@ export default function Home() {
                         </div>
 
                         <div className="w-50 h-60">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/chairs/chairFour.webp" alt="" />
+                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairFour.webp" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Chair #4</p>

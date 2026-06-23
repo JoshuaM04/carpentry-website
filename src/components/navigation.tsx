@@ -22,10 +22,10 @@ export default function navigation() {
                         </div>
 
                         <div>
-                            <a onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "true", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative" href="">
+                            <Link to="/gallery" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "true", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
                                 <span>gallery</span>
                                 <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[1] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@ export default function navigation() {
 
                                 <div className="text-white text-xl font-semibold flex flex-col gap-10">
                                     <Button className="uppercase w-fit" slot="close"><Link to="/home">home</Link></Button>
-                                    <Button className="uppercase w-fit" slot="close"><Link to="/home">gallery</Link></Button>
+                                    <Button className="uppercase w-fit" slot="close"><Link to="/gallery">gallery</Link></Button>
                                     <Button className="uppercase w-fit" slot="close"><Link to="/contact">contact</Link></Button>
                                     <Button className="uppercase w-fit" slot="close"><Link to="/about">about</Link></Button>
                                 </div>
