@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Home() {
 
     return (
@@ -32,7 +34,7 @@ export default function Home() {
                     <p className="text-2xl font-bold max-xsm:text-center">Custom Tables</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <div className="w-50 h-60">
+                        <Link to="/TableOne" className="w-50 h-60">
                             <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
@@ -48,7 +50,7 @@ export default function Home() {
 
                                 <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
                             </div>
-                        </div>
+                        </Link>
 
                         <div className="w-50 h-60">
                             <img src="/furniture/catalog/tables/furtnitureTwo.jpg" alt="" />

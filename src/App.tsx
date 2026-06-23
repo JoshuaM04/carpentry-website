@@ -2,6 +2,7 @@ import Home from './pages/Home'
 import Gallery from './pages/Gallery'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import TableOne from './pages/Catalog/Tables/TableOne'
 import NavBar from './components/navigation';
 import { Routes, Route } from 'react-router-dom';
 
@@ -17,6 +18,8 @@ export default function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
+        <Route path="/TableOne" element={<TableOne />} />
       </Routes>
     </div>
   );
