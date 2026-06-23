@@ -9,7 +9,7 @@ export default function Home() {
                         <source className="max-2md:hidden max-2md:aria-hidden" src="woodWorkSample.mp4" type="video/mp4"></source>
                     </video>
 
-                    <div className="h-screen w-full overflow-hidden mt-40"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
+                    <div className="h-screen w-full overflow-hidden mt-40 pointer-events-none"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
 
                     <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute">
                         <h1 className="font-bold flex flex-col gap-4 text-6xl text-center">
@@ -185,7 +185,7 @@ export default function Home() {
 
                     <hr />
 
-                    <p className="text-2xl font-bold">Nightstands</p>
+                    <p className="text-2xl font-bold max-sm:text-center">Nightstands</p>
 
                 </section>
             </main>
