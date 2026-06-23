@@ -11,7 +11,7 @@ export default function TableOne() {
             <div className="flex flex-col gap-10 mt-40">
                 <div className="grid grid-cols-[1fr_400px] gap-10 max-2md:flex max-2md:flex-col">
                     <div className="img-container">
-                        <img src="/public/furniture/catalog/tables/furnitureOne.webp" alt="" />
+                        <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
                     </div>
 
                     <div className="product-information-container flex flex-col gap-2">
