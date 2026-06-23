@@ -11,7 +11,7 @@ export default function Home() {
 
                     <div className="h-screen w-full overflow-hidden mt-40 pointer-events-none"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
 
-                    <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute">
+                    <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute max-2md:w-56.25">
                         <h1 className="font-bold flex flex-col gap-4 text-6xl text-center">
                             <div>Hand Crafted</div>
                             <div>Real Materials</div>
@@ -19,7 +19,7 @@ export default function Home() {
                         </h1>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center gap-5 text-white bottom-20 left-[50%] translate-x-[-50%] absolute">
+                    <div className="flex flex-col justify-center items-center gap-5 text-white bottom-20 left-[50%] translate-x-[-50%] absolute max-2md:bottom-10">
                         <p className="explore-text font-bold uppercase">Explore</p>
 
                         <a href="#furniture-menu" className="flex justify-center items-center explore-arrow-container bg-slate-900 rounded-full animate-bounce">
