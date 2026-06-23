@@ -8,6 +8,7 @@
     --color-svgLeftToolCasing: #E15649;
     --color-svgRightHandle: #7F7C79;
     --color-svgRightToolBar: #855151;
+    --breakpoint-xsm: 33.375rem;
     --breakpoint-2md: 56.25rem;
 }
 

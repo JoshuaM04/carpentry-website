@@ -29,9 +29,9 @@ export default function Home() {
                 </section>
 
                 <section id="furniture-menu" className="flex flex-col gap-10 w-full p-10">
-                    <p className="text-2xl font-bold">Custom Tables</p>
+                    <p className="text-2xl font-bold max-xsm:text-center">Custom Tables</p>
 
-                    <div className="flex flex-wrap justify-between items-center gap-10">
+                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
                         <div className="w-50 h-60">
                             <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
 
@@ -107,9 +107,9 @@ export default function Home() {
 
                     <hr />
 
-                    <p className="text-2xl font-bold">Custom Chairs</p>
+                    <p className="text-2xl font-bold max-xsm:text-center">Custom Chairs</p>
 
-                    <div className="flex flex-wrap justify-between items-center gap-10">
+                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
                         <div className="w-50 h-60">
                             <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairOne.webp" alt="" />
 
