@@ -39,3 +39,7 @@ form {
 .modal-pop-up {
     width: clamp(20rem, 50vw, 35rem);
 }
+
+.cart-component {
+    margin-top: clamp(20rem, 130vh, 90rem);
+}
