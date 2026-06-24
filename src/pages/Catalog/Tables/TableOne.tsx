@@ -23,7 +23,7 @@ export default function TableOne() {
                     </Button>
 
                     <Modal className=" z-2 text-white flex justify-center items-center fixed left-[50%] top-[50%] translate-[-50%] backdrop-blur-sm w-full h-full p-10 font-roboto">
-                        <Dialog className="modal-pop-up flex flex-col justify-between bg-black drop-shadow-xl/50 h-200 w-180 p-10">
+                        <Dialog className="modal-pop-up flex flex-col justify-between bg-black drop-shadow-xl/50 h-200 w-180 p-10 max-lg:h-180">
                             <div className="flex flex-col gap-10">
                                 <div className="flex flex-col max-lg:gap-5">
                                     <div className="flex justify-end max-lg:-ml-5 max-lg:-mr-5">
