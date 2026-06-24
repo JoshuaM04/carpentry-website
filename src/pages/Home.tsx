@@ -4,7 +4,7 @@ export default function Home() {
 
     return (
         <div className="home-container">
-            <main className="flex flex-col gap-50 items-center">
+            <main className="flex flex-col gap-80 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
                         className="top-0 left-0 w-full h-full object-cover pointer-events-none max-2md:hidden max-2md:aria-hidden" autoPlay loop muted>
@@ -24,7 +24,7 @@ export default function Home() {
                     <div className="flex flex-col justify-center items-center gap-5 text-white bottom-20 left-[50%] translate-x-[-50%] absolute max-2md:bottom-10">
                         <p className="explore-text font-bold uppercase">Explore</p>
 
-                        <a href="#furniture-menu" className="flex justify-center items-center explore-arrow-container bg-slate-900 rounded-full animate-bounce">
+                        <a href="#cart" className="flex justify-center items-center explore-arrow-container bg-slate-900 rounded-full animate-bounce">
                             <svg className="fill-white w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.3166 21.0976 11.6834 21.0976 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3Z"></path> </g></svg>
                         </a>
                     </div>
