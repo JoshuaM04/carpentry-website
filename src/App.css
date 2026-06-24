@@ -35,3 +35,7 @@ form {
 .input-container {
     width: clamp(15rem, 24vw, 42.5rem);
 }
+
+.modal-pop-up {
+    width: clamp(20rem, 50vw, 35rem);
+}

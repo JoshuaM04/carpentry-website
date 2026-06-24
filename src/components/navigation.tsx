@@ -58,9 +58,7 @@ export default function navigation() {
                     </div>
 
                     <DialogTrigger>
-                        <Button>
-                            <svg className="w-10 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L4 7" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 12L4 12" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 17L4 17" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
-                        </Button>
+                        <Button className="hover:cursor-pointer"><svg className="w-10 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L4 7" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 12L4 12" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20 17L4 17" stroke-width="1.5" stroke-linecap="round"></path> </g></svg></Button>
 
                         <Modal className="z-2 bg-black fixed left-[50%] top-[50%] translate-[-50%] w-full h-full p-10 font-roboto">
                             <Dialog className="flex flex-col gap-20">
@@ -70,7 +68,7 @@ export default function navigation() {
                                         <p>Creations</p>
                                     </Heading>
 
-                                    <Button slot="close">
+                                    <Button className="hover:cursor-pointer" slot="close">
                                         <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                                     </Button>
                                 </div>
