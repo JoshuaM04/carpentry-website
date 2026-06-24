@@ -12,7 +12,7 @@ export default function cart({inCart, inCartPrice, handleCartDecrement, handleCa
     const location = useLocation();
 
     const isHomePage = location.pathname === '/' || location.pathname === '/home'
-    const spacingStyle = isHomePage ? 'max-2md:mt-380 mt-600 p-10' : 'max-2md:mt-40 mt-45 p-10';
+    const spacingStyle = isHomePage ? 'max-2md:mt-380 mt-380 p-10' : 'max-2md:mt-40 mt-30 p-10';
 
     return (
         <div id="cart" className={`cart-component flex justify-end items-center gap-5 ${spacingStyle} absolute w-full`}>
