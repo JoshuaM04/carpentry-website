@@ -14,6 +14,10 @@ export default function cart({inCart, inCartPrice, handleCartDecrement, handleCa
     const isHomePage = location.pathname === '/' || location.pathname === '/home'
     const spacingStyle = isHomePage ? 'cart-component max-2md:mt-380 mt-380 p-10' : 'max-2md:mt-40 mt-30 p-10';
 
+    const handleCheckout = () => {
+        window.location.href = "https://buy.stripe.com/test_fZueV50YZ1gZg3lcEx7EQ00";
+    } 
+
     return (
         <div id="cart" className={`flex justify-end items-center gap-5 ${spacingStyle} absolute w-full`}>
             <DialogTrigger>
@@ -64,6 +68,10 @@ export default function cart({inCart, inCartPrice, handleCartDecrement, handleCa
                             <div className="flex justify-between">
                                 <p>Tax</p>
                                 <p>N/A</p>
+                            </div>
+
+                            <div>
+                                <button onClick={handleCheckout} className="text-black font-semibold bg-white p-2 w-full hover:cursor-pointer">Checkout</button>
                             </div>
                         </div>
                     </Dialog>
