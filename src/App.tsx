@@ -23,6 +23,7 @@ export default function App() {
   return (
     <div className="root-container min-h-dvh font-roboto">
       <NavBar />
+
       <Cart 
         inCart={inCart}
         inCartPrice={inCartPrice}

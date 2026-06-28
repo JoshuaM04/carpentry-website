@@ -43,3 +43,11 @@ form {
 .cart-component {
     margin-top: clamp(20rem, 130vh, 90rem);
 }
+
+.about-img-element {
+    width: clamp(10rem, 40vw, 25rem);
+}
+
+.about-description {
+    width: clamp(10rem, 40vw, 25rem);
+}

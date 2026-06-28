@@ -1,9 +1,10 @@
+import Footer from '../components/footer';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
 
     return (
-        <div className="home-container">
+        <div className="home-container flex flex-col gap-20">
             <main className="flex flex-col gap-80 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
@@ -191,6 +192,8 @@ export default function Home() {
 
                 </section>
             </main>
+
+            <Footer />
         </div>
     );
 }
