@@ -15,7 +15,7 @@ export default function cart({inCart, inCartPrice, handleCartDecrement, handleCa
     const spacingStyle = isHomePage ? 'cart-component max-2md:mt-380 mt-380 p-10' : 'max-2md:mt-40 mt-30 p-10';
 
     const handleCheckout = () => {
-        window.location.href = "https://buy.stripe.com/test_bJe14f233cZH18r6g97EQ01";
+        window.location.href = "https://buy.stripe.com/9B64gsbJ0bXj653c8s0Fi00";
     } 
 
     return (
