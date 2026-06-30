@@ -37,7 +37,7 @@ const connectDB = async (req, res, next) => {
     }
 }
 
-app.post('/reviews', conntectDB, async(request, response) => {
+app.post('/reviews', connectDB, async(request, response) => {
     try {
         const { title, rating, comment, username, email } = request.body;
 
