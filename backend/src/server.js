@@ -23,7 +23,21 @@ const reviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model('Review', reviewSchema);
 
-app.post('/reviews', async(request, response) => {
+const connectDB = async (req, res, next) => {
+    if (mongoose.connection.readyState === 1) {
+        return next();
+    }
+
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("Connected to MongoDB Atlas");
+    } catch (error) {
+        console.error("Database connection failed:", error);
+        return res.status(500).json({ success: false, error: "Database connection failed" });
+    }
+}
+
+app.post('/reviews', conntectDB, async(request, response) => {
     try {
         const { title, rating, comment, username, email } = request.body;
 
@@ -40,7 +54,7 @@ app.post('/reviews', async(request, response) => {
     }
 });
 
-app.get('/reviews', async (request, response) => {
+app.get('/reviews', connectDB, async (request, response) => {
     try {
         const allReviews = await Review.find();
         response.json(allReviews);
