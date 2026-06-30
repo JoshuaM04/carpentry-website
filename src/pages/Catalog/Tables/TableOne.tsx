@@ -47,6 +47,7 @@ function ReviewsSection() {
                                 <p>{new Date(review.timestamp).toLocaleDateString()}</p>
                             </div>
 
+                            
                             <div>
                                 <p className="font-semibold">Review</p>
                                 <p>{review.comment}</p>
@@ -75,9 +76,9 @@ export default function TableOne({quantity, handleDecrement, handleIncrement, ha
         <main className="table-one-container flex flex-col gap-10 min-h-dvh p-10">
             <section className="flex flex-col gap-10 mt-80">
                 <div className="grid grid-cols-[1fr_400px] gap-10 max-2md:flex max-2md:flex-col">
-                    <div className="img-container">
+                   <div className="img-container">
                         <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
-                    </div>
+                   </div>
 
                     <div className="product-information-container flex flex-col gap-2">
                         <div>
