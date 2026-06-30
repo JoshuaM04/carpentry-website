@@ -12,18 +12,15 @@ interface Review {
 
 function AverageRating() {
     const [data, setData] = useState<Review[] | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetch('/api/reviews') 
         .then(response => response.json())
         .then(responseData => {
             setData(responseData);
-            setLoading(false);
         })
         .catch(error => {
             console.error("Error fetching reviews:", error);
-            setLoading(false);
         });
     }, []); 
 
