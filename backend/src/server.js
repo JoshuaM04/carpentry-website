@@ -23,7 +23,7 @@ const reviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model('Review', reviewSchema);
 
-app.post('/api/reviews', async(request, response) => {
+app.post('/reviews', async(request, response) => {
     try {
         const { title, rating, comment, username, email } = request.body;
 
@@ -40,7 +40,7 @@ app.post('/api/reviews', async(request, response) => {
     }
 });
 
-app.get('/api/reviews', async (request, response) => {
+app.get('/reviews', async (request, response) => {
     try {
         const allReviews = await Review.find();
         response.json(allReviews);
