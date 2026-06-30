@@ -45,10 +45,7 @@ app.post('/reviews', connectDB, async(request, response) => {
 
         const savedReview = await newReview.save();
 
-        response.status(201).json({
-            success: true,
-            data: savedReview
-        })
+        response.redirect('/src/pages/Catalog/Tables/TableOne.tsx');
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
     }
