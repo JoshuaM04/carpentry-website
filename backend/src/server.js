@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
-const Review = mongoose.model('Review', reviewSchema);
+const Review = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
 const connectDB = async (req, res, next) => {
     if (mongoose.connection.readyState === 1) {
