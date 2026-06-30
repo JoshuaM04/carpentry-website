@@ -3,6 +3,7 @@ import Gallery from './pages/Gallery'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import TableOne from './pages/Catalog/Tables/TableOne'
+import TableOneReview from './pages/Reviews/Tables/TableOneReview';
 import NavBar from './components/navigation';
 import Cart from './components/cart';
 import { useState } from 'react';
@@ -50,6 +51,8 @@ export default function App() {
                 />
               } 
         />
+
+        <Route path="/TableOneReview" element={<TableOneReview />} />
       </Routes>
     </div>
   );
