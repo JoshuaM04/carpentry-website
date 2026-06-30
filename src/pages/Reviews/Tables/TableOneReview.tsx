@@ -19,7 +19,7 @@ export default function TableOneReview() {
                     </div>
                 </div>
 
-                <form className="flex flex-col gap-10 min-w-full" action="https://carpentry-website-eight.vercel.app/reviews" method="POST">
+                <form className="flex flex-col gap-10 min-w-full" action="/api/reviews" method="POST">
                     <div className="flex flex-col gap-2">
                         <label className="font-semibold" htmlFor="title">Title<span className="text-red-500">*</span></label>
                         <input id="title" name="title" required className="border p-2" type="text" placeholder="Example: I definitely recommend this product!" />

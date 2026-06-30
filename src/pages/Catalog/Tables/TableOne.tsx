@@ -17,7 +17,7 @@ function ReviewsSection() {
     useEffect(() => { 
         const fetchReviews = async () => {
             try {
-                const response = await fetch('https://carpentry-website-eight.vercel.app/reviews');
+                const response = await fetch('/api/reviews');
                 const data = await response.json();
                 setReviews(data);
 
