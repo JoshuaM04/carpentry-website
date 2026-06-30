@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.connect('mongodb://Viper:Viper1630@ac-dbwsrkg-shard-00-00.einyqdj.mongodb.net:27017,ac-dbwsrkg-shard-00-01.einyqdj.mongodb.net:27017,ac-dbwsrkg-shard-00-02.einyqdj.mongodb.net:27017/?ssl=true&replicaSet=atlas-odz8bq-shard-0&authSource=admin&appName=CarpentryCluster')
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Succesfully connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
@@ -49,6 +49,8 @@ app.get('/reviews', async (request, response) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log("Server running on port 8080");
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(8080, () => console.log("Server running on port 8080"));
+}
+
+export default app;
