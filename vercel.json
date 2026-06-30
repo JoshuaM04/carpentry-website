@@ -1,6 +1,5 @@
 {
-    "experimentalServices": true,
-    "services": {
+    "experimentalServices": {
         "frontend": {
             "root": ".",
             "framework": "vite"
