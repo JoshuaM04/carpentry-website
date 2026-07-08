@@ -95,18 +95,6 @@ export default function Home() {
 
                     <hr />
 
-                    <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
-
-                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <div className="w-50 h-fit">
-                            <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
-                                Coming Soon
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr />
-
                     <p className="text-2xl font-bold max-sm:text-center">Nightstands</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
@@ -127,6 +115,18 @@ export default function Home() {
                                 <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
                             </div>
                         </Link>
+                    </div>
+
+                    <hr />
+                    
+                    <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
+
+                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
+                        <div className="w-50 h-fit">
+                            <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
+                                Coming Soon
+                            </div>
+                        </div>
                     </div>
 
                 </section>
