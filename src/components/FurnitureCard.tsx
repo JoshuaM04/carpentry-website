@@ -10,11 +10,15 @@ interface Review {
   email: string;
 }
 
-function AverageRating() {
+interface FurnitureCardProps {
+    product: Product;
+}
+
+export default function FurnitureCard({ product }: FurnitureCardProps) {
     const [data, setData] = useState<Review[] | null>(null);
 
     useEffect(() => {
-        fetch('/api/reviews') 
+        fetch(`/api/reviews/${product.reviewDB}`) 
         .then(response => response.json())
         .then(responseData => {
             setData(responseData);
@@ -30,18 +34,6 @@ function AverageRating() {
     const averageRating = totalRatingSum / data.length;
 
     return (
-        <div>
-            <p>{averageRating.toFixed(1)} / 5.0</p>
-        </div>
-    );
-}
-
-interface FurnitureCardProps {
-    product: Product;
-}
-
-export default function FurnitureCard({ product }: FurnitureCardProps) {
-    return (
         <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
             <Link to={product.route} className="flex flex-col gap-5 w-50 h-fit">
                 <img className="size-50" src={product.image} alt={product.name} />
@@ -49,7 +41,9 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
                 <div className="flex flex-col gap-5">
                         <div>
                             <p className="font-semibold">{product.name}</p>
-                            <AverageRating />
+                            <div>
+                                <p>{averageRating.toFixed(1)} / 5.0</p>
+                            </div>
                         </div>
                     
                         <div>
