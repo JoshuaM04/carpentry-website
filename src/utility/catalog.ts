@@ -37,7 +37,7 @@ export const FURNITURE_CATALOG: Product[] = [
         type: 'nightstand',
         route: '/HazyNight',
         review: '/HazyNightReview',
-        reviewForm: '/api/earth-wood/reviews',
+        reviewForm: '/api/hazy-night/reviews',
         reviewDB: '/hazy-night/reviews',
         name: 'Hazy Night',
         price: 500,

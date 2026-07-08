@@ -18,10 +18,11 @@ const reviewSchema = new mongoose.Schema({
     comment: { type: String, required: true },
     username: { type: String, required: true },
     email: { type: String, required: true},
+    productIdentifier: { type: Object },
     timestamp: { type: Date, default: Date.now }
 });
 
-const Review = mongoose.models.Review || mongoose.model('Review', reviewSchema);
+const ReviewCollection = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
 const connectDB = async (req, res, next) => {
     if (mongoose.connection.readyState === 1) {
@@ -37,24 +38,33 @@ const connectDB = async (req, res, next) => {
     }
 }
 
-app.post('/reviews', connectDB, async(request, response) => {
+app.post('/api/reviews/:productKey', connectDB, async(request, response) => {
     try {
-        const { title, rating, comment, username, email } = request.body;
+        const { productKey } = req.params;
+        const { title, rating, comment, username, email } = req.body;
 
-        const newReview = new Review({ title, rating, comment, username, email });
+        const newReview = await ReviewCollection.create({
+            productIdentifier: productKey,
+            title,
+            rating,
+            comment,
+            username,
+            email
+        });
 
-        const savedReview = await newReview.save();
-
-        response.redirect('/src/pages/Catalog/Tables/TableOne');
+        res.status(201).json(newReview);
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
     }
 });
 
-app.get('/reviews', connectDB, async (request, response) => {
+app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
     try {
-        const allReviews = await Review.find();
-        response.json(allReviews);
+        const { productKey } = request.params;
+
+        const reviews = await ReviewCollection.find({ productIdentifier: productKey });
+
+        res.state(200).json(reviews);
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
     }
