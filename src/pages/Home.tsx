@@ -72,27 +72,16 @@ export default function Home() {
                     <p className="text-2xl font-bold max-xsm:text-center">Tables</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <Link to="/TableOne" className="flex flex-col gap-5 w-50 h-fit">
-                            <img className="size-50" src="/furniture/catalog/tables/tableOne.jpg" alt="" />
-
-                            <div className="flex flex-col gap-4">
-                                <p className="font-semibold">Earth Wood</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <div className="ratings flex gap-2">
-                                    <AverageRating />
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </Link>
+                        <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">    
+                            {
+                                FURNITURE_CATALOG.filter((item) => item.type === "table").map((item) => (
+                                    <FurnitureCard
+                                        key={item.id}
+                                        product={item}
+                                    />
+                                ))
+                            }
+                        </div>
                     </div>
 
                     <hr />

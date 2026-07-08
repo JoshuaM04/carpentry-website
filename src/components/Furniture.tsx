@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
-import type { Product } from '../../utility/catalog';
+import type { Product } from '../utility/catalog';
 
 interface FurnitureProps {
     product: Product;
-    addToCart: (product: Product) => void;
+    // addToCart: (product: Product) => void;
 }
 
-export default function Furniture({ product, addToCart }: FurnitureProps) {
+export default function Furniture({ product }: FurnitureProps) {
     return (
-        <main className="table-one-container flex flex-col gap-10 min-h-dvh p-10">
+        <main className="furniture-component flex flex-col gap-10">
             <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[1fr_1fr] gap-10 max-2md:flex max-2md:flex-col">
+                <div className="grid grid-cols-[35vw_1fr] gap-10 max-2md:flex max-2md:flex-col">
                    <div className="img-container">
                         <img src={product.image} alt={product.name} />
                    </div>
@@ -18,7 +18,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                     <div className="product-information-container flex flex-col gap-2">
                         <div>
                             <h2 className="text-2xl">{product.name}</h2>
-                            <p>{product.price}</p>
+                            <p>${product.price}</p>
                         </div>
 
                         <hr />
@@ -44,7 +44,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                 <p className="text-black text-lg">${product.price}</p>
                             </div>
 
-                            <button onClick={() => addToCart(product)} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                            <button className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
             <section className="flex flex-col gap-10">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-xl">Reviews</h2>
-                    <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to="/TableOneReview">Write a Review</Link>
+                    <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to={product.review}>Write a Review</Link>
                 </div>
             </section>
         </main>

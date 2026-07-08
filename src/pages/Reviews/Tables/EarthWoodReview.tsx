@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function TableOneReview() {
+export default function EarthWoodReview() {
     const rating = [1, 2, 3, 4, 5];
     const [activeRating, setActiveRating] = useState(0);
 
@@ -10,7 +10,7 @@ export default function TableOneReview() {
             <div className="flex flex-col gap-10 mt-80">
                 <div className="flex gap-5">
                     <div className="img-container">
-                        <img className="size-40" src="../../../../furniture/catalog/tables/tableOne.jpg" alt="" />
+                        <img className="size-40" src="../../../../public/furniture/catalog/tables/earth-wood.jpg" alt="" />
                     </div>
 
                     <div className="flex flex-col justify-center gap-2">

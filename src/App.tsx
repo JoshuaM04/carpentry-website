@@ -2,10 +2,10 @@ import Home from './pages/Home'
 import Gallery from './pages/Gallery'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import TableOne from './pages/Catalog/Tables/TableOne'
-import TableOneReview from './pages/Reviews/Tables/TableOneReview';
+import EarthWood from './pages/Catalog/Tables/EarthWood';
+import EarthWoodReview from './pages/Reviews/Tables/EarthWoodReview';
 import HazyNight from './pages/Catalog/Nightstands/HazyNight';
-import NightstandOneReview from './pages/Reviews/Nightstands/NightstandOneReview';
+import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
 import NavBar from './components/navigation';
 import Cart from './components/cart';
 import { useState } from 'react';
@@ -41,34 +41,11 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        <Route path="/TableOne" 
-              element={
-                <TableOne 
-                  quantity={quantity}
-                  price={price}
-                  count={count}
-                  handleDecrement={handleDecrement}
-                  handleIncrement={handleIncrement}
-                  handleCart={handleCart}
-                />
-              } 
-        />
+        <Route path="/EarthWood" element={<EarthWood />} />
+        <Route path="/HazyNight" element={<HazyNight />} />
 
-        <Route path="/HazyNight" 
-              element={
-                <HazyNight 
-                  quantity={quantity}
-                  price={price}
-                  count={count}
-                  handleDecrement={handleDecrement}
-                  handleIncrement={handleIncrement}
-                  handleCart={handleCart}
-                />
-              } 
-        />
-
-        <Route path="/TableOneReview" element={<TableOneReview />} />
-        <Route path="/NightstandOneReview" element={<NightstandOneReview />} />
+        <Route path="/EarthWoodReview" element={<EarthWoodReview />} />
+        <Route path="/HazyNightReview" element={<HazyNightReview />} />
       </Routes>
     </div>
   );

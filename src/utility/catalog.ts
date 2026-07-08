@@ -2,6 +2,7 @@ export interface Product {
     id: string;
     type: string;
     route: string;
+    review: string;
     name: string;
     price: number;
     stripePriceId: string;
@@ -17,10 +18,11 @@ export const FURNITURE_CATALOG: Product[] = [
         id: 'earth-wood',
         type: 'table',
         route: '/EarthWood',
+        review: '/EarthWoodReview',
         name: 'Earth Wood',
         price: 500,
         stripePriceId: 'N/A',
-        image: '../../furniture/catalog/tables/tableOne.jpg',
+        image: '../../furniture/catalog/tables/earth-wood.jpg',
         wood: 'Oak',
         width: '36"',
         height: '25"',
@@ -30,10 +32,11 @@ export const FURNITURE_CATALOG: Product[] = [
         id: 'hazy-night',
         type: 'nightstand',
         route: '/HazyNight',
+        review: '/HazyNightReview',
         name: 'Hazy Night',
         price: 500,
         stripePriceId: 'N/A',
-        image: '../../furniture/catalog/nightstands/nightstandOne.jpg',
+        image: '../../furniture/catalog/nightstands/hazy-night.jpg',
         wood: 'Poplar',
         width: '24.5"',
         height: '31"',
