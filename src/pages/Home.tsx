@@ -67,14 +67,14 @@ export default function Home() {
                 </section>
 
                 <section id="furniture-menu" className="flex flex-col gap-10 w-full p-10">
-                    <p className="text-2xl font-bold max-xsm:text-center">Custom Tables</p>
+                    <p className="text-2xl font-bold max-xsm:text-center">Tables</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <Link to="/TableOne" className="w-50 h-fit">
-                            <img src="/furniture/catalog/tables/tableOne.jpg" alt="" />
+                        <Link to="/TableOne" className="flex flex-col gap-5 w-50 h-fit">
+                            <img className="size-50" src="/furniture/catalog/tables/tableOne.jpg" alt="" />
 
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Table #1</p>
+                            <div className="flex flex-col gap-4">
+                                <p className="font-semibold">Earth Wood</p>
 
                                 <div>
                                     <div className="flex gap-2">
@@ -91,136 +91,16 @@ export default function Home() {
                                 <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
                             </div>
                         </Link>
-
-                        <div className="w-50 h-fit">
-                            <img src="/furniture/catalog/tables/furtnitureTwo.jpg" alt="" />
-
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Table #2</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
-
-                        <div className="w-50 h-fit">
-                            <img src="/furniture/catalog/tables/furnitureThree.jpg" alt="" />
-                            
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Table #3</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
-
-                        <div className="w-50 h-fit">
-                            <img src="/furniture/catalog/tables/furnitureFour.jpg" alt="" />
-                            
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Table #4</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
                     </div>
 
                     <hr />
 
-                    <p className="text-2xl font-bold max-xsm:text-center">Custom Chairs</p>
+                    <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
                         <div className="w-50 h-fit">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairOne.webp" alt="" />
-
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Chair #1</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
-
-                        <div className="w-50 h-fit">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairTwo.webp" alt="" />
-
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Chair #2</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
-
-                        <div className="w-50 h-fit">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairThree.webp" alt="" />
-                            
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Chair #3</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </div>
-
-                        <div className="w-50 h-fit">
-                            <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairFour.webp" alt="" />
-                            
-                            <div className="flex flex-col gap-4 p-5">
-                                <p className="font-semibold">Chair #4</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
+                            <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
+                                Coming Soon
                             </div>
                         </div>
                     </div>
@@ -228,6 +108,26 @@ export default function Home() {
                     <hr />
 
                     <p className="text-2xl font-bold max-sm:text-center">Nightstands</p>
+
+                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
+                        <Link to="/NightstandOne" className="flex flex-col gap-5 w-50 h-fit">
+                            <img className="size-50" src="/furniture/catalog/nightstands/nightstandOne.jpg" alt="" />
+
+                            <div className="flex flex-col gap-4">
+                                <p className="font-semibold">Hazy Night</p>
+
+                                <div>
+                                    <div className="flex gap-2">
+                                        <div className="w-4 h-4 bg-black"></div>
+                                        <div className="w-4 h-4 bg-red-900"></div>
+                                    </div>
+                                    <p className="text-xs">2 color options</p>
+                                </div>
+
+                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
+                            </div>
+                        </Link>
+                    </div>
 
                 </section>
             </main>

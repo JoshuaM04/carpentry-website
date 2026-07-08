@@ -4,6 +4,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import TableOne from './pages/Catalog/Tables/TableOne'
 import TableOneReview from './pages/Reviews/Tables/TableOneReview';
+import NightstandOne from './pages/Catalog/Nightstands/NightstandOne';
 import NavBar from './components/navigation';
 import Cart from './components/cart';
 import { useState } from 'react';
@@ -42,6 +43,19 @@ export default function App() {
         <Route path="/TableOne" 
               element={
                 <TableOne 
+                  quantity={quantity}
+                  price={price}
+                  count={count}
+                  handleDecrement={handleDecrement}
+                  handleIncrement={handleIncrement}
+                  handleCart={handleCart}
+                />
+              } 
+        />
+
+        <Route path="/NightstandOne" 
+              element={
+                <NightstandOne 
                   quantity={quantity}
                   price={price}
                   count={count}
