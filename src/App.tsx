@@ -7,7 +7,6 @@ import EarthWoodReview from './pages/Reviews/Tables/EarthWoodReview';
 import HazyNight from './pages/Catalog/Nightstands/HazyNight';
 import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
 import NavBar from './components/navigation';
-import Cart from './components/cart';
 import { Routes, Route } from 'react-router-dom';
 
 export default function App() {

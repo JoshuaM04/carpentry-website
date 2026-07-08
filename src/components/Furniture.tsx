@@ -12,13 +12,18 @@ interface ReviewType {
     timestamp: string;
 }
 
-function ReviewsSection() {
+interface FurnitureProps {
+    product: Product;
+    // addToCart: (product: Product) => void;
+}
+
+export default function Furniture({ product }: FurnitureProps) {
     const [reviews, setReviews] = useState<ReviewType[]>([]);
 
     useEffect(() => { 
         const fetchReviews = async () => {
             try {
-                const response = await fetch('/api/reviews');
+                const response = await fetch(`/api/reviews/${product.reviewDB}`);
                 const data = await response.json();
                 setReviews(data);
 
@@ -31,42 +36,6 @@ function ReviewsSection() {
         fetchReviews();
     }, []);
 
-    return (
-        <div className="flex flex-col gap-5">
-            <h2>Customer Reviews ({reviews.length})</h2>
-
-            <div className="flex flex-col gap-5">
-                {
-                    reviews.map((review) => (
-                        <div key={review._id} className="flex flex-col gap-2">
-                            <div className="flex justify-between">
-                                <p>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)} ({review.rating}/5)</p>
-                                <p>By <span className="font-semibold">{review.username}</span></p>
-                            </div>
-                            <div className="flex justify-between">
-                                <h3>{review.title}</h3>
-                                <p>{new Date(review.timestamp).toLocaleDateString()}</p>
-                            </div>
-
-                            
-                            <div>
-                                <p className="font-semibold">Review</p>
-                                <p>{review.comment}</p>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-    );
-}
-
-interface FurnitureProps {
-    product: Product;
-    // addToCart: (product: Product) => void;
-}
-
-export default function Furniture({ product }: FurnitureProps) {
     return (
         <main className="furniture-component flex flex-col gap-10">
             <section className="flex flex-col gap-10 mt-80">
@@ -118,7 +87,32 @@ export default function Furniture({ product }: FurnitureProps) {
                     <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to={product.review}>Write a Review</Link>
                 </div>
 
-                <ReviewsSection />
+                <div className="reviews-container flex flex-col gap-5">
+                    <h2>Customer Reviews ({reviews.length})</h2>
+
+                    <div className="flex flex-col gap-5">
+                        {
+                            reviews.map((review) => (
+                                <div key={review._id} className="flex flex-col gap-2">
+                                    <div className="flex justify-between">
+                                        <p>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)} ({review.rating}/5)</p>
+                                        <p>By <span className="font-semibold">{review.username}</span></p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <h3>{review.title}</h3>
+                                        <p>{new Date(review.timestamp).toLocaleDateString()}</p>
+                                    </div>
+
+                                    
+                                    <div>
+                                        <p className="font-semibold">Review</p>
+                                        <p>{review.comment}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
             </section>
         </main>
     )
