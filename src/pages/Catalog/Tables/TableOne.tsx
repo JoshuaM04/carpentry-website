@@ -75,9 +75,9 @@ export default function TableOne({quantity, handleDecrement, handleIncrement, ha
     return (
         <main className="table-one-container flex flex-col gap-10 min-h-dvh p-10">
             <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[1fr_400px] gap-10 max-2md:flex max-2md:flex-col">
+                <div className="grid grid-cols-[1fr_1fr] gap-10 max-2md:flex max-2md:flex-col">
                    <div className="img-container">
-                        <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
+                        <img src="/furniture/catalog/tables/tableOne.jpg" alt="" />
                    </div>
 
                     <div className="product-information-container flex flex-col gap-2">
@@ -89,8 +89,10 @@ export default function TableOne({quantity, handleDecrement, handleIncrement, ha
                         <hr />
 
                         <div>
-                            <p className="font-bold">Size</p>
-                            <p>48w</p>
+                            <p className="font-bold">Dimensions</p>
+                            <p>36" - Width</p>
+                            <p>25" - Height</p>
+                            <p>14" - Diameter</p>
                         </div>
 
                         <hr />

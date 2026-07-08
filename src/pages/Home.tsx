@@ -70,8 +70,8 @@ export default function Home() {
                     <p className="text-2xl font-bold max-xsm:text-center">Custom Tables</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <Link to="/TableOne" className="w-50 h-60">
-                            <img src="/furniture/catalog/tables/furnitureOne.webp" alt="" />
+                        <Link to="/TableOne" className="w-50 h-fit">
+                            <img src="/furniture/catalog/tables/tableOne.jpg" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
                                 <p className="font-semibold">Table #1</p>
@@ -92,7 +92,7 @@ export default function Home() {
                             </div>
                         </Link>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img src="/furniture/catalog/tables/furtnitureTwo.jpg" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
@@ -110,7 +110,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img src="/furniture/catalog/tables/furnitureThree.jpg" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
@@ -128,7 +128,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img src="/furniture/catalog/tables/furnitureFour.jpg" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
@@ -152,7 +152,7 @@ export default function Home() {
                     <p className="text-2xl font-bold max-xsm:text-center">Custom Chairs</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairOne.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
@@ -170,7 +170,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairTwo.webp" alt="" />
 
                             <div className="flex flex-col gap-4 p-5">
@@ -188,7 +188,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairThree.webp" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">
@@ -206,7 +206,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-50 h-60">
+                        <div className="w-50 h-fit">
                             <img className="w-[199.97px] h-[96.83px]" src="/furniture/catalog/chairs/chairFour.webp" alt="" />
                             
                             <div className="flex flex-col gap-4 p-5">

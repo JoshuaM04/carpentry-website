@@ -8,9 +8,9 @@ export default function TableOneReview() {
     return (
         <main className="table-one-review-container flex flex-col items-center min-h-dvh p-10">
             <div className="flex flex-col gap-10 mt-80">
-                <div className="flex">
+                <div className="flex gap-5">
                     <div className="img-container">
-                        <img className="w-40" src="../../../../furniture/catalog/tables/furnitureOne.webp" alt="" />
+                        <img className="w-40" src="../../../../furniture/catalog/tables/tableOne.jpg" alt="" />
                     </div>
 
                     <div className="flex flex-col justify-center gap-2">
@@ -22,7 +22,7 @@ export default function TableOneReview() {
                 <form className="flex flex-col gap-10 min-w-full" action="/api/reviews" method="POST">
                     <div className="flex flex-col gap-2">
                         <label className="font-semibold" htmlFor="title">Title<span className="text-red-500">*</span></label>
-                        <input id="title" name="title" required className="border p-2" type="text" placeholder="Example: I definitely recommend this product!" />
+                        <input id="title" name="title" required className="border p-2" type="text" placeholder="I definitely recommend this product!" />
                     </div>
 
                     <div className="flex flex-col gap-2">
@@ -50,7 +50,7 @@ export default function TableOneReview() {
 
                     <div className="flex flex-col gap-2">
                         <label htmlFor="username" className="font-semibold">Display Name<span className="text-red-500">*</span></label>
-                        <input id="username" type="text" name="username" className="border p-2" placeholder="Example: ILikeCarpentry9022" />
+                        <input id="username" type="text" name="username" className="border p-2" placeholder="ILikeCarpentry9022" />
                     </div>
 
                     <div className="flex flex-col gap-2">
