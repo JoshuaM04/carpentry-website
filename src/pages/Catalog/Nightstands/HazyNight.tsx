@@ -70,7 +70,7 @@ interface cartProps {
     handleCart: Function;
 }
 
-export default function NightStandOne({quantity, handleDecrement, handleIncrement, handleCart, count, price}: cartProps) {
+export default function HazyNight({quantity, handleDecrement, handleIncrement, handleCart, count, price}: cartProps) {
 
     return (
         <main className="table-one-container flex flex-col gap-10 min-h-dvh p-10">

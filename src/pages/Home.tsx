@@ -1,4 +1,6 @@
 import Footer from '../components/footer';
+import { FURNITURE_CATALOG } from '../utility/catalog'
+import FurnitureCard from '../components/FurnitureCard';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -97,36 +99,25 @@ export default function Home() {
 
                     <p className="text-2xl font-bold max-sm:text-center">Nightstands</p>
 
-                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <Link to="/NightstandOne" className="flex flex-col gap-5 w-50 h-fit">
-                            <img className="size-50" src="/furniture/catalog/nightstands/nightstandOne.jpg" alt="" />
-
-                            <div className="flex flex-col gap-4">
-                                <p className="font-semibold">Hazy Night</p>
-
-                                <div>
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-black"></div>
-                                        <div className="w-4 h-4 bg-red-900"></div>
-                                    </div>
-                                    <p className="text-xs">2 color options</p>
-                                </div>
-
-                                <p className="text-xs italic">Approximately <span className="font-bold">2 days</span> completion</p>
-                            </div>
-                        </Link>
+                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">    
+                        {
+                            FURNITURE_CATALOG.filter((item) => item.type === "nightstand").map((item) => (
+                                <FurnitureCard
+                                    key={item.id}
+                                    product={item}
+                                />
+                            ))
+                        }
                     </div>
 
                     <hr />
 
                     <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
 
-                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
-                        <div className="w-50 h-fit">
-                            <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
-                                Coming Soon
-                            </div>
-                        </div>
+                    <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
+                        <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
+                            Coming Soon
+                        </div> 
                     </div>
                 </section>
             </main>
