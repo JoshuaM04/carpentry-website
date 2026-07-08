@@ -27,7 +27,7 @@ export default function Reviews({ product }: ReviewsProps) {
         };
 
         try {
-            const response = await fetch(`/api/reviews/${product.reviewDB}`, {
+            const response = await fetch(`/api/reviews?productKey=${product.reviewDB}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData),

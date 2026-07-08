@@ -38,10 +38,10 @@ const connectDB = async (req, res, next) => {
     }
 }
 
-app.post('/reviews/:productKey', connectDB, async(request, response) => {
+app.post('/reviews', connectDB, async(request, response) => {
     try {
-        const { productKey } = request.params;
-        const { title, rating, comment, username, email } = req.body;
+        const { productKey } = request.query;
+        const { title, rating, comment, username, email } = request.body;
 
         const newReview = await ReviewCollection.create({
             productIdentifier: productKey,
@@ -58,9 +58,9 @@ app.post('/reviews/:productKey', connectDB, async(request, response) => {
     }
 });
 
-app.get('/reviews/:productKey', connectDB, async (request, response) => {
+app.get('/reviews', connectDB, async (request, response) => {
     try {
-        const { productKey } = request.params;
+        const { productKey } = request.query;
 
         const reviews = await ReviewCollection.find({ productIdentifier: productKey });
 
