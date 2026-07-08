@@ -118,7 +118,7 @@ export default function Home() {
                     </div>
 
                     <hr />
-                    
+
                     <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
@@ -128,7 +128,6 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-
                 </section>
             </main>
 
