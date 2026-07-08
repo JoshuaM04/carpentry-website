@@ -18,6 +18,9 @@ export default function Reviews({ product }: ReviewsProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        console.log("Current product object:", product);
+        console.log("Value of product.reviewDB:", product?.reviewDB);
+
         const reviewData = {
             title,
             rating,

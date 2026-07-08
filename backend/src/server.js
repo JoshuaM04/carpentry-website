@@ -8,23 +8,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('Succesfully connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
 const reviewSchema = new mongoose.Schema({
     title: { type: String, required: true },
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
     username: { type: String, required: true },
     email: { type: String, required: true},
-    productIdentifier: { type: String },
+    productIdentifier: { type: String, required: true },
     timestamp: { type: Date, default: Date.now }
 });
 
 const ReviewCollection = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
-const connectDB = async (req, res, next) => {
+const connectDB = async (request, response, next) => {
     if (mongoose.connection.readyState === 1) {
         return next();
     }
@@ -32,7 +28,6 @@ const connectDB = async (req, res, next) => {
     try {
         await mongoose.connect(process.env.MONGODB_URI);
         console.log("Connected to MongoDB Atlas");
-
         return next();
     } catch (error) {
         console.error("Database connection failed:", error);
