@@ -37,7 +37,7 @@ const connectDB = async (request, response, next) => {
 
 const reviewRouter = express.Router();
 
-reviewRouter.post('/reviews/:productKey', connectDB, async(request, response) => {
+reviewRouter.post('/:productKey', connectDB, async(request, response) => {
     try {
         const { productKey } = request.params;
         const { title, rating, comment, username, email } = request.body;
@@ -57,7 +57,7 @@ reviewRouter.post('/reviews/:productKey', connectDB, async(request, response) =>
     }
 });
 
-reviewRouter.get('/reviews/:productKey', connectDB, async (request, response) => {
+reviewRouter.get('/:productKey', connectDB, async (request, response) => {
     try {
         const { productKey } = request.params;
 
