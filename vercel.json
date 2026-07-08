@@ -1,12 +1,26 @@
 {
-    "experimentalServices": {
-        "frontend": {
-            "entrypoint": ".",
-            "routePrefix": "/"
-        },
-        "backend": {
-            "entrypoint": "backend/src/server.js",
-            "routePrefix": "/api{/*}"
-        }
+  "version": 2,
+  "builds": [
+    { "src": "package.json", "use": "@vercel/static-build" },
+    { "src": "backend/src/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    {
+      "src": "/api/reviews/(?<productKey>[^/]+)",
+      "dest": "backend/src/server.js",
+      "methods": ["GET", "POST"]
+    },
+    {
+      "src": "/api/reviews",
+      "dest": "backend/src/server.js",
+      "methods": ["GET"]
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.html"
     }
+  ]
 }
