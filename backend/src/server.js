@@ -18,7 +18,7 @@ const reviewSchema = new mongoose.Schema({
     comment: { type: String, required: true },
     username: { type: String, required: true },
     email: { type: String, required: true},
-    productIdentifier: { type: Object },
+    productIdentifier: { type: String },
     timestamp: { type: Date, default: Date.now }
 });
 
@@ -40,7 +40,7 @@ const connectDB = async (req, res, next) => {
 
 app.post('/reviews/:productKey', connectDB, async(request, response) => {
     try {
-        const { productKey } = req.params;
+        const { productKey } = request.params;
         const { title, rating, comment, username, email } = req.body;
 
         const newReview = await ReviewCollection.create({
@@ -52,7 +52,7 @@ app.post('/reviews/:productKey', connectDB, async(request, response) => {
             email
         });
 
-        res.status(201).json(newReview);
+        response.status(201).json(newReview);
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
     }
@@ -64,7 +64,7 @@ app.get('/reviews/:productKey', connectDB, async (request, response) => {
 
         const reviews = await ReviewCollection.find({ productIdentifier: productKey });
 
-        res.state(200).json(reviews);
+        response.status(200).json(reviews);
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
     }
