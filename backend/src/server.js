@@ -20,18 +20,50 @@ const reviewSchema = new mongoose.Schema({
 
 const ReviewCollection = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
+let cachedConnection = null;
+
 const connectDB = async (request, response, next) => {
+    // 1. Guard check for the environment variable
+    if (!process.env.MONGODB_URI) {
+        console.error("CRITICAL: MONGODB_URI missing from environment variables.");
+        return response.status(500).json({ success: false, error: "Database configuration missing." });
+    }
+
+    // 2. If already connected (readyState 1), move straight to the next handler
     if (mongoose.connection.readyState === 1) {
         return next();
     }
 
+    // 3. If a connection is already in progress, wait for it to finish instead of making a new one
+    if (mongoose.connection.readyState === 2) {
+        console.log("Database is already connecting. Waiting for resolution...");
+        try {
+            await cachedConnection;
+            return next();
+        } catch (error) {
+            return response.status(500).json({ success: false, error: "Cached connection failed", details: error.message });
+        }
+    }
+
+    // 4. No connection exists yet. Create a fresh one and cache the promise.
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log("Connected to MongoDB Atlas");
+        console.log("Initializing brand new MongoDB Atlas connection...");
+        
+        // Configuration options optimize performance for serverless environments
+        cachedConnection = mongoose.connect(process.env.MONGODB_URI, {
+            bufferCommands: false, // Stop mongoose from delaying queries if connection drops briefly
+        });
+
+        await cachedConnection;
+        console.log("Successfully connected to MongoDB Atlas!");
         return next();
     } catch (error) {
-        console.error("Database connection failed:", error);
-        return res.status(500).json({ success: false, error: "Database connection failed", mongoError: error.message });
+        console.error("Database connection failed completely:", error);
+        return response.status(500).json({ 
+            success: false, 
+            error: "Database connection failed", 
+            mongoError: error.message 
+        });
     }
 }
 
