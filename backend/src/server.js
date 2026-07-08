@@ -35,7 +35,9 @@ const connectDB = async (request, response, next) => {
     }
 }
 
-app.post('/reviews/:productKey', connectDB, async(request, response) => {
+const reviewRouter = express.Router();
+
+reviewRouter.post('/reviews/:productKey', connectDB, async(request, response) => {
     try {
         const { productKey } = request.params;
         const { title, rating, comment, username, email } = request.body;
@@ -55,7 +57,7 @@ app.post('/reviews/:productKey', connectDB, async(request, response) => {
     }
 });
 
-app.get('/reviews/:productKey', connectDB, async (request, response) => {
+reviewRouter.get('/reviews/:productKey', connectDB, async (request, response) => {
     try {
         const { productKey } = request.params;
 
@@ -66,6 +68,9 @@ app.get('/reviews/:productKey', connectDB, async (request, response) => {
         response.status(500).json({ success: false, error: error.message });
     }
 });
+
+app.use('/api/reviews', reviewRouter);
+app.use('/reviews', reviewRouter);
 
 if (process.env.NODE_ENV !== 'production') {
     app.listen(8080, () => console.log("Server running on port 8080"));
