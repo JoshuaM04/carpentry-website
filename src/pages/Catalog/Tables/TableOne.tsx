@@ -82,7 +82,7 @@ export default function TableOne({quantity, handleDecrement, handleIncrement, ha
 
                     <div className="product-information-container flex flex-col gap-2">
                         <div>
-                            <h2 className="text-2xl">Table One</h2>
+                            <h2 className="text-2xl">Earth Wood</h2>
                             <p>$500</p>
                         </div>
 

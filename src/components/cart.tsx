@@ -41,10 +41,10 @@ export default function cart({inCart, inCartPrice, handleCartDecrement, handleCa
 
                             <div className={`flex justify-between max-lg:flex-col max-lg:items-center max-lg:gap-5 ${inCart === 0 ? 'hidden aria-hidden' : 'block'} `}>
                                 <div className="flex gap-5 max-lg:justify-center max-lg:flex-col">
-                                    <div className="w-40"><img src="/furniture/catalog/tables/furnitureOne.webp" alt="" /></div>
+                                    <div className="w-40"><img src="/furniture/catalog/tables/tableOne.jpg" alt="" /></div>
                                     
                                     <div className="flex flex-col justify-between max-lg:flex-row">
-                                        <p>Table One</p>
+                                        <p>Earth Wood</p>
                                         <p className="font-semibold">${inCartPrice}</p>
                                     </div>
                                 </div>

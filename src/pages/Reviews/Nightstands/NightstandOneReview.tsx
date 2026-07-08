@@ -10,12 +10,12 @@ export default function TableOneReview() {
             <div className="flex flex-col gap-10 mt-80">
                 <div className="flex gap-5">
                     <div className="img-container">
-                        <img className="size-40" src="../../../../furniture/catalog/tables/tableOne.jpg" alt="" />
+                        <img className="size-40" src="../../../../furniture/catalog/nightstands/nightstandOne.jpg" alt="" />
                     </div>
 
                     <div className="flex flex-col justify-center gap-2">
                         <h2 className="text-xl">Write a Review</h2>
-                        <Link to="/TableOne" className="text-blue-700 underline">Earth Wood</Link>
+                        <Link to="/NightstandOne" className="text-blue-700 underline">Hazy Night</Link>
                     </div>
                 </div>
 

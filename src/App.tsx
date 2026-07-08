@@ -5,6 +5,7 @@ import Contact from './pages/Contact'
 import TableOne from './pages/Catalog/Tables/TableOne'
 import TableOneReview from './pages/Reviews/Tables/TableOneReview';
 import NightstandOne from './pages/Catalog/Nightstands/NightstandOne';
+import NightstandOneReview from './pages/Reviews/Nightstands/NightstandOneReview';
 import NavBar from './components/navigation';
 import Cart from './components/cart';
 import { useState } from 'react';
@@ -67,6 +68,7 @@ export default function App() {
         />
 
         <Route path="/TableOneReview" element={<TableOneReview />} />
+        <Route path="/NightstandOneReview" element={<NightstandOneReview />} />
       </Routes>
     </div>
   );

@@ -82,7 +82,7 @@ export default function NightStandOne({quantity, handleDecrement, handleIncremen
 
                     <div className="product-information-container flex flex-col gap-2">
                         <div>
-                            <h2 className="text-2xl">Nightstand One</h2>
+                            <h2 className="text-2xl">Hazy Night</h2>
                             <p>$500</p>
                         </div>
 
@@ -126,7 +126,7 @@ export default function NightStandOne({quantity, handleDecrement, handleIncremen
             <section className="flex flex-col gap-10">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-xl">Reviews</h2>
-                    <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to="/TableOneReview">Write a Review</Link>
+                    <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to="/NightstandOneReview">Write a Review</Link>
                 </div>
 
                 <ReviewsSection />
