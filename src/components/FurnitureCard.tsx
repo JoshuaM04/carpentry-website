@@ -18,6 +18,8 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
     const [data, setData] = useState<Review[]>([]);
 
     useEffect(() => {
+        if (!product?.reviewDB) return;
+        
         fetch(`/api/reviews/${product?.reviewDB}`) 
         .then(response => response.json())
         .then(responseData => {
@@ -26,7 +28,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
         .catch(error => {
             console.error("Error fetching reviews:", error);
         });
-    }, []); 
+    }, [product?.reviewDB]); 
 
     const totalRatingSum = data.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = totalRatingSum / data.length;
