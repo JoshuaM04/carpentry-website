@@ -38,7 +38,7 @@ const connectDB = async (req, res, next) => {
     }
 }
 
-app.post('/api/reviews/:productKey', connectDB, async(request, response) => {
+app.post('/reviews/:productKey', connectDB, async(request, response) => {
     try {
         const { productKey } = req.params;
         const { title, rating, comment, username, email } = req.body;
@@ -58,7 +58,7 @@ app.post('/api/reviews/:productKey', connectDB, async(request, response) => {
     }
 });
 
-app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
+app.get('/reviews/:productKey', connectDB, async (request, response) => {
     try {
         const { productKey } = request.params;
 
