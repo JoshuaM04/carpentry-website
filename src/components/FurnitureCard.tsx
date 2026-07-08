@@ -15,10 +15,10 @@ interface FurnitureCardProps {
 }
 
 export default function FurnitureCard({ product }: FurnitureCardProps) {
-    const [data, setData] = useState<Review[] | null>(null);
+    const [data, setData] = useState<Review[]>([]);
 
     useEffect(() => {
-        fetch(`/api/reviews/${product.reviewDB}`) 
+        fetch(`/api/reviews/${product?.reviewDB}`) 
         .then(response => response.json())
         .then(responseData => {
             setData(responseData);
@@ -27,8 +27,6 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
             console.error("Error fetching reviews:", error);
         });
     }, []); 
-
-    if (!data || data.length === 0) return <p>No reviews yet</p>;
 
     const totalRatingSum = data.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = totalRatingSum / data.length;
@@ -42,7 +40,8 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
                         <div>
                             <p className="font-semibold">{product.name}</p>
                             <div>
-                                <p>{averageRating.toFixed(1)} / 5.0</p>
+                                <p className={`${data.length === 0 ? 'hidden' : 'block'}`}>{averageRating.toFixed(1)} / 5.0</p>
+                                <p className={`${data.length === 0 ? 'block' : 'hidden'}`}>No reviews yet</p>
                             </div>
                         </div>
                     
