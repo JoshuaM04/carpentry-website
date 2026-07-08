@@ -1,42 +1,6 @@
 import Footer from '../components/footer';
 import { FURNITURE_CATALOG } from '../utility/catalog'
 import FurnitureCard from '../components/FurnitureCard';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-interface Review {
-  title: string;
-  rating: number;
-  comment: string;
-  username: string;
-  email: string;
-}
-
-function AverageRating() {
-    const [data, setData] = useState<Review[] | null>(null);
-
-    useEffect(() => {
-        fetch('/api/reviews') 
-        .then(response => response.json())
-        .then(responseData => {
-            setData(responseData);
-        })
-        .catch(error => {
-            console.error("Error fetching reviews:", error);
-        });
-    }, []); 
-
-    if (!data || data.length === 0) return <p>No reviews yet</p>;
-
-    const totalRatingSum = data.reduce((sum, review) => sum + review.rating, 0);
-    const averageRating = totalRatingSum / data.length;
-
-    return (
-        <div>
-            <p>{averageRating.toFixed(1)} / 5.0</p>
-        </div>
-    );
-}
 
 export default function Home() {
 

@@ -3,6 +3,8 @@ export interface Product {
     type: string;
     route: string;
     review: string;
+    reviewForm: string;
+    reviewDB: string;
     name: string;
     price: number;
     stripePriceId: string;
@@ -19,6 +21,8 @@ export const FURNITURE_CATALOG: Product[] = [
         type: 'table',
         route: '/EarthWood',
         review: '/EarthWoodReview',
+        reviewForm: '/api/earth-wood/reviews',
+        reviewDB: '/earth-wood/reviews',
         name: 'Earth Wood',
         price: 500,
         stripePriceId: 'N/A',
@@ -33,6 +37,8 @@ export const FURNITURE_CATALOG: Product[] = [
         type: 'nightstand',
         route: '/HazyNight',
         review: '/HazyNightReview',
+        reviewForm: '/api/earth-wood/reviews',
+        reviewDB: '/hazy-night/reviews',
         name: 'Hazy Night',
         price: 500,
         stripePriceId: 'N/A',

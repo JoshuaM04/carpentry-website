@@ -24,7 +24,7 @@ export default function Reviews({ product }: ReviewsProps) {
                     </div>
                 </div>
 
-                <form className="flex flex-col gap-10 min-w-full" action="/api/reviews" method="POST">
+                <form className="flex flex-col gap-10 min-w-full" action={product.reviewForm} method="POST">
                     <div className="flex flex-col gap-2">
                         <label className="font-semibold" htmlFor="title">Title<span className="text-red-500">*</span></label>
                         <input id="title" name="title" required className="border p-2" type="text" placeholder="I definitely recommend this product!" />
