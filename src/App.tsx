@@ -7,7 +7,7 @@ import EarthWoodReview from './pages/Reviews/Tables/EarthWoodReview';
 import HazyNight from './pages/Catalog/Nightstands/HazyNight';
 import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
 import NavBar from './components/Navigation';
-import Cart from './components/Cart';
+import Cart from './components/Cart'
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
