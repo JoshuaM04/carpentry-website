@@ -51,7 +51,7 @@ export default function cart({ cart, setCart }: CartProps) {
                 </Button>
 
                 <Modal className="modal-display z-2 text-white flex justify-center items-center fixed left-[50%] top-[50%] translate-[-50%] backdrop-blur-sm w-full h-full p-10 font-roboto max-lg:bg-black">
-                    <Dialog className="modal-pop-up flex flex-col justify-between drop-shadow-xl/50 h-300 w-350 p-10 relative lg:bg-black">
+                    <Dialog className="modal-pop-up flex flex-col justify-between drop-shadow-xl/50 lg:h-300 lg:w-350 p-10 relative lg:bg-black">
                         <div className="flex flex-col max-lg:gap-5">
                             <div className="flex justify-end max-lg:-ml-5 max-lg:-mr-5">
                                 <Button className="hover:cursor-pointer" slot="close">
