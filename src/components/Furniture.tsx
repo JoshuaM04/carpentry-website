@@ -88,7 +88,7 @@ export default function Furniture({ product }: FurnitureProps) {
                 </div>
 
                 <div className="reviews-container flex flex-col gap-5">
-                    <h2>Customer Reviews ({reviews.length})</h2>
+                    <h2>Customer Reviews <span className="font-semibold">({reviews.length})</span></h2>
 
                     <div className="flex flex-col gap-5">
                         {
@@ -98,16 +98,13 @@ export default function Furniture({ product }: FurnitureProps) {
                                         <p>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)} ({review.rating}/5)</p>
                                         <p>By <span className="font-semibold">{review.username}</span></p>
                                     </div>
+
                                     <div className="flex justify-between">
-                                        <h3>{review.title}</h3>
+                                        <h3 className="font-semibold">{review.title}</h3>
                                         <p>{new Date(review.timestamp).toLocaleDateString()}</p>
                                     </div>
-
                                     
-                                    <div>
-                                        <p className="font-semibold">Review</p>
-                                        <p>{review.comment}</p>
-                                    </div>
+                                    <p>{review.comment}</p>
                                 </div>
                             ))
                         }
