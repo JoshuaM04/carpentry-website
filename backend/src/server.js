@@ -16,7 +16,7 @@ const reviewSchema = new mongoose.Schema({
     email: { type: String, required: true},
     productIdentifier: { type: String, required: true },
     timestamp: { type: Date, default: Date.now }
-});
+}, { collection: 'reviews' });
 
 const ReviewCollection = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
