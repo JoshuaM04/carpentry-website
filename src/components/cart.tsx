@@ -66,9 +66,9 @@ export default function cart({ cart, setCart }: CartProps) {
                             {cart.length === 0 ? (
                                 <p>Your cart is empty</p>
                             ) : (
-                                <div className="flex flex-col gap-10 h-[70%] overflow-y-scroll scrollbar-thumb-black scrollbar-track-slate-100/60">
+                                <div className="flex flex-col gap-10 h-[70%]">
                                     {cart.map((item) => (
-                                        <div className="mr-10">
+                                        <div>
                                             <div className={`flex justify-between max-lg:flex-col max-lg:items-center max-lg:gap-5`}>
                                                 <div className="flex gap-5 max-lg:justify-center max-lg:flex-col">
                                                     <div><img className="size-25" src={item.image} alt={item.name} /></div>
