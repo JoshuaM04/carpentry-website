@@ -12,10 +12,6 @@ export default function navigation() {
     return (
         <header>
             <nav className={`navigation-component absolute left-[50%] translate-x-[-50%] w-full ${textColor} text-sm font-semibold uppercase p-5 z-1 max-2md:text-white max-2md:bg-black max-2md:p-10`}>
-                <p className="text-black text-lg text-center bg-red-500 -mt-5 -ml-5 -mr-5 mb-5 p-5">
-                    Cart feature is currently under maintenance. Thank you for your understanding.
-                </p>
-
                 <div className="desktop-layout flex justify-center items-center gap-40 max-2md:hidden max-2md:aria-hidden">
                     <div className="flex gap-20">
                         <div>

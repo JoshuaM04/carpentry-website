@@ -14,10 +14,10 @@ interface ReviewType {
 
 interface FurnitureProps {
     product: Product;
-    // addToCart: (product: Product) => void;
+    addToCart: (product: Product) => void;
 }
 
-export default function Furniture({ product }: FurnitureProps) {
+export default function Furniture({ product, addToCart }: FurnitureProps) {
     const [reviews, setReviews] = useState<ReviewType[]>([]);
 
     useEffect(() => { 
@@ -73,7 +73,7 @@ export default function Furniture({ product }: FurnitureProps) {
                                 <p className="text-black text-lg">${product.price}</p>
                             </div>
 
-                            <button className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                            <button onClick={() => addToCart(product)} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
                     </div>
                 </div>
