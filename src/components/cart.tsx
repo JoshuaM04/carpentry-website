@@ -12,9 +12,25 @@ export default function cart({ cart, setCart }: CartProps) {
     const isHomePage = location.pathname === '/' || location.pathname === '/home'
     const spacingStyle = isHomePage ? 'cart-component max-2md:mt-380 mt-380 p-10' : 'max-2md:mt-40 mt-30 p-10';
 
-    const handleCheckout = () => {
-        window.location.href = "https://buy.stripe.com/9B64gsbJ0bXj653c8s0Fi00";
-    } 
+    const handleCheckout = async () => {
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cartItems: cart}),
+            });
+
+            const data = await response.json();
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                console.error("Failed to retrieve a valid payment session URL.");
+            }
+        } catch (error) {
+            console.error("Checkout redirection error:", error);
+        }
+    }
 
     const updateQuantity = (id: string, amount: number) => {
         setCart((prevCart) => 
@@ -87,7 +103,7 @@ export default function cart({ cart, setCart }: CartProps) {
                                 <p>N/A</p>
                             </div>
                             <div>
-                                <button onClick={handleCheckout} className="text-black font-semibold bg-white p-2 w-full hover:cursor-pointer">Checkout</button>
+                                <button onClick={handleCheckout} disabled={cart.length === 0} className="text-black font-semibold bg-white p-2 w-full hover:cursor-pointer">Checkout</button>
                             </div>
                         </div>
                     </Dialog>

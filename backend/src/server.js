@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 // Automatically intercepts incoming JSON strings and parses them automatically.
@@ -64,6 +66,36 @@ app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
         response.status(200).json(reviews);
     } catch (error) {
         response.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/checkout', async (request, response) => {
+    try {
+        const { cartItems } = request.body;
+
+        const lineItems = cartItems.map((item) => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.name,
+                    images: [item.image],
+                },
+                unit_amount: Math.round(item.price * 100),
+            },
+            quantity: item.quantity,
+        }));
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: 'https://carpentry-website-two.vercel.app/home'
+        });
+
+        return response.status(200).json({ url: session.url });
+    } catch (error) {
+        consol.error("Stripe session error:", error);
+        return response.status(500).json({ error: error.message });
     }
 });
 
