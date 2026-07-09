@@ -1,5 +1,5 @@
 import Furniture from '../../../components/Furniture';
-import Footer from '../../../components/footer';
+import Footer from '../../../components/Footer';
 import type { Product } from '../../../utility/catalog';
 import { FURNITURE_CATALOG } from '../../../utility/catalog';
 

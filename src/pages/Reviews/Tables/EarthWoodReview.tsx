@@ -1,5 +1,5 @@
 import Reviews from '../../../components/Reviews';
-import Footer from '../../../components/footer';
+import Footer from '../../../components/Footer';
 import { FURNITURE_CATALOG } from '../../../utility/catalog';
 
 export default function EarthWoodReview() {
