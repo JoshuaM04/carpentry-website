@@ -1,10 +1,10 @@
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 
 export default function Contact() {
     return (
         <div className="contact-container flex flex-col gap-20">
             <main className="flex flex-col items-center gap-20 min-h-dvh">
-                <div className="flex flex-col gap-5 text-center w-full p-5 mt-40 max-2md:mt-60">
+                <div className="flex flex-col gap-5 text-center w-full p-5 mt-60">
                     <h2 className="text-4xl font-semibold">Contact Us</h2>
                 </div>
                 <form action="https://formspree.io/f/meebeyjw" method="post" className="flex flex-col items-start gap-10">

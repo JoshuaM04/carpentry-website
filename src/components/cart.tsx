@@ -50,49 +50,47 @@ export default function cart({ cart, setCart }: CartProps) {
                     <div className={` ${cart.length === 0 ? 'hidden aria-hidden' : 'block'} text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1 absolute bottom-9 right-15`}>{cart.reduce((total, item) => total + item.quantity, 0)}</div>
                 </Button>
 
-                <Modal className=" z-2 text-white flex justify-center items-center fixed left-[50%] top-[50%] translate-[-50%] backdrop-blur-sm w-full h-full p-10 font-roboto">
-                    <Dialog className="modal-pop-up flex flex-col justify-between bg-black drop-shadow-xl/50 h-200 w-180 p-10 max-lg:h-170 relative">
-                        <div className="flex flex-col gap-10 h-full">
-                            <div className="flex flex-col max-lg:gap-5">
-                                <div className="flex justify-end max-lg:-ml-5 max-lg:-mr-5">
-                                    <Button className="hover:cursor-pointer" slot="close">
-                                        <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-                                    </Button>
-                                </div>
-
-                                <Heading className="text-2xl font-bold text-center border-b pb-5 -ml-10 -mr-10">Order Summary</Heading>
+                <Modal className="modal-display z-2 text-white flex justify-center items-center fixed left-[50%] top-[50%] translate-[-50%] backdrop-blur-sm w-full h-full p-10 font-roboto">
+                    <Dialog className="modal-pop-up flex flex-col justify-between bg-black drop-shadow-xl/50 h-300 w-350 p-10 max-lg:min-h-dvh max-lg:min-w-dvw relative">
+                        <div className="flex flex-col max-lg:gap-5">
+                            <div className="flex justify-end max-lg:-ml-5 max-lg:-mr-5">
+                                <Button className="hover:cursor-pointer" slot="close">
+                                    <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                                </Button>
                             </div>
 
-                            {cart.length === 0 ? (
-                                <p>Your cart is empty</p>
-                            ) : (
-                                <div className="flex flex-col gap-10 h-[70%]">
-                                    {cart.map((item) => (
-                                        <div>
-                                            <div className={`flex justify-between max-lg:flex-col max-lg:items-center max-lg:gap-5`}>
-                                                <div className="flex gap-5 max-lg:justify-center max-lg:flex-col">
-                                                    <div><img className="size-25" src={item.image} alt={item.name} /></div>
-                                            
-                                                    <div className="flex flex-col justify-between max-lg:flex-row">
-                                                        <p>{item.name}</p>
-                                                        <p className="font-semibold">${item.price}</p>
-                                                    </div>
-                                                </div>
+                            <Heading className="text-2xl font-bold text-center border-b pb-5 -ml-10 -mr-10">Order Summary</Heading>
+                        </div>
 
-                                                <div className="flex items-center">
-                                                    <div className="text-black flex gap-4 max-lg:justify-center max-lg:w-40">
-                                                        <button onClick={() => updateQuantity(item.id, -1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 10L1 6L15 6V10L1 10Z"></path> </g></svg></button>
-                                                        <div className="flex justify-center items-center bg-white pl-4 pr-4 select-none w-10">{item.quantity}</div>
-                                                        <button onClick={() => updateQuantity(item.id, 1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 1H6V6L1 6V10H6V15H10V10H15V6L10 6V1Z"></path> </g></svg></button>
-                                                    </div>
+                        {cart.length === 0 ? (
+                            <p className="absolute top-45">Your cart is empty...please buy something I need to feed my family.</p>
+                        ) : (
+                            <div className="cart-items-container flex flex-col gap-10 pr-10 -mr-5 h-[70%] overflow-y-scroll scrollbar-thumb-black scrollbar-track-white">
+                                {cart.map((item) => (
+                                    <div>
+                                        <div className="flex justify-between max-sm:flex-col max-sm:gap-5">
+                                            <div className="flex gap-5">
+                                                <div><img className="size-25" src={item.image} alt={item.name} /></div>
+                                        
+                                                <div className="flex flex-col justify-between">
+                                                    <p>{item.name}</p>
+                                                    <p className="font-semibold">${item.price}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center">
+                                                <div className="text-black flex gap-4">
+                                                    <button onClick={() => updateQuantity(item.id, -1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 10L1 6L15 6V10L1 10Z"></path> </g></svg></button>
+                                                    <div className="flex justify-center items-center bg-white pl-4 pr-4 select-none w-10">{item.quantity}</div>
+                                                    <button onClick={() => updateQuantity(item.id, 1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 1H6V6L1 6V10H6V15H10V10H15V6L10 6V1Z"></path> </g></svg></button>
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        
                         <div className="flex flex-col -ml-10 -mr-10 gap-5 border-t p-5 bottom-5">
                             <div className="flex justify-between">
                                 <p>Subtotal</p>
