@@ -1,7 +1,6 @@
 import Footer from '../components/footer';
 
 export default function Contact() {
-
     return (
         <div className="contact-container flex flex-col gap-20">
             <main className="flex flex-col items-center gap-20 min-h-dvh">

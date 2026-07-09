@@ -3,7 +3,6 @@ import { FURNITURE_CATALOG } from '../utility/catalog'
 import FurnitureCard from '../components/FurnitureCard';
 
 export default function Home() {
-
     return (
         <div className="home-container flex flex-col gap-20">
             <main className="flex flex-col gap-80 items-center">

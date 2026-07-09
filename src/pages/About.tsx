@@ -1,7 +1,6 @@
 import Footer from '../components/footer';
 
 export default function About() {
-
     return (
         <div className="about-container flex flex-col gap-20">
             <main className="flex min-h-dvh p-10">
