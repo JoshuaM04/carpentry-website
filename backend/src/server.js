@@ -20,8 +20,6 @@ const reviewSchema = new mongoose.Schema({
 
 const ReviewCollection = mongoose.models.Review || mongoose.model('Review', reviewSchema);
 
-let cachedConnection = null;
-
 const connectDB = async (request, response, next) => {
     if (mongoose.connection.readyState === 1) {
         return next();
@@ -33,7 +31,7 @@ const connectDB = async (request, response, next) => {
         return next();
     } catch (error) {
         console.error("Database connection failed:", error);
-        return res.status(500).json({ success: false, error: "Database connection failed", mongoError: error.message });
+        return response.status(500).json({ success: false, error: "Database connection failed", mongoError: error.message });
     }
 }
 
@@ -68,17 +66,6 @@ app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
         response.status(500).json({ success: false, error: error.message });
     }
 });
-
-app.get('/api/reviews', connectDB, async (request, response) => {
-    try {
-        const allReviews = await ReviewCollection.find({});
-    } catch (error) {
-        response.status(500).json({ success: false, error: error.message });
-    }
-});
-
-app.use('/api/reviews', app);
-app.use('/reviews', app);
 
 if (process.env.NODE_ENV !== 'production') {
     app.listen(8080, () => console.log("Server running on port 8080"));
