@@ -23,7 +23,7 @@ export default function Reviews({ product }: ReviewsProps) {
 
         const reviewData = {
             title,
-            rating,
+            rating: activeRating,
             comment,
             username,
             email
