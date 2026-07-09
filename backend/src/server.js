@@ -1,8 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+/* import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY); */
 
 const app = express();
 // Automatically intercepts incoming JSON strings and parses them automatically.
@@ -69,7 +69,7 @@ app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
     }
 });
 
-app.post('/api/checkout', async (request, response) => {
+/* app.post('/api/checkout', async (request, response) => {
     try {
         const { cartItems } = request.body;
 
@@ -97,7 +97,7 @@ app.post('/api/checkout', async (request, response) => {
         consol.error("Stripe session error:", error);
         return response.status(500).json({ error: error.message });
     }
-});
+}); */
 
 if (process.env.NODE_ENV !== 'production') {
     app.listen(8080, () => console.log("Server running on port 8080"));
