@@ -94,7 +94,7 @@ app.post('/api/checkout', async (request, response) => {
 
         return response.status(200).json({ url: session.url });
     } catch (error) {
-        consol.error("Stripe session error:", error);
+        console.error("Stripe session error:", error);
         return response.status(500).json({ error: error.message });
     }
 });
