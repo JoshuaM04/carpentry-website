@@ -6,6 +6,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/checkout",
+      "destination": "/backend/src/server.js"
+    },
+    {
       "source": "/api/reviews",
       "destination": "/backend/src/server.js"
     },
