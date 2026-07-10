@@ -10,7 +10,7 @@ export default function cart({ cart, setCart }: CartProps) {
     const location = useLocation();
 
     const isHomePage = location.pathname === '/' || location.pathname === '/home'
-    const spacingStyle = isHomePage ? 'cart-component absolute top-[110%] p-10' : 'absolute max-2md:top-[12%] top-[10%] p-10';
+    const spacingStyle = isHomePage ? 'absolute top-[110%] p-10' : 'absolute max-2md:mt-[10rem] mt-[8rem] p-10';
 
     const handleCheckout = async () => {
         try {

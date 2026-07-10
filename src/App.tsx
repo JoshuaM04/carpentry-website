@@ -8,8 +8,9 @@ import HazyNight from './pages/Catalog/Nightstands/HazyNight';
 import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
 import NavBar from './components/Navigation';
 import Cart from './components/Cart'
+import ScrollToTop from './components/ScrollToTop';
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
@@ -33,6 +34,8 @@ export default function App() {
       <NavBar />
 
       <Cart cart={cart} setCart={setCart} />
+      
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -40,10 +43,8 @@ export default function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-
         <Route path="/EarthWood" element={<EarthWood addToCart={addToCart} />} />
         <Route path="/HazyNight" element={<HazyNight addToCart={addToCart} />} />
-
         <Route path="/EarthWoodReview" element={<EarthWoodReview />} />
         <Route path="/HazyNightReview" element={<HazyNightReview />} />
       </Routes>
