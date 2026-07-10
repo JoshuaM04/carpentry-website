@@ -5,7 +5,7 @@ import FurnitureCard from '../components/FurnitureCard';
 export default function Home() {
     return (
         <div className="home-container flex flex-col gap-20">
-            <main className="flex flex-col gap-40 items-center">
+            <main className="flex flex-col gap-20 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
                     <video 
                         className="top-0 left-0 w-full h-full object-cover pointer-events-none max-2md:hidden max-2md:aria-hidden" autoPlay loop muted>
@@ -31,7 +31,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section id="furniture-menu" className="flex flex-col gap-10 w-full p-10 pt-20">
+                <section id="furniture-menu" className="flex flex-col gap-10 w-full p-10 pt-40">
                     <p className="text-2xl font-bold max-xsm:text-center">Tables</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">
