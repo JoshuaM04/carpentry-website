@@ -36,10 +36,6 @@ form {
     width: clamp(15rem, 24vw, 42.5rem);
 }
 
-.cart-component {
-    margin-top: clamp(20rem, 130vh, 90rem);
-}
-
 .about-img-element {
     width: clamp(10rem, 40vw, 25rem);
 }
