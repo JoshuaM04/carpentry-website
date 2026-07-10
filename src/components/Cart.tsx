@@ -14,7 +14,10 @@ export default function cart({ cart, setCart }: CartProps) {
 
     const handleCheckout = async () => {
         try {
-            const response = await fetch('/api/checkout', {
+            const productionUrl = 'https://carpentry-website-two.vercel.app/';
+            const baseUrl = window.location.hostname === 'localhost' ? '' : productionUrl;
+
+            const response = await fetch(`${baseUrl}/api/checkout`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ cartItems: cart}),
