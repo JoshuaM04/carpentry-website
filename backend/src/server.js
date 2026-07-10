@@ -80,17 +80,20 @@ app.post('/api/checkout', async (request, response) => {
     try {
         const { cartItems } = request.body;
 
-        const lineItems = cartItems.map((item) => ({
-            price_data: {
-                currency: 'usd',
-                product_data: {
-                    name: item.name,
-                    images: [item.image],
+        const lineItems = cartItems.map((item) => {
+
+            return {
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: item.name,
+                        images: [item.imageUrl],
+                    },
+                    unit_amount: Math.round(item.price * 100),
                 },
-                unit_amount: Math.round(item.price * 100),
-            },
-            quantity: item.quantity,
-        }));
+                quantity: item.quantity,
+            };
+        });
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],

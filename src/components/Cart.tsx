@@ -17,10 +17,28 @@ export default function cart({ cart, setCart }: CartProps) {
             const productionUrl = 'https://carpentry-website-two.vercel.app/';
             const baseUrl = window.location.hostname === 'localhost' ? '' : productionUrl;
 
+            const localCart = cart.map(item => {
+                let absoluteImageUrl = '';
+
+                if (item.image && !item.image.includes('...')) {
+                    if (item.image.startsWith('http')) {
+                        absoluteImageUrl = item.image;
+                    } else {
+                        const cleanPath = item.image.startsWith('/') ? item.image : `/${item.image}`;
+                        absoluteImageUrl = new URL(cleanPath, productionUrl).href;
+                    }
+
+                    return {
+                        ...item,
+                        imageUrl: absoluteImageUrl
+                    };
+                };
+            });
+
             const response = await fetch(`${baseUrl}/api/checkout`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cartItems: cart}),
+                body: JSON.stringify({ cartItems: localCart }),
             });
 
             const data = await response.json();
