@@ -85,7 +85,7 @@ app.post('/api/checkout', async (request, response) => {
                 currency: 'usd',
                 product_data: {
                     name: item.name,
-                    images: image/imageUrl ? [item.imageUrl] : [],
+                    images: [item.image],
                 },
                 unit_amount: Math.round(item.price * 100),
             },
