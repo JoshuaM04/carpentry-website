@@ -14,11 +14,15 @@ interface ReviewType {
 
 interface FurnitureProps {
     product: Product;
-    addToCart: (product: Product) => void;
+    addToCart: (product: Product, selectedColor: string) => void;
 }
 
 export default function Furniture({ product, addToCart }: FurnitureProps) {
     const [reviews, setReviews] = useState<ReviewType[]>([]);
+    const [activeColor, setActiveColor] = useState('');
+    const colors  = [...product.colors];
+    const colorTextStyles = [...product.colorTextStyles];
+    const colorStyles = [...product.colorStyles];
 
     useEffect(() => { 
         const fetchReviews = async () => {
@@ -45,8 +49,8 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                    </div>
 
                     <div className="product-information-container flex flex-col gap-2">
-                        <div>
-                            <h2 className="text-2xl">{product.name}</h2>
+                        <div className="flex flex-col gap-2">
+                            <h2 className="text-3xl">{product.name}</h2>
                             <p>${product.price}</p>
                         </div>
 
@@ -68,12 +72,28 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
 
                         <hr />
 
+                        <div className="flex flex-col gap-2">
+                            <h3 className="font-bold">Color</h3>
+
+                            <div className="flex gap-2">
+                               {
+                                    colors.map((item, index) => (
+                                        <div key={index} className={`h-10 ${activeColor === item ? 'border-b-2' : ''}`}>
+                                            <div className={`${colorTextStyles[index]} ${colorStyles[index]} w-20 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
+                                        </div>
+                                    ))
+                               }
+                            </div>
+                        </div>
+
+                        <hr />
+
                         <div className="flex flex-col">
                             <div className="flex justify-between items-center bg-slate-100 -mt-2 p-2">
                                 <p className="text-black text-lg">${product.price}</p>
                             </div>
 
-                            <button onClick={() => addToCart(product)} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                            <button onClick={() => addToCart(product, activeColor)} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -83,12 +103,11 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
 
             <section className="flex flex-col gap-10">
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-xl">Reviews</h2>
                     <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to={product.review}>Write a Review</Link>
                 </div>
 
                 <div className="reviews-container flex flex-col gap-5">
-                    <h2>Customer Reviews <span className="font-semibold">({reviews.length})</span></h2>
+                    <h3 className="text-lg">Customer Reviews <span className="font-semibold">({reviews.length})</span></h3>
 
                     <div className="flex flex-col gap-5">
                         {

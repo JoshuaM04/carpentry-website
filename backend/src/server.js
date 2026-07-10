@@ -81,12 +81,16 @@ app.post('/api/checkout', async (request, response) => {
         const { cartItems } = request.body;
 
         const lineItems = cartItems.map((item) => {
+        
+        const formattedColor = item.activeColor
+            ? `(${item.activeColor.charAt(0).toUpperCase() + item.activeColor.slice(1)})`
+            : '';
 
             return {
                 price_data: {
                     currency: 'usd',
                     product_data: {
-                        name: item.name,
+                        name: `${item.name} ${formattedColor}`,
                         images: [item.imageUrl],
                     },
                     unit_amount: Math.round(item.price * 100),

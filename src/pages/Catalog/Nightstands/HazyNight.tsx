@@ -4,7 +4,7 @@ import type { Product } from '../../../utility/catalog';
 import { FURNITURE_CATALOG } from '../../../utility/catalog';
 
 interface HazyNightProps {
-    addToCart: (product: Product) => void;
+    addToCart: (product: Product, selectedColor: string) => void;
 }
 
 export default function HazyNight({ addToCart }: HazyNightProps) {

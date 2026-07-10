@@ -16,6 +16,9 @@ interface FurnitureCardProps {
 
 export default function FurnitureCard({ product }: FurnitureCardProps) {
     const [data, setData] = useState<Review[]>([]);
+    const colors  = [...product.colors];
+    const colorTextStyles = [...product.colorTextStyles];
+    const colorStyles = [...product.colorStyles];
 
     useEffect(() => {
         if (!product?.reviewDB) return;
@@ -46,11 +49,14 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
                 
                     <div className="flex flex-col gap-2">
                         <div className="flex gap-2">
-                            <div className="w-8 h-5 bg-black"></div>
-                            <div className="w-8 h-5 bg-red-900"></div>
+                            {
+                                colors.map((item, index) => (
+                                    <div key={index} className={`${colorTextStyles[index]} ${colorStyles[index]} text-xs w-10 h-5 hover:cursor-pointer select-none`}>{item}</div>
+                                ))
+                            }
                         </div>
 
-                        <p className="text-xs">2 color options</p>
+                        <p className="text-xs">{product.colors.length} color options</p>
                     </div>
 
                     <div>

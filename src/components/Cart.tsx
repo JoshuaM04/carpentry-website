@@ -53,13 +53,14 @@ export default function cart({ cart, setCart }: CartProps) {
         }
     }
 
-    const updateQuantity = (id: string, amount: number) => {
-        setCart((prevCart) => 
-            prevCart
-                .map((item) =>
-                    item.id === id ? { ...item, quantity: item.quantity + amount } : item
-                )
-                .filter((item) => item.quantity > 0)
+    const updateQuantity = (cartItemId: string, amount: number) => {
+        setCart((prevCart) =>
+            prevCart.map((item) => 
+                item.cartItemId === cartItemId
+                ? { ...item, quantity: item.quantity + amount }
+                : item
+            )
+            .filter((item) => item.quantity > 0)
         );
     };
 
@@ -93,17 +94,23 @@ export default function cart({ cart, setCart }: CartProps) {
                                             <div className="flex gap-5">
                                                 <div><img className="size-25" src={item.image} alt={item.name} /></div>
                                         
-                                                <div className="flex flex-col justify-between">
-                                                    <p>{item.name}</p>
+                                                <div className="flex flex-col gap-1 justify-between">
+                                                    <p className="font-semibold">{item.name}</p>
+
+                                                    <div className="flex flex-col gap-1">
+                                                        <p className="capitalize">{item.activeColor}</p>
+                                                        <div className={`border-2 border-white w-11 h-5 bg bg-${item.activeColor}-500`}></div>
+                                                    </div>
+
                                                     <p className="font-semibold">${item.price}</p>
                                                 </div>
                                             </div>
 
                                             <div className="flex items-center">
                                                 <div className="text-black flex gap-4">
-                                                    <button onClick={() => updateQuantity(item.id, -1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 10L1 6L15 6V10L1 10Z"></path> </g></svg></button>
+                                                    <button onClick={() => updateQuantity(item.cartItemId, -1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 10L1 6L15 6V10L1 10Z"></path> </g></svg></button>
                                                     <div className="flex justify-center items-center bg-white pl-4 pr-4 select-none w-10">{item.quantity}</div>
-                                                    <button onClick={() => updateQuantity(item.id, 1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 1H6V6L1 6V10H6V15H10V10H15V6L10 6V1Z"></path> </g></svg></button>
+                                                    <button onClick={() => updateQuantity(item.cartItemId, 1)} className="hover:cursor-pointer"><svg className="fill-white w-5" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 1H6V6L1 6V10H6V15H10V10H15V6L10 6V1Z"></path> </g></svg></button>
                                                 </div>
                                             </div>
                                         </div>
