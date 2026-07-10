@@ -10,7 +10,7 @@ import NavBar from './components/Navigation';
 import Cart from './components/Cart'
 import ScrollToTop from './components/ScrollToTop';
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
