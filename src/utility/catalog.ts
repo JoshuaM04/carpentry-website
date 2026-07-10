@@ -24,7 +24,7 @@ export const FURNITURE_CATALOG: Product[] = [
         name: 'Earth Wood',
         price: 500,
         stripePriceId: 'N/A',
-        image: '../../furniture/catalog/nightstands/earth-wood.jpg',
+        image: '../../furniture/catalog/tables/earth-wood.jpg',
         wood: 'Oak',
         width: '36"',
         height: '25"',
