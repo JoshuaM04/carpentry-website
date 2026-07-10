@@ -8,7 +8,14 @@ const app = express();
 // Automatically intercepts incoming JSON strings and parses them automatically.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: [
+        'https://carpentry-website-two.vercel.app/',
+        'http://localhost:5173/'
+    ],
+    methods: ['POST', 'GET', 'OPTIONS'],
+    allowedHeaders: ['Content-Type']
+}));
 
 const reviewSchema = new mongoose.Schema({
     title: { type: String, required: true },
