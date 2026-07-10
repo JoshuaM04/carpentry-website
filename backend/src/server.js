@@ -97,6 +97,11 @@ app.post('/api/checkout', async (request, response) => {
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
+
+            shipping_address_collection: {
+                allowed_countries: ['US'],
+            },
+
             line_items: lineItems,
             mode: 'payment',
             success_url: 'https://carpentry-website-two.vercel.app/home'
