@@ -119,11 +119,12 @@ export default function cart({ cart, setCart }: CartProps) {
                             </div>
                         )}
                         
-                        <div className="flex flex-col gap-5 -ml-10 -mr-10 border-t p-5 bottom-5">
+                        <div className="flex flex-col gap-5 -ml-10 -mr-10 -mb-10 border-t p-5 bottom-5">
                             <div className="flex justify-between">
                                 <p>Subtotal</p>
                                 <p>${cart.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
                             </div>
+
                             <div>
                                 <button onClick={handleCheckout} disabled={cart.length === 0} className="text-black font-semibold bg-white p-2 w-full hover:cursor-pointer">Checkout</button>
                             </div>
