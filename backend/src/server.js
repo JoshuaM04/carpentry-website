@@ -84,7 +84,7 @@ app.post('/api/reviews/:productKey', connectDB, upload.fields([
                 contentType: videoFile.mimetype
             });
 
-            resolvedImageUrl = blob.url;
+            resolvedVideoUrl = blob.url;
         }
 
         const newReview = await ReviewCollection.create({
