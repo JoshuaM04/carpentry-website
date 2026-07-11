@@ -134,13 +134,13 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                     <div className="media-upload-container">
                                         {
                                             review.imageUpload === '' && review.videoUpload === '' ? (
+                                                <div className="hidden"></div>
+                                            ) : (
                                                 review.imageUpload ? (
                                                     <img src={review.imageUpload} alt={product.name} className="w-100" />
                                                 ) : (
                                                     <video src={review.videoUpload} controls className="w-100" />
                                                 )
-                                            ) : (
-                                                <div className="hidden"></div>
                                             )
                                         }
                                     </div>
