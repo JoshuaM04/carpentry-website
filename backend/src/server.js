@@ -17,7 +17,6 @@ app.use(cors({
     methods: ['POST', 'GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type']
 }));
-const multer = require('multer');
 const { put } = require('@vercel/blob');
 
 const upload = multer({
