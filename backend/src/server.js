@@ -22,7 +22,9 @@ const reviewSchema = new mongoose.Schema({
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
     username: { type: String, required: true },
-    email: { type: String, required: true},
+    imageUpload: { type: String, default: '' },
+    videoUpload: { type: String, default: '' },
+    email: { type: String, required: true },
     productIdentifier: { type: String, required: true },
     timestamp: { type: Date, default: Date.now }
 }, { collection: 'reviews' });
@@ -55,6 +57,8 @@ app.post('/api/reviews/:productKey', connectDB, async(request, response) => {
             rating,
             comment,
             username,
+            imageUpload,
+            videoUpload,
             email
         });
 

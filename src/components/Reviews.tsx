@@ -14,6 +14,28 @@ export default function Reviews({ product }: ReviewsProps) {
     const rating = [1, 2, 3, 4, 5];
     const [activeRating, setActiveRating] = useState(0);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [imageUpload, setImageUpload] = useState<string>('No file chosen');
+    const [videoUpload, setVideoUpload] = useState<string>('No file chosen');
+
+    const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const images = event.target.files;
+
+        if (images && images.length > 0) {
+            setImageUpload(images[0].name);
+        } else {
+            setImageUpload('No file chosen');
+        }
+    };
+
+    const handleVideo = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const videos = event.target.files;
+
+        if (videos && videos.length > 0) {
+            setVideoUpload(videos[0].name);
+        } else {
+            setVideoUpload('No file chosen');
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,6 +48,8 @@ export default function Reviews({ product }: ReviewsProps) {
             rating: activeRating,
             comment,
             username,
+            imageUpload,
+            videoUpload,
             email
         };
 
@@ -40,6 +64,8 @@ export default function Reviews({ product }: ReviewsProps) {
                 setTitle("");
                 setComment("");
                 setUsername("");
+                setImageUpload("No file chosen")
+                setVideoUpload("No file chosen");
                 setEmail("");
                 setActiveRating(0);
                 setIsSubmitted(true);
@@ -95,6 +121,44 @@ export default function Reviews({ product }: ReviewsProps) {
                     <div className="flex flex-col gap-2">
                         <label htmlFor="username" className="font-semibold">Display Name<span className="text-red-500">*</span></label>
                         <input id="username" value={username} type="text" onChange={(e) => setUsername(e.target.value)} className="border p-2" placeholder="ILikeCarpentry9022" />
+                    </div>
+
+                    <div className="flex flex-col gap-5">
+                        <div className="img-submission-container flex flex-wrap items-center gap-5">
+                            <label htmlFor="imgUpload" className="text-sm font-semibold text-white bg-black min-w-27 p-2 hover:cursor-pointer">
+                                Upload Image
+                            </label>
+
+                            <input id="imgUpload" type="file" accept="image/*" onChange={handleImage} className="hidden" /> 
+
+                            <div className="flex gap-5">
+                                <span>
+                                    {imageUpload}
+                                </span>
+                                
+                                <button onClick={() => setImageUpload('No file chosen')} className={`${imageUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
+                                    <svg className="size-5 stroke-red-500 fill-red-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="video-submission-container flex flex-wrap items-center gap-5">
+                            <label htmlFor="videoUpload" className="text-sm font-semibold text-white bg-black p-2 min-w-27 hover:cursor-pointer">
+                                Upload Video
+                            </label>
+
+                            <input id="videoUpload" type="file" accept="video/*" onChange={handleVideo} className="hidden" /> 
+
+                            <div className="flex gap-5">
+                                <span>
+                                    {videoUpload}
+                                </span>
+                                
+                                <button onClick={() => setVideoUpload('No file chosen')} className={`${videoUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
+                                    <svg className="size-5 stroke-red-500 fill-red-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-2">

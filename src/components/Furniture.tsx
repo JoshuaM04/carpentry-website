@@ -8,6 +8,8 @@ interface ReviewType {
     rating: number;
     comment: string;
     username: string;
+    imageUpload: string;
+    videoUpload: string;
     email: string;
     timestamp: string;
 }
@@ -128,6 +130,16 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                     </div>
                                     
                                     <p>{review.comment}</p>
+
+                                    <div className="media-upload-container">
+                                        {
+                                            review.imageUpload ? (
+                                                <img src={review.imageUpload} alt={product.name} className="w-20" />
+                                            ) : (
+                                                <video src={review.videoUpload} controls className="w-20" />
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             ))
                         }
