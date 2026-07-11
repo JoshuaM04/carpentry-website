@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import Stripe from 'stripe';
 import multer from 'multer';
+import { put } from '@vercel/blob'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
@@ -17,7 +18,6 @@ app.use(cors({
     methods: ['POST', 'GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type']
 }));
-const { put } = require('@vercel/blob');
 
 const upload = multer({
     storage: multer.memoryStorage(),
