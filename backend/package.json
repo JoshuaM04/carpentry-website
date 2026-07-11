@@ -4,9 +4,11 @@
   "type": "module",
   "main": "src/server.js",
   "dependencies": {
+    "@vercel/blob": "^2.6.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.0.0",
+    "multer": "^2.2.0",
     "stripe": "^22.3.1"
   }
 }

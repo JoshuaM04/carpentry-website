@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import Stripe from 'stripe';
+import multer from 'multer';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
@@ -16,6 +17,12 @@ app.use(cors({
     methods: ['POST', 'GET', 'OPTIONS'],
     allowedHeaders: ['Content-Type']
 }));
+const multer = require('multer');
+
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 50 * 1024 * 1024 }
+});
 
 const reviewSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -46,10 +53,17 @@ const connectDB = async (request, response, next) => {
     }
 }
 
-app.post('/api/reviews/:productKey', connectDB, async(request, response) => {
+app.post('/api/reviews/:productKey', connectDB, upload.fields([
+        { name: 'image', maxCount: 1},
+        { name: 'video', maxCount: 1 }
+    ]), async(request, response) => {
+
     try {
         const { productKey } = request.params;
         const { title, rating, comment, username, email } = request.body;
+
+        const imageFile = request.files && request.files['image'] ? request.files['image'][0] : null;
+        const videoFile = request.files && request.files['video'] ? request.files['video'][0] : null;
 
         const newReview = await ReviewCollection.create({
             productIdentifier: productKey,
