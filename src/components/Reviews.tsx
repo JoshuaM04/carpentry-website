@@ -16,14 +16,18 @@ export default function Reviews({ product }: ReviewsProps) {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [imageUpload, setImageUpload] = useState<string>('No file chosen');
     const [videoUpload, setVideoUpload] = useState<string>('No file chosen');
+    const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+    const [selectedVideoFile, setSelectedVideoFile] = useState<File | null>(null);
 
     const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const images = event.target.files;
 
         if (images && images.length > 0) {
             setImageUpload(images[0].name);
+            setSelectedImageFile(images[0]);
         } else {
             setImageUpload('No file chosen');
+            setSelectedImageFile(null);
         }
     };
 
@@ -32,8 +36,10 @@ export default function Reviews({ product }: ReviewsProps) {
 
         if (videos && videos.length > 0) {
             setVideoUpload(videos[0].name);
+            setSelectedVideoFile(videos[0]);
         } else {
             setVideoUpload('No file chosen');
+            setSelectedVideoFile(null);
         }
     };
 
@@ -43,20 +49,21 @@ export default function Reviews({ product }: ReviewsProps) {
         console.log("Current product object:", product);
         console.log("Value of product.reviewDB:", product?.reviewDB);
 
-        const reviewData = {
-            title,
-            rating: activeRating,
-            comment,
-            username,
-            imageUpload,
-            videoUpload,
-            email
-        };
+        const formData = new FormData();
+
+        formData.append('title', title);
+        formData.append('rating', String(activeRating));
+        formData.append('comment', comment);
+        formData.append('username', username);
+        formData.append('email', email);
+
+        if (selectedImageFile) formData.append('image', selectedImageFile);
+        if (selectedVideoFile) formData.append('video', selectedVideoFile);
 
         try {
             const response = await fetch(`/api/reviews/${product.reviewDB}`, {
                 method: 'POST',
-                body: JSON.stringify(reviewData),
+                body: formData,
             });
 
             if (response.ok) {
@@ -68,7 +75,13 @@ export default function Reviews({ product }: ReviewsProps) {
                 setEmail("");
                 setActiveRating(0);
                 setIsSubmitted(true);
-            } 
+
+                setSelectedImageFile(null);
+                setSelectedVideoFile(null);
+            } else {
+                const errorData = await response.json();
+                console.error("Backend validation error:", errorData.error);
+            }
         } catch (error) {
             console.error("Failed to submit review:", error);
         }

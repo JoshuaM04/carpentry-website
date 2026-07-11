@@ -18,6 +18,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 const multer = require('multer');
+const { put } = require('@vercel/blob');
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -65,14 +66,35 @@ app.post('/api/reviews/:productKey', connectDB, upload.fields([
         const imageFile = request.files && request.files['image'] ? request.files['image'][0] : null;
         const videoFile = request.files && request.files['video'] ? request.files['video'][0] : null;
 
+        let resolvedImageUrl = '';
+        let resolvedVideoUrl = '';
+
+        if (imageFile) {
+            const blob = await put(`reviews/${Date.now()}=${imageFile.originalname}`, imageFile.buffer, {
+                access: 'public',
+                contentType: imageFile.mimetype
+            });
+
+            resolvedImageUrl = blob.url;
+        }
+
+        if (videoFile) {
+            const blob = await put(`reviews/${Date.now()}=${videoFile.originalname}`, videoFile.buffer, {
+                access: 'public',
+                contentType: videoFile.mimetype
+            });
+
+            resolvedImageUrl = blob.url;
+        }
+
         const newReview = await ReviewCollection.create({
             productIdentifier: productKey,
             title,
             rating,
             comment,
             username,
-            imageUpload,
-            videoUpload,
+            imageUpload: resolvedImageUrl,
+            videoUpload: resolvedVideoUrl,
             email
         });
 
