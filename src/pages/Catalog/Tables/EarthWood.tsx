@@ -14,7 +14,7 @@ export default function EarthWood({ addToCart }: EarthWoodProps) {
     
     return (
         <div className="flex flex-col justify-between items-center gap-20 min-h-dvh">
-            <main className="table-one-container flex flex-col 2md:max-w-[2500px] gap-10 p-10">
+            <main className="table-one-container flex flex-col w-fit 2md:max-w-[2500px] gap-10 p-10 max-xsm:w-80">
                 <Furniture
                     product={item}
                     addToCart={addToCart}
