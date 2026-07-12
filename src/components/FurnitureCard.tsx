@@ -51,7 +51,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
                         <div className="flex gap-2">
                             {
                                 colors.map((item, index) => (
-                                    <div key={index} className={`${colorTextStyles[index]} ${colorStyles[index]} text-xs w-10 h-5 hover:cursor-pointer select-none`}>{item}</div>
+                                    <div key={index} className={`${colorTextStyles[index]} ${colorStyles[index]} text-[1px] w-10 h-5 hover:cursor-pointer select-none`}>{item}</div>
                                 ))
                             }
                         </div>
