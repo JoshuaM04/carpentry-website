@@ -13,8 +13,8 @@
     --breakpoint-2md: 56.25rem;
     --font-roboto: "Roboto Slab", serif;
 
-    --animate-timer-message: timer-message 5s ease-out;
-    --animate-timer-forms-message: timer-forms-message 5s ease-out;
+    --animate-timer-message: timer-message 5s ease-out forwards;
+    --animate-timer-forms-message: timer-forms-message 5s ease-out forwards;
 }
 
 @keyframes timer-message {
