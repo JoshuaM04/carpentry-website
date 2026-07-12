@@ -26,6 +26,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     const colorTextStyles = [...product.colorTextStyles];
     const colorStyles = [...product.colorStyles];
     const [messageVisbility, setMessageVisibility] = useState('hidden');
+    const [count, setCount] = useState(0);
 
     useEffect(() => { 
         const fetchReviews = async () => {
@@ -45,11 +46,17 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
 
     const showMessage = () => {
         setMessageVisibility('block');
+        setCount((prevIndex) => prevIndex + 1);
     }
 
     useEffect(() => {
-        setTimeout(() => setMessageVisibility('hidden'), 5000);
-    }, [messageVisbility])
+        console.log(count);
+        const timer = setTimeout(() => { setMessageVisibility('hidden'); setCount(0) }, 5000);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [count])
 
     return (
         <main className="furniture-component flex flex-col gap-10">
@@ -59,7 +66,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         <img src={product.image} alt={product.name} />
                    </div>
 
-                    <div className="product-information-container flex flex-col gap-2">
+                    <div className="product-information-container flex flex-col gap-2 relative">
                         <div className="flex flex-col gap-2">
                             <h2 className="text-3xl">{product.name}</h2>
                             <p>${product.price}</p>
@@ -111,8 +118,10 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                             <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
 
-                        <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-fade-out-message'} font-semibold uppercase bg-green-100 p-2 w-fit`}>
-                            Added to cart
+                        <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-2`}>
+                            <p>Added to cart</p>
+
+                            <div className="absolute top-114 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
                         </div>
                     </div>
                 </div>
