@@ -61,12 +61,12 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     return (
         <main className="furniture-component flex flex-col gap-10">
             <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:h-127.5 max-2md:flex max-2md:flex-col">
+                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:min-h-127.5 max-2md:flex max-2md:flex-col">
                    <div className="img-container">
                         <img src={product.image} alt={product.name} />
                    </div>
 
-                    <div className="product-information-container flex flex-col gap-2 max-2md:h-127.5 relative">
+                    <div className="product-information-container flex flex-col gap-2 max-2md:min-h-127.5 relative">
                         <div className="flex flex-col gap-2">
                             <h2 className="text-3xl">{product.name}</h2>
                             <p>${product.price}</p>
