@@ -13,7 +13,7 @@ export default function HazyNight({ addToCart }: HazyNightProps) {
     if (!item) return <p>Product not found</p>;
 
     return (
-        <div className="flex flex-col justify-between gap-20 min-h-dvh">
+        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh">
             <main className="table-one-container flex flex-col gap-10 p-10">
                 <Furniture
                     product={item}

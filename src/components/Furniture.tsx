@@ -30,7 +30,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     const imageGallery = [...product.imageGallery];
     const galleryButton = [0, 1, 2];
     const [activeButton, setActiveButton] = useState(0);
-    const galleryPosition = ['translateX(0px)', 'translateX(-777px)', 'translateX(-1554px)'];
+    const galleryPosition = [0, 1, 2];
 
     useEffect(() => { 
         console.log(imageGallery);
@@ -65,9 +65,9 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     }, [count])
 
     return (
-        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5 2md:max-w-[2080px]">
-            <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:max-h-127.5 2md:w-full max-2md:flex max-2md:flex-col">
+        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5 2md:w-full">
+            <section className="flex flex-col gap-10 mt-80 w-full">
+                <div className="grid grid-cols-[29vw_1fr] gap-10 2md:h-130 2md:w-full max-2md:flex max-2md:flex-col">
                    <div className="flex flex-col items-center gap-5 max-h-127.5 max-w-189.25">
                        <div className="img-container flex gap-10 overflow-hidden">
                             {
@@ -80,7 +80,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                        <div className="flex gap-2">
                             {
                                 galleryButton.map((item, index) => (
-                                    <button key={index} onClick={() => setActiveButton(item)} className={`${activeButton === item ? 'bg-black' : 'bg-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
+                                    <button key={index} onClick={() => setActiveButton(item)} className={`${activeButton === item ? 'bg-black text-black' : 'bg-slate-300 text-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
                                 ))
                             }
                        </div>
@@ -152,7 +152,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
 
             <hr />
 
-            <section className="flex flex-col gap-10">
+            <section className="flex flex-col gap-10 w-full">
                 <div className="flex flex-col gap-2">
                     <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to={product.review}>Write a Review</Link>
                 </div>

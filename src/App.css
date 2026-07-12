@@ -37,7 +37,7 @@
 
 .animated-gallery {
     transition: transform var(--animation-duration, 0.5s) ease-in-out;
-    transform: var(--galleryPosition, translateX(0px));
+    transform: translateX(calc(var(--galleryPosition, 0) * -100% - (var(--galleryPosition, 0) * 40px)));
 }
 
 h1 {
