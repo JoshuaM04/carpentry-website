@@ -25,6 +25,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     const colors  = [...product.colors];
     const colorTextStyles = [...product.colorTextStyles];
     const colorStyles = [...product.colorStyles];
+    const [messageVisbility, setMessageVisibility] = useState('hidden');
 
     useEffect(() => { 
         const fetchReviews = async () => {
@@ -41,6 +42,14 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
 
         fetchReviews();
     }, []);
+
+    const showMessage = () => {
+        setMessageVisibility('block');
+    }
+
+    useEffect(() => {
+        setTimeout(() => setMessageVisibility('hidden'), 5000);
+    }, [messageVisbility])
 
     return (
         <main className="furniture-component flex flex-col gap-10">
@@ -99,7 +108,11 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                 <p className="text-black text-lg">${product.price}</p>
                             </div>
 
-                            <button onClick={() => addToCart(product, activeColor)} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                            <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                        </div>
+
+                        <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-fade-out-message'} font-semibold uppercase bg-green-100 p-2 w-fit`}>
+                            Added to cart
                         </div>
                     </div>
                 </div>

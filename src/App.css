@@ -12,6 +12,17 @@
     --breakpoint-xsm: 33.375rem;
     --breakpoint-2md: 56.25rem;
     --font-roboto: "Roboto Slab", serif;
+
+    --animate-fade-out-message: fade-out-message 5s ease-out;
+}
+
+@keyframes fade-out-message {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
 }
 
 h1 {
