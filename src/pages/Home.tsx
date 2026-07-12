@@ -49,7 +49,7 @@ export default function Home() {
 
                     <hr />
 
-                    <p className="text-2xl font-bold max-sm:text-center">Nightstands</p>
+                    <p className="text-2xl font-bold max-xsm:text-center">Nightstands</p>
 
                     <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">    
                         {
