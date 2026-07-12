@@ -12,6 +12,7 @@ export interface Product {
     colorStyles: Array<string>;
     stripePriceId: string;
     image: string;
+    imageGallery: Array<string>;
     wood: string;
     width: string;
     height: string;
@@ -33,6 +34,7 @@ export const FURNITURE_CATALOG: Product[] = [
         colorStyles: ['bg-orange-200', 'bg-olive-500', 'bg-black', 'bg-gray-500', 'bg-blue-900'],
         stripePriceId: 'N/A',
         image: '/furniture/catalog/tables/earth-wood.jpg',
+        imageGallery: ['/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg'],
         wood: 'Oak',
         width: '36"',
         height: '25"',
@@ -52,6 +54,7 @@ export const FURNITURE_CATALOG: Product[] = [
         colorStyles: ['bg-orange-200', 'bg-olive-500', 'bg-black', 'bg-gray-500', 'bg-blue-900'],
         stripePriceId: 'N/A',
         image: '/furniture/catalog/nightstands/hazy-night.jpg',
+        imageGallery: ['/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg'],
         wood: 'Poplar',
         width: '24.5"',
         height: '31"',

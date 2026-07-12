@@ -27,8 +27,14 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     const colorStyles = [...product.colorStyles];
     const [messageVisbility, setMessageVisibility] = useState('hidden');
     const [count, setCount] = useState(0);
+    const imageGallery = [...product.imageGallery];
+    const galleryButton = [0, 1, 2];
+    const [activeButton, setActiveButton] = useState(0);
+    const galleryPosition = ['translateX(0px)', 'translateX(-777px)', 'translateX(-1554px)'];
 
     useEffect(() => { 
+        console.log(imageGallery);
+
         const fetchReviews = async () => {
             try {
                 const response = await fetch(`/api/reviews/${product.reviewDB}`);
@@ -59,11 +65,25 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     }, [count])
 
     return (
-        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5">
+        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5 2md:max-w-[2080px]">
             <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:min-h-127.5 max-2md:flex max-2md:flex-col">
-                   <div className="img-container">
-                        <img src={product.image} alt={product.name} />
+                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:max-h-127.5 2md:w-full max-2md:flex max-2md:flex-col">
+                   <div className="flex flex-col items-center gap-5 max-h-127.5 max-w-189.25">
+                       <div className="img-container flex gap-10 overflow-hidden">
+                            {
+                                imageGallery.map((item) => (
+                                    <img className="animated-gallery" style={{'--animation-duration': `2s`, '--galleryPosition': `${galleryPosition[activeButton]}`} as React.CSSProperties} src={item} alt={product.name} />
+                                ))
+                            }
+                       </div>
+
+                       <div className="flex gap-2">
+                            {
+                                galleryButton.map((item, index) => (
+                                    <button key={index} onClick={() => setActiveButton(item)} className={`${activeButton === item ? 'bg-black' : 'bg-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
+                                ))
+                            }
+                       </div>
                    </div>
 
                     <div className="product-information-container flex flex-col gap-2 max-2md:min-h-132 relative">
