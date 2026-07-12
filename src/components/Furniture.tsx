@@ -93,7 +93,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         <div className="flex flex-col gap-2 h-24">
                             <h3 className="font-bold">Color</h3>
 
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 overflow-x-scroll overflow-y-hidden">
                                {
                                     colors.map((item, index) => (
                                         <div className="flex flex-col gap-1">
