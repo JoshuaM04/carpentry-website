@@ -115,7 +115,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                 <p className="text-black text-lg">${product.price}</p>
                             </div>
 
-                            <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
+                            <button onClick={() => { showMessage; addToCart(product, activeColor) }} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
 
                         <div>

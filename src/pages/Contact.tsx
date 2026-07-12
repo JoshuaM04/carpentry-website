@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 
 export default function Contact() {
@@ -6,11 +6,24 @@ export default function Contact() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [message, setMessage] = useState("");
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [messageVisbility, setMessageVisibility] = useState('hidden');
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        console.log(count);
+        const timer = setTimeout(() => { setMessageVisibility('hidden'); setCount(0) }, 5000);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [count])
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        setMessageVisibility('block');
+        setCount((prevIndex) => prevIndex + 1);
+        
         const formData = {
             name,
             email,
@@ -30,7 +43,6 @@ export default function Contact() {
                 setEmail("");
                 setPhone("");
                 setMessage("");
-                setIsSubmitted(true);
             } 
         } catch (error) {
             console.error("Failed to submit contact form:", error);
@@ -68,10 +80,14 @@ export default function Contact() {
                     </div>
             
                     <div className="flex gap-5">
-                        <button type="submit" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit hover:cursor-pointer">Submit</button>
+                        <button type="submit" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-10 hover:cursor-pointer">Submit</button>
                         
-                        <div className={`${isSubmitted === false ? 'hidden' : 'block'} text-sm font-semibold uppercase select-none bg-green-100 p-2`}>
-                            Submitted
+                        <div>
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit h-9`}>
+                                <p>Submitted</p>
+                            </div>
+
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-forms-message'} bg-black h-1`}></div>
                         </div>
                     </div>
                 </form>

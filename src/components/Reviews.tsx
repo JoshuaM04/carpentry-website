@@ -1,5 +1,5 @@
 import type { Product } from '../utility/catalog';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ReviewsProps {
@@ -13,11 +13,21 @@ export default function Reviews({ product }: ReviewsProps) {
     const [email, setEmail] = useState("");
     const rating = [1, 2, 3, 4, 5];
     const [activeRating, setActiveRating] = useState(0);
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const [imageUpload, setImageUpload] = useState<string>('No file chosen');
     const [videoUpload, setVideoUpload] = useState<string>('No file chosen');
     const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
     const [selectedVideoFile, setSelectedVideoFile] = useState<File | null>(null);
+    const [messageVisbility, setMessageVisibility] = useState('hidden');
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        console.log(count);
+        const timer = setTimeout(() => { setMessageVisibility('hidden'); setCount(0) }, 5000);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [count])
 
     const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const images = event.target.files;
@@ -45,6 +55,9 @@ export default function Reviews({ product }: ReviewsProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        setMessageVisibility('block');
+        setCount((prevIndex) => prevIndex + 1);
 
         console.log("Current product object:", product);
         console.log("Value of product.reviewDB:", product?.reviewDB);
@@ -74,7 +87,6 @@ export default function Reviews({ product }: ReviewsProps) {
                 setVideoUpload("No file chosen");
                 setEmail("");
                 setActiveRating(0);
-                setIsSubmitted(true);
 
                 setSelectedImageFile(null);
                 setSelectedVideoFile(null);
@@ -179,10 +191,14 @@ export default function Reviews({ product }: ReviewsProps) {
                     </div>
 
                     <div className="flex gap-5">
-                        <button type="submit" className="text-sm font-semibold text-white bg-black p-2 w-fit hover:cursor-pointer">Submit Review</button>
+                        <button type="submit" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-10 hover:cursor-pointer">Submit</button>
+                        
+                        <div>
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit h-9`}>
+                                <p>Submitted</p>
+                            </div>
 
-                        <div className={`${isSubmitted === false ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2`}>
-                            Submitted
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-forms-message'} bg-black h-1`}></div>
                         </div>
                     </div>
                 </form>

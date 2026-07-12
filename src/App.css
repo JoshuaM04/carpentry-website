@@ -14,11 +14,21 @@
     --font-roboto: "Roboto Slab", serif;
 
     --animate-timer-message: timer-message 5s ease-out;
+    --animate-timer-forms-message: timer-forms-message 5s ease-out;
 }
 
 @keyframes timer-message {
     0% {
         width: 144.34px;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+@keyframes timer-forms-message {
+    0% {
+        width: 91.77px;
     }
     100% {
         width: 0%;
