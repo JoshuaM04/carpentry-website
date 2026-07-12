@@ -54,7 +54,7 @@ export const FURNITURE_CATALOG: Product[] = [
         colorStyles: ['bg-orange-200', 'bg-olive-500', 'bg-black', 'bg-gray-500', 'bg-blue-900'],
         stripePriceId: 'N/A',
         image: '/furniture/catalog/nightstands/hazy-night.jpg',
-        imageGallery: ['/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg'],
+        imageGallery: ['/furniture/catalog/nightstands/hazy-night.jpg', '/furniture/catalog/nightstands/hazy-night.jpg', '/furniture/catalog/nightstands/hazy-night.jpg'],
         wood: 'Poplar',
         width: '24.5"',
         height: '31"',
