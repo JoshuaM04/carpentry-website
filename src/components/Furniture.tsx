@@ -61,12 +61,12 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     return (
         <main className="furniture-component flex flex-col gap-10">
             <section className="flex flex-col gap-10 mt-80">
-                <div className="grid grid-cols-[35vw_1fr] gap-10 max-2md:flex max-2md:flex-col">
+                <div className="grid grid-cols-[35vw_1fr] gap-10 2md:h-127.5 max-2md:flex max-2md:flex-col">
                    <div className="img-container">
                         <img src={product.image} alt={product.name} />
                    </div>
 
-                    <div className="product-information-container flex flex-col gap-2 relative">
+                    <div className="product-information-container flex flex-col gap-2 max-2md:h-127.5 relative">
                         <div className="flex flex-col gap-2">
                             <h2 className="text-3xl">{product.name}</h2>
                             <p>${product.price}</p>
@@ -119,9 +119,9 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         </div>
 
                         <div>
-                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-2`}>
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-3`}>
                                 <p>Added to cart</p>
-                                <div className="absolute top-114 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
+                                <div className="absolute top-118 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
                             </div>
 
                             <div key={count} className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-message'} bg-black h-1`}></div>
