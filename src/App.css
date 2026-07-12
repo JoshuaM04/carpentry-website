@@ -13,15 +13,15 @@
     --breakpoint-2md: 56.25rem;
     --font-roboto: "Roboto Slab", serif;
 
-    --animate-fade-out-message: fade-out-message 5s ease-out;
+    --animate-timer-message: timer-message 5s ease-out;
 }
 
-@keyframes fade-out-message {
-    100% {
-        opacity: 0;
-    }
+@keyframes timer-message {
     0% {
-        opacity: 1;
+        width: 144.34px;
+    }
+    100% {
+        width: 0%;
     }
 }
 

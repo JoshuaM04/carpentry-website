@@ -118,10 +118,13 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                             <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className="font-semibold text-white bg-black p-2 hover:cursor-pointer">Add to cart</button>
                         </div>
 
-                        <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-2`}>
-                            <p>Added to cart</p>
+                        <div>
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-2`}>
+                                <p>Added to cart</p>
+                                <div className="absolute top-114 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
+                            </div>
 
-                            <div className="absolute top-114 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
+                            <div key={count} className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-message'} bg-black h-1`}></div>
                         </div>
                     </div>
                 </div>
