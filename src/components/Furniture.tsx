@@ -65,7 +65,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     }, [count])
 
     return (
-        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5 2md:w-full">
+        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5">
             <section className="flex flex-col gap-10 mt-80 w-full">
                 <div className="grid grid-cols-[29vw_1fr] gap-10 2md:h-130 2md:w-full max-2md:flex max-2md:flex-col">
                    <div className="flex flex-col items-center gap-5 max-h-127.5 max-w-189.25">
@@ -183,14 +183,14 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                             ) : 
                                                 review.imageUpload !== '' && review.videoUpload !== '' ? (
                                                     <div>
-                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
-                                                        <video src={review.videoUpload} controls className="w-100" />
+                                                        <img src={review.imageUpload} alt={product.name} className="max-w-100" />
+                                                        <video src={review.videoUpload} controls className="max-w-100" />
                                                     </div>
                                                 ) :
                                                     review.imageUpload ? (
-                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
+                                                        <img src={review.imageUpload} alt={product.name} className="max-w-100" />
                                                     ) : (
-                                                        <video src={review.videoUpload} controls className="w-100" />
+                                                        <video src={review.videoUpload} controls className="max-w-100" />
                                                     )
                                         }
                                     </div>

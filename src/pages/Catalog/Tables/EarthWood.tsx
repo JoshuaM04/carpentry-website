@@ -13,8 +13,8 @@ export default function EarthWood({ addToCart }: EarthWoodProps) {
     if (!item) return <p>Product not found</p>;
     
     return (
-        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh">
-            <main className="table-one-container flex flex-col w-fit 2md:max-w-[2500px] gap-10 p-10 max-xsm:w-100">
+        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh w-full">
+            <main className="table-one-container flex flex-col w-fit max-2md:max-w-full gap-10 p-10">
                 <Furniture
                     product={item}
                     addToCart={addToCart}
