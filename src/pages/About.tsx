@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function About() {
-    const gallery = ['/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg'];
+    const gallery = ['/workStation1.png', '/workStation2.png', '/workStation3.png', '/workStation4.png'];
     const [panelOne, setPanelOne] = useState('hidden');
     const [panelOneIcon, setPanelOneIcon] = useState('/faq-plus-icon.svg');
     const [panelTwo, setPanelTwo] = useState('hidden');
