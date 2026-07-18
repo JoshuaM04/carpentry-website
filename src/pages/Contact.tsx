@@ -9,7 +9,6 @@ export default function Contact() {
     const [messageVisbility, setMessageVisibility] = useState('hidden');
     const [count, setCount] = useState(0);
     const [imageUpload, setImageUpload] = useState<string>('No file chosen');
-    const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
     useEffect(() => {
         console.log(count);
@@ -46,7 +45,6 @@ export default function Contact() {
                 setPhone("");
                 setMessage("");
                 setImageUpload('No file chosen');
-                setSelectedImageFile(null);
             } 
         } catch (error) {
             console.error("Failed to submit contact form:", error);
@@ -58,10 +56,8 @@ export default function Contact() {
 
         if (images && images.length > 0) {
             setImageUpload(images[0].name);
-            setSelectedImageFile(images[0]);
         } else {
             setImageUpload('No file chosen');
-            setSelectedImageFile(null);
         }
     };
 
