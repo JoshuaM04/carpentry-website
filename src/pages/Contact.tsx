@@ -8,6 +8,8 @@ export default function Contact() {
     const [message, setMessage] = useState("");
     const [messageVisbility, setMessageVisibility] = useState('hidden');
     const [count, setCount] = useState(0);
+    const [imageUpload, setImageUpload] = useState<string>('No file chosen');
+    const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
     useEffect(() => {
         console.log(count);
@@ -43,11 +45,25 @@ export default function Contact() {
                 setEmail("");
                 setPhone("");
                 setMessage("");
+                setImageUpload('No file chosen');
+                setSelectedImageFile(null);
             } 
         } catch (error) {
             console.error("Failed to submit contact form:", error);
         }
     }
+
+    const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const images = event.target.files;
+
+        if (images && images.length > 0) {
+            setImageUpload(images[0].name);
+            setSelectedImageFile(images[0]);
+        } else {
+            setImageUpload('No file chosen');
+            setSelectedImageFile(null);
+        }
+    };
 
     return (
         <div className="contact-container flex flex-col gap-20">
@@ -73,6 +89,23 @@ export default function Contact() {
                         <label htmlFor="phone-number">Phone number<span className="text-red-500">*</span></label>
                         <input id="phone-number" value={phone} onChange={(e) => setPhone(e.target.value)} className="border border-slate-400 w-full p-2" type="text" name="phone-number" placeholder="Phone number" required />
                     </div>
+
+                    <div className="flex flex-wrap items-center gap-5">
+                        <label htmlFor="imgUpload" className="text-sm font-semibold text-white bg-black min-w-27 p-2 hover:cursor-pointer">
+                            Upload Image
+                        </label>
+                        
+                        <input id="imgUpload" type="file" accept="image/*" onChange={handleImage} className="hidden" />
+
+                        <span>
+                            {imageUpload}
+                        </span>
+
+                        <button onClick={() => setImageUpload('No file chosen')} className={`${imageUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
+                            <svg className="size-5 stroke-red-500 fill-red-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
+                        </button>
+                    </div>
+
 
                     <div className="flex flex-col gap-2 w-full">
                         <label htmlFor="message">Message<span className="text-red-500">*</span></label>
