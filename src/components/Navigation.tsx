@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DialogTrigger, Modal, Dialog, Heading, Button } from 'react-aria-components/Modal';
 
 export default function navigation() {
     const [navHover, setNavHover] = useState(["false", "false", "false", "false"]);
-    const location = useLocation();
-
-    const isHomePage = location.pathname === '/' || location.pathname === '/home';
-    const textColor = isHomePage ? 'text-white' : 'text-white bg-black';
 
     return (
         <header>
