@@ -53,7 +53,7 @@ export default function About() {
                         <h2 className="text-3xl font-semibold">Behind the scenes</h2>
 
                         <div className="flex flex-col 2xl:grid 2xl:grid-cols-[1fr_1fr] gap-10">
-                            <video controls>
+                            <video poster="/woodworkPoster.webp" controls>
                                 <source src="woodWorkSample.mp4" type="video/mp4"></source>
                             </video>
 
