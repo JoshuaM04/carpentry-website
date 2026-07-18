@@ -33,10 +33,10 @@ export default function About() {
 
                     <section className="flex flex-col gap-10">
                         <h2 className="text-3xl font-semibold">A glimpse into the studio</h2>
-                        <div className="flex gap-10 overflow-x-scroll">
+                        <div className="flex flex-wrap gap-10">
                             {
                                 gallery.map((item) => (
-                                    <img className="max-lg:w-full max-2xl:w-(--gallery-item-sm) w-(--gallery-item)" src={item} />
+                                    <img className="max-lg:w-full max-2xl:w-(--gallery-item-sm) w-(--gallery-item)" src={item} alt="Workstation" />
                                 ))
                             }
                         </div>

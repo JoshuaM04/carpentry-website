@@ -58,12 +58,12 @@ export default function Contact() {
 
                 <form onSubmit={handleSubmit} className="flex flex-col items-start gap-10">
                     <div className="flex flex-wrap justify-between gap-10 w-full">
-                        <div className="input-container flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 max-3xl:w-full w-[48%]">
                             <label htmlFor="name">Name</label>
                             <input id="name" value={name} onChange={(e) => setName(e.target.value)} className="border border-slate-400 p-2 w-full" type="name" name="full-name" placeholder="Name" />
                         </div>
 
-                        <div className="input-container flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 max-3xl:w-full w-[48%]">
                             <label htmlFor="email">Email*</label>
                             <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="border border-slate-400 p-2 w-full" type="email" name="email" placeholder="Email" required />
                         </div>

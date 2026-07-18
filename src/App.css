@@ -9,8 +9,11 @@
     --color-svgLeftToolCasing: #E15649;
     --color-svgRightHandle: #7F7C79;
     --color-svgRightToolBar: #855151;
+
     --breakpoint-xsm: 33.375rem;
     --breakpoint-2md: 56.25rem;
+    --breakpoint-3xl: 2000px;
+
     --font-roboto: "Roboto Slab", serif;
 
     --animate-timer-message: timer-message 5s ease-out forwards;
@@ -59,10 +62,6 @@ h1 {
 
 form {
     width: clamp(1rem, 50vw, 87.5rem);
-}
-
-.input-container {
-    width: clamp(15rem, 24vw, 42.5rem);
 }
 
 .about-img-element {
