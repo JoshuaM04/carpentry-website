@@ -116,7 +116,7 @@ export default function Reviews({ product }: ReviewsProps) {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-10 min-w-full">
                     <div className="flex flex-col gap-2">
                         <label className="font-semibold" htmlFor="title">Title<span className="text-red-500">*</span></label>
-                        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required className="border p-2" type="text" placeholder="I definitely recommend this product!" />
+                        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required className="border p-2" type="text" />
                     </div>
 
                     <div className="flex flex-col gap-2">
@@ -144,7 +144,7 @@ export default function Reviews({ product }: ReviewsProps) {
 
                     <div className="flex flex-col gap-2">
                         <label htmlFor="username" className="font-semibold">Display Name<span className="text-red-500">*</span></label>
-                        <input id="username" value={username} type="text" onChange={(e) => setUsername(e.target.value)} className="border p-2" placeholder="ILikeCarpentry9022" />
+                        <input id="username" value={username} type="text" onChange={(e) => setUsername(e.target.value)} className="border p-2" />
                     </div>
 
                     <div className="flex flex-col gap-5">
