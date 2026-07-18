@@ -33,8 +33,13 @@ export default function Reviews({ product }: ReviewsProps) {
         const images = event.target.files;
 
         if (images && images.length > 0) {
-            setImageUpload(images[0].name);
-            setSelectedImageFile(images[0]);
+            if (images[0].name.length > 20) {
+                setImageUpload(images[0].name.substring(0, 21) + "...");
+                setSelectedImageFile(images[0]);
+            } else {
+                setImageUpload(images[0].name);
+                setSelectedImageFile(images[0]);
+            }
         } else {
             setImageUpload('No file chosen');
             setSelectedImageFile(null);
@@ -45,8 +50,13 @@ export default function Reviews({ product }: ReviewsProps) {
         const videos = event.target.files;
 
         if (videos && videos.length > 0) {
-            setVideoUpload(videos[0].name);
-            setSelectedVideoFile(videos[0]);
+            if (videos[0].name.length > 20) {
+                setVideoUpload(videos[0].name.substring(0, 21) + "...");
+                setSelectedVideoFile(videos[0]);
+            } else {
+                setVideoUpload(videos[0].name);
+                setSelectedVideoFile(videos[0]);
+            }
         } else {
             setVideoUpload('No file chosen');
             setSelectedVideoFile(null);

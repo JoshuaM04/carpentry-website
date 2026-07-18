@@ -55,7 +55,11 @@ export default function Contact() {
         const images = event.target.files;
 
         if (images && images.length > 0) {
-            setImageUpload(images[0].name);
+            if (images[0].name.length > 15) {
+                setImageUpload(images[0].name.substring(0, 16) + "...");
+            } else {
+                setImageUpload(images[0].name);
+            }
         } else {
             setImageUpload('No file chosen');
         }
