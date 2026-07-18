@@ -85,7 +85,7 @@ export default function cart({ cart, setCart }: CartProps) {
                         </div>
 
                         {cart.length === 0 ? (
-                            <p className="absolute -m-10 p-10 top-45 w-full">Your cart is empty...please buy something I need to feed my family.</p>
+                            <p className="absolute -m-10 p-10 top-45 w-full">Your cart is empty</p>
                         ) : (
                             <div className="cart-items-container flex flex-col gap-10 pr-10 -mr-5 h-[70%] overflow-y-scroll scrollbar-thumb-black scrollbar-track-white">
                                 {cart.map((item) => (
