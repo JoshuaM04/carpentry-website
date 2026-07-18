@@ -7,12 +7,8 @@ export default function Home() {
         <div className="home-container flex flex-col gap-20">
             <main className="flex flex-col gap-20 items-center">
                 <section id="video-showcase" className="relative h-screen w-full overflow-hidden">
-                    <video 
-                        className="top-0 left-0 w-full h-full object-cover pointer-events-none max-2md:hidden max-2md:aria-hidden" autoPlay loop muted>
-                        <source className="max-2md:hidden max-2md:aria-hidden" src="woodWorkSample.mp4" type="video/mp4"></source>
-                    </video>
 
-                    <div className="h-screen w-full overflow-hidden mt-40 pointer-events-none"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
+                    <div className="h-screen w-full overflow-hidden mt-30 pointer-events-none"><img className="top-0 left-0 w-full h-full object-cover" src="/heroSectionImage.avif" alt="" /></div>
 
                     <div className="text-white top-[45%] left-[50%] translate-x-[-50%] absolute max-2md:w-56.25 max-2md:top-[50%]">
                         <h1 className="font-bold flex flex-col gap-4 text-6xl text-center">

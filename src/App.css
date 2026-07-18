@@ -15,6 +15,9 @@
 
     --animate-timer-message: timer-message 5s ease-out forwards;
     --animate-timer-forms-message: timer-forms-message 5s ease-out forwards;
+    
+    --gallery-item-sm: calc(50% - 20px);
+    --gallery-item: calc(25% - 30px);
 }
 
 @keyframes timer-message {
@@ -63,9 +66,5 @@ form {
 }
 
 .about-img-element {
-    width: clamp(10rem, 40vw, 25rem);
-}
-
-.about-description {
     width: clamp(10rem, 40vw, 25rem);
 }

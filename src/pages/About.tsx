@@ -1,19 +1,132 @@
 import Footer from'../components/Footer';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function About() {
+    const gallery = ['/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg', '/furniture/catalog/tables/earth-wood.jpg'];
+    const [panelOne, setPanelOne] = useState('hidden');
+    const [panelOneIcon, setPanelOneIcon] = useState('/faq-plus-icon.svg');
+    const [panelTwo, setPanelTwo] = useState('hidden');
+    const [panelTwoIcon, setPanelTwoIcon] = useState('/faq-plus-icon.svg');
+    const [panelThree, setPanelThree] = useState('hidden');
+    const [panelThreeIcon, setPanelThreeIcon] = useState('/faq-plus-icon.svg');
+    const [panelFour, setPanelFour] = useState('hidden');
+    const [panelFourIcon, setPanelFourIcon] = useState('/faq-plus-icon.svg');
+
+
     return (
         <div className="about-container flex flex-col gap-20">
-            <main className="flex min-h-dvh p-10">
-                <div className="flex flex-col justify-center gap-5 w-full p-5 mt-60"> 
-                    <div className="flex flex-wrap justify-center gap-10">
-                        <div className="about-img-container">
-                            <svg className="about-img-element border-2 fill-gray-400" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_15_82)"> <rect width="24" height="24"></rect> <g filter="url(#filter0_d_15_82)"> <path d="M14.3365 12.3466L14.0765 11.9195C13.9082 12.022 13.8158 12.2137 13.8405 12.4092C13.8651 12.6046 14.0022 12.7674 14.1907 12.8249L14.3365 12.3466ZM9.6634 12.3466L9.80923 12.8249C9.99769 12.7674 10.1348 12.6046 10.1595 12.4092C10.1841 12.2137 10.0917 12.022 9.92339 11.9195L9.6634 12.3466ZM4.06161 19.002L3.56544 18.9402L4.06161 19.002ZM19.9383 19.002L20.4345 18.9402L19.9383 19.002ZM16 8.5C16 9.94799 15.2309 11.2168 14.0765 11.9195L14.5965 12.7737C16.0365 11.8971 17 10.3113 17 8.5H16ZM12 4.5C14.2091 4.5 16 6.29086 16 8.5H17C17 5.73858 14.7614 3.5 12 3.5V4.5ZM7.99996 8.5C7.99996 6.29086 9.79082 4.5 12 4.5V3.5C9.23854 3.5 6.99996 5.73858 6.99996 8.5H7.99996ZM9.92339 11.9195C8.76904 11.2168 7.99996 9.948 7.99996 8.5H6.99996C6.99996 10.3113 7.96342 11.8971 9.40342 12.7737L9.92339 11.9195ZM9.51758 11.8683C6.36083 12.8309 3.98356 15.5804 3.56544 18.9402L4.55778 19.0637C4.92638 16.1018 7.02381 13.6742 9.80923 12.8249L9.51758 11.8683ZM3.56544 18.9402C3.45493 19.8282 4.19055 20.5 4.99996 20.5V19.5C4.70481 19.5 4.53188 19.2719 4.55778 19.0637L3.56544 18.9402ZM4.99996 20.5H19V19.5H4.99996V20.5ZM19 20.5C19.8094 20.5 20.545 19.8282 20.4345 18.9402L19.4421 19.0637C19.468 19.2719 19.2951 19.5 19 19.5V20.5ZM20.4345 18.9402C20.0164 15.5804 17.6391 12.8309 14.4823 11.8683L14.1907 12.8249C16.9761 13.6742 19.0735 16.1018 19.4421 19.0637L20.4345 18.9402Z" fill="#000000"></path> </g> </g> <defs> <filter id="filter0_d_15_82" x="2.55444" y="3.5" width="18.8911" height="19" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix> <feOffset dy="1"></feOffset> <feGaussianBlur stdDeviation="0.5"></feGaussianBlur> <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"></feColorMatrix> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_82"></feBlend> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_82" result="shape"></feBlend> </filter> <clipPath id="clip0_15_82"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
+            <div className="flex flex-col items-center">
+                <main className="flex flex-col gap-20 p-10 mt-60 w-[90vw] min-h-dvh">
+                    <section className="flex flex-col gap-10">
+                        <h2 className="text-3xl font-semibold">Creating hand-made furniture to last</h2>
+                        <p className="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae lectus ullamcorper, ullamcorper nunc eu, accumsan justo. Nullam egestas, augue quis faucibus scelerisque, leo purus consequat risus, ut tincidunt nulla orci eu nisi. Suspendisse vitae ante laoreet nulla laoreet aliquet. Nulla ut nisi aliquam, ultrices nisl at, vehicula augue. Donec sed dignissim metus. Mauris eget magna varius, tincidunt elit sed, condimentum felis. Aliquam vel tellus eget mi porta mollis. Aenean id sapien tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit tincidunt pretium. Morbi tristique eros in porta rutrum. Curabitur sed ipsum urna.</p>
+                        <Link to="/Home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
+                    </section>
+
+                    <section className="flex flex-col gap-10">
+                        <h2 className="text-3xl font-semibold">A glimpse into the studio</h2>
+                        <div className="flex gap-10 overflow-x-scroll">
+                            {
+                                gallery.map((item) => (
+                                    <img className="max-lg:w-full max-2xl:w-(--gallery-item-sm) w-(--gallery-item)" src={item} />
+                                ))
+                            }
                         </div>
-                        
-                        <p className="about-description w-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae lectus ullamcorper, ullamcorper nunc eu, accumsan justo. Nullam egestas, augue quis faucibus scelerisque, leo purus consequat risus, ut tincidunt nulla orci eu nisi. Suspendisse vitae ante laoreet nulla laoreet aliquet. Nulla ut nisi aliquam, ultrices nisl at, vehicula augue. Donec sed dignissim metus. Mauris eget magna varius, tincidunt elit sed, condimentum felis. Aliquam vel tellus eget mi porta mollis. Aenean id sapien tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit tincidunt pretium. Morbi tristique eros in porta rutrum. Curabitur sed ipsum urna.</p>
-                    </div>
-                </div>
-            </main>
+                    </section>
+                    
+                    <section className="flex flex-col gap-10">
+                        <h2 className="text-3xl font-semibold">Our plans for the future</h2>
+                        <p className="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae lectus ullamcorper, ullamcorper nunc eu, accumsan justo. Nullam egestas, augue quis faucibus scelerisque, leo purus consequat risus, ut tincidunt nulla orci eu nisi. Suspendisse vitae ante laoreet nulla laoreet aliquet. Nulla ut nisi aliquam, ultrices nisl at, vehicula augue. Donec sed dignissim metus. Mauris eget magna varius, tincidunt elit sed, condimentum felis. Aliquam vel tellus eget mi porta mollis. Aenean id sapien tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit tincidunt pretium. Morbi tristique eros in porta rutrum. Curabitur sed ipsum urna.</p>
+                    </section>
+
+                    <section className="flex flex-col gap-10">
+                        <h2 className="text-3xl font-semibold">Behind the scenes</h2>
+
+                        <div className="flex flex-col 2xl:grid 2xl:grid-cols-[1fr_1fr] gap-10">
+                            <video autoPlay loop muted controls>
+                                <source src="woodWorkSample.mp4" type="video/mp4"></source>
+                            </video>
+
+                            <p className="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae lectus ullamcorper, ullamcorper nunc eu, accumsan justo. Nullam egestas, augue quis faucibus scelerisque, leo purus consequat risus, ut tincidunt nulla orci eu nisi.</p>
+                        </div>
+                    </section>
+
+                    <section className="flex flex-col gap-5">
+                        <h3 className="text-xl font-semibold">Frequently asked questions</h3>
+
+                        <div>
+                            <div id="faq-panel-one" className="flex flex-col gap-5 border-b pt-4 pb-4">
+                                <div className="flex justify-between items-center gap-5">
+                                    <div className="font-semibold">Can I commission a custom-made piece?</div>
+                                    
+                                    <button
+                                        onClick={() => panelOne === 'hidden' ? ( setPanelOne('block'), setPanelOneIcon('/faq-minus-icon.svg') ) : ( setPanelOne('hidden'), setPanelOneIcon('/faq-plus-icon.svg') )}
+                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                    >
+                                        <img className="min-w-3" src={panelOneIcon} />
+                                    </button>
+                                </div>
+
+                                <div className={`${panelOne}`}>
+                                    <p className="font-light">example</p>
+                                </div>
+                            </div>
+
+                            <div id="faq-panel-two" className="flex flex-col gap-5 border-b pt-4 pb-4">
+                                <div className="flex justify-between items-center gap-5">
+                                    <div className="font-semibold">Are the furniture pieces water proof?</div>
+
+                                    <button
+                                        onClick={() => panelTwo === 'hidden' ? ( setPanelTwo('block'), setPanelTwoIcon('/faq-minus-icon.svg') ) : ( setPanelTwo('hidden'), setPanelTwoIcon('/faq-plus-icon.svg') )}
+                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                    >
+                                        <img className="min-w-3" src={panelTwoIcon} />
+                                    </button>
+                                </div>
+
+                                <div className={`${panelTwo}`}>
+                                    <p className="font-light">example</p>
+                                </div>
+                            </div>
+
+                            <div id="faq-panel-three" className="flex flex-col gap-5 border-b pt-4 pb-4">
+                                <div className="flex justify-between items-center gap-5">
+                                    <div className="font-semibold">How long does a furniture piece take to make and ship?</div>
+
+                                    <button
+                                        onClick={() => panelThree === 'hidden' ? ( setPanelThree('block'), setPanelThreeIcon('/faq-minus-icon.svg') ) : ( setPanelThree('hidden'), setPanelThreeIcon('/faq-plus-icon.svg') )}
+                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                    >
+                                        <img className="min-w-3" src={panelThreeIcon} />
+                                    </button>
+                                </div>
+
+                                <div className={`${panelThree}`}>
+                                    <p className="font-light">example</p>
+                                </div>
+                            </div>
+
+                            <div id="faq-panel-four" className="flex flex-col gap-5 pt-4 pb-4">
+                                <div className="flex justify-between items-center gap-5">
+                                    <div className="font-semibold">Can I choose a paint finish that is not currently available?</div>
+
+                                    <button
+                                        onClick={() => panelFour === 'hidden' ? ( setPanelFour('block'), setPanelFourIcon('/faq-minus-icon.svg') ) : ( setPanelFour('hidden'), setPanelFourIcon('/faq-plus-icon.svg') )}
+                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                    >
+                                        <img className="min-w-3" src={panelFourIcon} />
+                                    </button>
+                                </div>
+
+                                <div className={`${panelFour}`}>
+                                    <p className="font-light">example</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
 
             <Footer />
         </div>

@@ -11,7 +11,7 @@ export default function navigation() {
 
     return (
         <header>
-            <nav className={`navigation-component absolute left-[50%] translate-x-[-50%] w-full ${textColor} text-sm font-semibold uppercase p-5 z-1 max-2md:text-white max-2md:bg-black max-2md:p-10`}>
+            <nav className={`navigation-component absolute left-[50%] translate-x-[-50%] w-full text-white bg-black text-sm font-semibold uppercase p-5 z-1 max-2md:text-white max-2md:bg-black max-2md:p-10`}>
                 <div className="desktop-layout flex justify-center items-center gap-40 max-2md:hidden max-2md:aria-hidden">
                     <div className="flex gap-20">
                         <div>
