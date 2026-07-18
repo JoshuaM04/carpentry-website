@@ -52,8 +52,8 @@ export default function About() {
                     <section className="flex flex-col gap-10">
                         <h2 className="text-3xl font-semibold">Behind the scenes</h2>
 
-                        <div className="flex flex-col 2xl:grid 2xl:grid-cols-[1fr_1fr] gap-10">
-                            <video poster="/woodworkPoster.webp" controls>
+                        <div className="flex flex-col 2xl:flex-row gap-10">
+                            <video poster="/woodworkPoster.webp" className="2xl:w-500" controls>
                                 <source src="woodWorkSample.mp4" type="video/mp4"></source>
                             </video>
 
