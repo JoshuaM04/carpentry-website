@@ -72,12 +72,13 @@ export default function About() {
                                     <button
                                         onClick={() => panelOne === 'hidden' ? ( setPanelOne('block'), setPanelOneIcon('/faq-minus-icon.svg') ) : ( setPanelOne('hidden'), setPanelOneIcon('/faq-plus-icon.svg') )}
                                         className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                        aria-controls="panel-one"
                                     >
                                         <img className="min-w-3" src={panelOneIcon} />
                                     </button>
                                 </div>
 
-                                <div className={`${panelOne}`}>
+                                <div id="panel-one" className={`${panelOne}`} aria-expanded={panelOne === 'block'}>
                                     <p className="font-light">Yes! You can visit the <Link to="/Contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
                                 </div>
                             </div>
@@ -89,12 +90,13 @@ export default function About() {
                                     <button
                                         onClick={() => panelTwo === 'hidden' ? ( setPanelTwo('block'), setPanelTwoIcon('/faq-minus-icon.svg') ) : ( setPanelTwo('hidden'), setPanelTwoIcon('/faq-plus-icon.svg') )}
                                         className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                        aria-controls="panel-two"
                                     >
                                         <img className="min-w-3" src={panelTwoIcon} />
                                     </button>
                                 </div>
 
-                                <div className={`${panelTwo}`}>
+                                <div id="panel-two" className={`${panelTwo}`} aria-expanded={panelTwo === 'block'}>
                                     <p className="font-light">Yes they are! We use a protective coating to ensure the paint does not get damaged and the wood is able to last a long time.</p>
                                 </div>
                             </div>
@@ -106,12 +108,13 @@ export default function About() {
                                     <button
                                         onClick={() => panelThree === 'hidden' ? ( setPanelThree('block'), setPanelThreeIcon('/faq-minus-icon.svg') ) : ( setPanelThree('hidden'), setPanelThreeIcon('/faq-plus-icon.svg') )}
                                         className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                        aria-controls="panel-three"
                                     >
                                         <img className="min-w-3" src={panelThreeIcon} />
                                     </button>
                                 </div>
 
-                                <div className={`${panelThree}`}>
+                                <div id="panel-three" className={`${panelThree}`} aria-expanded={panelThree === 'block'}>
                                     <p className="font-light">The completion time of a furniture piece is dependent on which model it is. It can vary from 1 week to around 3 weeks depending on the furniture piece. Shipping time is entirely out of our control and depends on the shipping provider.</p>
                                 </div>
                             </div>
@@ -123,12 +126,13 @@ export default function About() {
                                     <button
                                         onClick={() => panelFour === 'hidden' ? ( setPanelFour('block'), setPanelFourIcon('/faq-minus-icon.svg') ) : ( setPanelFour('hidden'), setPanelFourIcon('/faq-plus-icon.svg') )}
                                         className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                        aria-controls="panel-four"
                                     >
                                         <img className="min-w-3" src={panelFourIcon} />
                                     </button>
                                 </div>
 
-                                <div className={`${panelFour}`}>
+                                <div id="panel-four" className={`${panelFour}`} aria-expanded={panelFour === 'block'}>
                                     <p className="font-light">Absolutely! You can pick out a paint finish you prefer and add it in a contact form submission at our <Link to="/Contact" className="text-blue-500 underline">contact page</Link>.</p>
                                 </div>
                             </div>
