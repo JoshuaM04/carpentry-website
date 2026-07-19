@@ -183,14 +183,14 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                             ) : 
                                                 review.imageUpload !== '' && review.videoUpload !== '' ? (
                                                     <div>
-                                                        <img src={review.imageUpload} alt={product.name} className="max-w-100" />
+                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
                                                         <video src={review.videoUpload} controls className="max-w-100" />
                                                     </div>
                                                 ) :
                                                     review.imageUpload ? (
-                                                        <img src={review.imageUpload} alt={product.name} className="max-w-100" />
+                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
                                                     ) : (
-                                                        <video src={review.videoUpload} controls className="max-w-100" />
+                                                        <video src={review.videoUpload} controls className="w-100" />
                                                     )
                                         }
                                     </div>
