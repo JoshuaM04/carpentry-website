@@ -141,7 +141,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         <div>
                             <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-3`}>
                                 <p>Added to cart</p>
-                                <div className="absolute top-118 left-33 text-white text-xs flex justify-center items-center bg-black -">{count}</div>
+                                <div className="absolute top-118 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
                             </div>
 
                             <div key={count} className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-message'} bg-black h-1`}></div>
