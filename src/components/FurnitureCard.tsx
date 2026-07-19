@@ -38,7 +38,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
 
     return (
         <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
-            <Link to={product.route} className="flex flex-col gap-5 w-50 h-fit shadow-xl/30 bg-linear-to-br from-white to-olive-300">
+            <Link to={product.route} className="flex flex-col gap-5 w-fit h-fit shadow-xl/30 bg-linear-to-br from-white to-olive-300">
                 <img className="h-50" src={product.image} alt={product.name} />
 
                 <div className="flex flex-col gap-5 p-5 -mt-5">
