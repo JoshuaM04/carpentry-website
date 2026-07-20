@@ -63,7 +63,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
                         <p className={`${data.length === 0 ? 'hidden' : 'block'}`}>{averageRating.toFixed(1)} / 5.0</p>
                         <p className={`${data.length === 0 ? 'block' : 'hidden'}`}>No reviews yet</p>
                     </div>
-                    <p className="text-xs italic">Approximately <span className="font-bold">7 days</span> completion</p>
+                    <p className="text-xs italic">Approximately <span className="font-bold">14 days</span> completion</p>
                 </div>
             </Link>
         </div>
