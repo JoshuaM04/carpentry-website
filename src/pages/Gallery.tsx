@@ -3,14 +3,11 @@ import Footer from '../components/Footer';
 export default function Gallery() {
     return (
         <div className="gallery-container flex flex-col gap-20">
-            <main className="flex min-h-dvh p-10">
-                <div className="flex flex-wrap justify-center gap-10 mt-60 w-full">
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img1.avif" alt="" /></div>
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img2.avif" alt="" /></div>
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img3.avif" alt="" /></div>
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img4.avif" alt="" /></div>
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img5.avif" alt="" /></div>
-                    <div className="h-min"><img className="w-100" src="/furniture/gallery/img6.avif" alt="" /></div>
+            <main className="flex justify-center items-center min-h-dvh p-10 mt-40">
+                <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
+                    <div className="flex justify-center items-center text-2xl uppercase font-bold text-white bg-black size-100">
+                        Coming Soon
+                    </div> 
                 </div>
             </main>
 

@@ -133,6 +133,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         <div className="flex flex-col">
                             <div className="flex justify-between items-center bg-slate-100 -mt-2 p-2">
                                 <p className="text-black text-lg">${product.price}</p>
+                                <p className="font-light">$75 Shipping</p>
                             </div>
 
                             <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className={`${activeColor === '' ? 'pointer-events-none select-none' : ''} font-semibold text-white bg-black p-2 hover:cursor-pointer`}>Add to cart</button>

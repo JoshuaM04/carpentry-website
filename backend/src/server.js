@@ -132,7 +132,7 @@ app.post('/api/checkout', async (request, response) => {
                             name: `${item.name} ${formattedColor}`,
                             images: [item.imageUrl],
                         },
-                        unit_amount: Math.round(item.price * 100),
+                        unit_amount: Math.round(item.price * 100) + 75,
                     },
                     quantity: item.quantity,
                 };

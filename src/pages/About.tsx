@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function About() {
-    const gallery = ['/workStation1.png', '/workStation2.png', '/workStation3.png', '/workStation4.png'];
+    const gallery = ['/about-media/workStation1.png', '/about-media/workStation2.png', '/about-media/workStation3.png', '/about-media/workStation4.png'];
     const [panelOne, setPanelOne] = useState('hidden');
     const [panelOneIcon, setPanelOneIcon] = useState('/faq-plus-icon.svg');
     const [panelTwo, setPanelTwo] = useState('hidden');
@@ -52,12 +52,10 @@ export default function About() {
                     <section className="flex flex-col gap-10">
                         <h2 className="text-3xl font-semibold">Behind the scenes</h2>
 
-                        <div className="flex flex-col 2xl:flex-row gap-10">
-                            <video poster="/woodworkPoster.webp" className="2xl:w-500" controls>
-                                <source src="woodWorkSample.mp4" type="video/mp4"></source>
-                            </video>
-
-                            <p className="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae lectus ullamcorper, ullamcorper nunc eu, accumsan justo. Nullam egestas, augue quis faucibus scelerisque, leo purus consequat risus, ut tincidunt nulla orci eu nisi.</p>
+                        <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
+                            <div className="flex justify-center items-center text-xl uppercase font-bold text-white bg-black size-100">
+                                Coming Soon
+                            </div> 
                         </div>
                     </section>
 

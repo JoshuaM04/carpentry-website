@@ -63,7 +63,7 @@ export default function Home() {
                     <p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
 
                     <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
-                        <div className="flex justify-center items-center text-xl uppercase font-bold bg-slate-100 size-50">
+                        <div className="flex justify-center items-center text-xl uppercase font-bold text-white bg-black size-50">
                             Coming Soon
                         </div> 
                     </div>
