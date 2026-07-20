@@ -120,7 +120,6 @@ app.post('/api/checkout', async (request, response) => {
         const { cartItems } = request.body;
 
         const lineItems = cartItems.map((item) => {
-            
             const formattedColor = item.activeColor
                 ? `(${item.activeColor.charAt(0).toUpperCase() + item.activeColor.slice(1)})`
                 : '';
@@ -132,25 +131,38 @@ app.post('/api/checkout', async (request, response) => {
                             name: `${item.name} ${formattedColor}`,
                             images: [item.imageUrl],
                         },
-                        unit_amount: Math.round(item.price * 100) + 75,
+                        unit_amount: Math.round(item.price * 100),
                     },
                     quantity: item.quantity,
                 };
-            });
+        });
 
-            const session = await stripe.checkout.sessions.create({
-                payment_method_types: ['card'],
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
 
-                shipping_address_collection: {
-                    allowed_countries: ['US'],
+            shipping_address_collection: {
+                allowed_countries: ['US'],
+            },
+
+            shipping_options: [
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 7500,
+                            currency: 'usd'
+                        },
+                        display_name: 'Standard Shipping'
+                    }
                 },
+            ],
 
-                line_items: lineItems,
-                mode: 'payment',
-                success_url: 'https://carpentry-website-two.vercel.app/home'
-            });
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: 'https://carpentry-website-two.vercel.app/home'
+        });
 
-            return response.status(200).json({ url: session.url });
+        return response.status(200).json({ url: session.url });
     } catch (error) {
         console.error("Stripe session error:", error);
         return response.status(500).json({ error: error.message });
