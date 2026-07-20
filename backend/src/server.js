@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: [
-        'https://carpentry-website-two.vercel.app/',
+        'https://woodwork-creations.com/',
         'http://localhost:5173/'
     ],
     methods: ['POST', 'GET', 'OPTIONS'],
@@ -159,7 +159,7 @@ app.post('/api/checkout', async (request, response) => {
 
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'https://carpentry-website-two.vercel.app/home'
+            success_url: 'https://woodwork-creations.com/'
         });
 
         return response.status(200).json({ url: session.url });
