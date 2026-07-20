@@ -83,7 +83,7 @@ export default function About() {
 
                             <div id="faq-panel-two" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Are the furniture pieces water proof?</div>
+                                    <div className="font-semibold">Are the furniture pieces water resistant?</div>
 
                                     <button
                                         onClick={() => panelTwo === 'hidden' ? ( setPanelTwo('block'), setPanelTwoIcon('/faq-minus-icon.svg') ) : ( setPanelTwo('hidden'), setPanelTwoIcon('/faq-plus-icon.svg') )}
