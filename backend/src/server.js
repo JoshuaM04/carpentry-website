@@ -151,7 +151,7 @@ app.post('/api/checkout', async (request, response) => {
                     shipping_rate_data: {
                         type: 'fixed_amount',
                         fixed_amount: {
-                            amount: 7500,
+                            amount: 10,
                             currency: 'usd'
                         },
                         display_name: 'Standard Shipping'
