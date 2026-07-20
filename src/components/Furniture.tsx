@@ -80,7 +80,9 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                        <div className="flex gap-2">
                             {
                                 galleryButton.map((item, index) => (
-                                    <button key={index} onClick={() => setActiveButton(item)} className={`${activeButton === item ? 'bg-black text-black' : 'bg-slate-300 text-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
+                                    <button key={index} onClick={() => setActiveButton(item)} 
+                                    aria-label="color-option"
+                                    className={`${activeButton === item ? 'bg-black text-black' : 'bg-slate-300 text-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
                                 ))
                             }
                        </div>

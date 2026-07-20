@@ -67,7 +67,7 @@ export default function cart({ cart, setCart }: CartProps) {
     return (
         <div id="cart" className={`flex justify-end items-center gap-5 ${spacingStyle} w-full`}>
             <DialogTrigger>
-                <Button className="hover:cursor-pointer">
+                <Button aria-label="Cart modal display" className="hover:cursor-pointer">
                     <svg className="fill-black w-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.25 18.75C11.25 19.58 10.58 20.25 9.75 20.25C8.92 20.25 8.25 19.58 8.25 18.75C8.25 17.92 8.92 17.25 9.75 17.25C10.58 17.25 11.25 17.92 11.25 18.75ZM16.25 17.25C15.42 17.25 14.75 17.92 14.75 18.75C14.75 19.58 15.42 20.25 16.25 20.25C17.08 20.25 17.75 19.58 17.75 18.75C17.75 17.92 17.08 17.25 16.25 17.25ZM20.73 7.68L18.73 15.68C18.65 16.01 18.35 16.25 18 16.25H8C7.64 16.25 7.33 15.99 7.26 15.63L5.37 5.25H4C3.59 5.25 3.25 4.91 3.25 4.5C3.25 4.09 3.59 3.75 4 3.75H6C6.36 3.75 6.67 4.01 6.74 4.37L7.17 6.75H20C20.23 6.75 20.45 6.86 20.59 7.04C20.73 7.22 20.78 7.46 20.73 7.68ZM19.04 8.25H7.44L8.62 14.75H17.41L19.04 8.25Z"></path></g></svg>
                     <div className={` ${cart.length === 0 ? 'hidden aria-hidden' : 'block'} text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1 absolute bottom-9 right-15`}>{cart.reduce((total, item) => total + item.quantity, 0)}</div>
                 </Button>
@@ -76,7 +76,7 @@ export default function cart({ cart, setCart }: CartProps) {
                     <Dialog className="modal-pop-up flex flex-col gap-10 justify-between drop-shadow-xl/50 max-lg:h-full lg:h-[90%] lg:w-200 p-10 relative lg:bg-black">
                         <div className="flex flex-col max-lg:gap-5">
                             <div className="flex justify-end max-lg:-ml-5 max-lg:-mr-5">
-                                <Button className="hover:cursor-pointer" slot="close">
+                                <Button aria-label="Close cart modal display" className="hover:cursor-pointer" slot="close">
                                     <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                                 </Button>
                             </div>
