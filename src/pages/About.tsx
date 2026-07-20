@@ -53,7 +53,7 @@ export default function About() {
                         <h2 className="text-3xl font-semibold">Behind the scenes</h2>
 
                         <div className="flex flex-col justify-center gap-10 max-xsm:justify-center">
-                            <div className="flex justify-center items-center text-xl uppercase font-bold text-white bg-black size-100">
+                            <div className="flex justify-center items-center text-xl uppercase font-bold text-white bg-black w-50">
                                 Coming Soon
                             </div> 
                         </div>
