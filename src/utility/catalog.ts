@@ -27,7 +27,7 @@ export const FURNITURE_CATALOG: Product[] = [
         review: '/EarthWoodReview',
         reviewDB: 'earth-wood',
         name: 'Earth Wood',
-        price: 550,
+        price: 1,
         activeColor: '',
         colors: ['no paint', 'olive', 'black', 'gray', 'blue'],
         colorTextStyles: ['text-orange-200', 'text-olive-500', 'text-black', 'text-gray-500', 'text-blue-900'],
