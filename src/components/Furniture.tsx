@@ -67,8 +67,8 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     return (
         <main className="furniture-component flex flex-col gap-10 max-2md:gap-5">
             <section className="flex flex-col gap-10 mt-80 w-full">
-                <div className="grid grid-cols-[29vw_1fr] gap-10 2md:h-130 2md:w-full max-2md:flex max-2md:flex-col">
-                   <div className="flex flex-col items-center gap-5 max-h-127.5 max-w-189.25">
+                <div className="grid grid-cols-[29vw_1fr] gap-10 2md:w-full max-2md:flex max-2md:flex-col">
+                   <div className="flex flex-col items-center gap-5 max-w-189.25">
                        <div className="img-container flex gap-10 overflow-hidden">
                             {
                                 imageGallery.map((item) => (
@@ -148,9 +148,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                 </div>
                             </div>
 
-                            <hr />
-
-                            <div className="flex justify-between items-center bg-slate-100 p-2">
+                            <div className="flex justify-between items-center bg-slate-100 p-2 border-t">
                                 <p className="text-black text-lg">${product.price}</p>
                                 <p className="font-light">$75 Shipping</p>
                             </div>
