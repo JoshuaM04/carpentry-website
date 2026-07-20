@@ -137,6 +137,8 @@ app.post('/api/checkout', async (request, response) => {
                 };
         });
 
+        const origin = request.headers.origin || 'https://woodwork-creations.com/';
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
 
@@ -159,7 +161,8 @@ app.post('/api/checkout', async (request, response) => {
 
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'https://woodwork-creations.com/'
+            success_url: 'https://woodwork-creations.com/',
+            cancel_url: 'https://woodwork-creations.com/'
         });
 
         return response.status(200).json({ url: session.url });

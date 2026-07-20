@@ -14,7 +14,7 @@ export default function cart({ cart, setCart }: CartProps) {
 
     const handleCheckout = async () => {
         try {
-            const productionUrl = 'https://carpentry-website-two.vercel.app/';
+            const productionUrl = 'https://woodwork-creations.com/';
             const baseUrl = window.location.hostname === 'localhost' ? '' : productionUrl;
 
             const localCart = cart.map(item => {
