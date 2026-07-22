@@ -164,7 +164,7 @@ app.post('/api/checkout', async (request, response) => {
                             amount: 0,
                             currency: 'usd'
                         },
-                        display_name: 'Free Pickup'
+                        display_name: 'Local Pickup (Free)'
                     }
                 }
             ],
