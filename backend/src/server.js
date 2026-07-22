@@ -157,6 +157,16 @@ app.post('/api/checkout', async (request, response) => {
                         display_name: 'Standard Shipping'
                     }
                 },
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 0,
+                            currency: 'usd'
+                        },
+                        display_name: 'Free Pickup'
+                    }
+                }
             ],
 
             line_items: lineItems,
