@@ -11,7 +11,7 @@ import Cart from './components/Cart'
 import ScrollToTop from './components/ScrollToTop';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
@@ -47,7 +47,7 @@ export default function App() {
   return (
     <div className="root-container min-h-dvh font-roboto">
       <Analytics />
-      
+
       <NavBar />
 
       <Cart cart={cart} setCart={setCart} />
