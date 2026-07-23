@@ -26,7 +26,7 @@ export default function About() {
                         </p>
 
                         <p className="font-light">
-                            We are based in Austin and are able to ship our products anywhere across the United States. We strive for excellence and we hope to expand our reach to other countries as well!
+                            We are based in San Marcos and are able to ship our products anywhere across the United States. We strive for excellence and we hope to expand our reach to other countries as well!
                         </p>
                         <Link to="/Home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
                     </section>
