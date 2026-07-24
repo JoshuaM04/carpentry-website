@@ -114,10 +114,10 @@ export default function Reviews({ product }: ReviewsProps) {
             <div className="flex flex-col gap-10 mt-80">
                 <div className="flex gap-5">
                     <div className="img-container">
-                        <img className="size-40" src={product.image} alt={product.name} />
+                        <img className="w-60" src={product.image} alt={product.name} />
                     </div>
 
-                    <div className="flex flex-col justify-center gap-2">
+                    <div className="flex flex-col gap-2">
                         <h2 className="text-xl">Write a Review</h2>
                         <Link to={product.route} className="text-blue-700 underline">{product.name}</Link>
                     </div>

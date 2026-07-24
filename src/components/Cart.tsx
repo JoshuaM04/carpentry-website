@@ -92,7 +92,7 @@ export default function cart({ cart, setCart }: CartProps) {
                                     <div>
                                         <div className="flex justify-between max-sm:flex-col max-sm:gap-5">
                                             <div className="flex gap-5">
-                                                <div><img className="size-25" src={item.image} alt={item.name} /></div>
+                                                <div><img className="w-50" src={item.image} alt={item.name} /></div>
                                         
                                                 <div className="flex flex-col gap-1 justify-between">
                                                     <p className="font-semibold">{item.name}</p>

@@ -47,7 +47,7 @@ export default function Home() {
 
                     <p className="text-2xl font-bold max-xsm:text-center">Nightstands</p>
 
-                    <div className="flex flex-wrap justify-between items-center gap-10 max-xsm:justify-center">    
+                    <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">    
                         {
                             FURNITURE_CATALOG.filter((item) => item.type === "nightstand").map((item) => (
                                 <FurnitureCard
