@@ -67,7 +67,7 @@ export const FURNITURE_CATALOG: Product[] = [
         review: '/VatanoReview',
         reviewDB: 'vatano',
         name: 'Vatano',
-        price: 500,
+        price: 300,
         activeColor: '',
         colors: ['no paint', 'olive', 'black', 'gray', 'blue'],
         colorTextStyles: ['text-orange-200', 'text-olive-500', 'text-black', 'text-gray-500', 'text-blue-900'],
