@@ -12,6 +12,8 @@ export default function About() {
     const [panelThreeIcon, setPanelThreeIcon] = useState('/faq-plus-icon.svg');
     const [panelFour, setPanelFour] = useState('hidden');
     const [panelFourIcon, setPanelFourIcon] = useState('/faq-plus-icon.svg');
+    const [panelFive, setPanelFive] = useState('hidden');
+    const [panelFiveIcon, setPanelFiveIcon] = useState('/faq-plus-icon.svg');
 
 
     return (
@@ -65,8 +67,8 @@ export default function About() {
                         <div>
                             <div id="faq-panel-one" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Can I commission a custom-made furniture piece?</div>
-                                    
+                                    <div className="font-semibold">Do you source and use real wood for your furniture?</div>
+
                                     <button
                                         onClick={() => panelOne === 'hidden' ? ( setPanelOne('block'), setPanelOneIcon('/faq-minus-icon.svg') ) : ( setPanelOne('hidden'), setPanelOneIcon('/faq-plus-icon.svg') )}
                                         className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
@@ -77,7 +79,7 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-one" className={`${panelOne}`} aria-expanded={panelOne === 'block'}>
-                                    <p className="font-light">Yes! You can visit the <Link to="/Contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
+                                    <p className="font-light">Yes! We source our wood from Lowes and Home Depot to build our products. We may also source wood from a local lumber supplier for any custom projects. We do <strong>NOT</strong> use any cheap lamination, particle board, or fake prints.</p>
                                 </div>
                             </div>
 
@@ -95,7 +97,7 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-two" className={`${panelTwo}`} aria-expanded={panelTwo === 'block'}>
-                                    <p className="font-light">Yes they are! We use a protective coating to ensure the paint does not get damaged and the wood is able to last a long time.</p>
+                                    <p className="font-light">Yes they are! We use a protective transparent coating to ensure the paint does not get damaged and the wood is able to last a long time.</p>
                                 </div>
                             </div>
 
@@ -117,7 +119,7 @@ export default function About() {
                                 </div>
                             </div>
 
-                            <div id="faq-panel-four" className="flex flex-col gap-5 pt-4 pb-4">
+                            <div id="faq-panel-four" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
                                     <div className="font-semibold">Can I choose a paint finish that is not currently available?</div>
 
@@ -132,6 +134,24 @@ export default function About() {
 
                                 <div id="panel-four" className={`${panelFour}`} aria-expanded={panelFour === 'block'}>
                                     <p className="font-light">Absolutely! You can pick out a paint finish you prefer and add it in a contact form submission at our <Link to="/Contact" className="text-blue-500 underline">contact page</Link>.</p>
+                                </div>
+                            </div>
+
+                            <div id="faq-panel-five" className="flex flex-col gap-5 pt-4 pb-4">
+                                <div className="flex justify-between items-center gap-5">
+                                    <div className="font-semibold">Can I commission a custom-made furniture piece?</div>
+                                    
+                                    <button
+                                        onClick={() => panelFive === 'hidden' ? ( setPanelFive('block'), setPanelFiveIcon('/faq-minus-icon.svg') ) : ( setPanelFive('hidden'), setPanelFiveIcon('/faq-plus-icon.svg') )}
+                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
+                                        aria-controls="panel-five"
+                                    >
+                                        <img className="min-w-3" src={panelFiveIcon} />
+                                    </button>
+                                </div>
+
+                                <div id="panel-five" className={`${panelFive}`} aria-expanded={panelFive === 'block'}>
+                                    <p className="font-light">Yes! You can visit the <Link to="/Contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
                                 </div>
                             </div>
                         </div>
