@@ -67,7 +67,7 @@ export default function About() {
                         <div>
                             <div id="faq-panel-one" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Do you source and use real wood for your furniture?</div>
+                                    <div className="font-semibold">Do you source and use real wood for your products?</div>
 
                                     <button
                                         onClick={() => panelOne === 'hidden' ? ( setPanelOne('block'), setPanelOneIcon('/faq-minus-icon.svg') ) : ( setPanelOne('hidden'), setPanelOneIcon('/faq-plus-icon.svg') )}
