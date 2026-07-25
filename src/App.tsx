@@ -18,7 +18,13 @@ export default function App() {
   
   const addToCart = (product: any, selectedColor: string) => {
     setCart((prevCart) => {
-      const finalColor = selectedColor || product.colors?.[0] || 'Default';
+      let finalColor = '';
+
+      if (selectedColor === 'raw wood') {
+        finalColor = selectedColor;
+      } else {
+        finalColor = selectedColor.substring(8);
+      }
 
       const uniqueCartId = `${product.id}-${finalColor}`;
 
