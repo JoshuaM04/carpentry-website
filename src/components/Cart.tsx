@@ -99,7 +99,7 @@ export default function cart({ cart, setCart }: CartProps) {
 
                                                     <div className="flex flex-col gap-1">
                                                         <p className="capitalize">{item.activeColor}</p>
-                                                        <div className={`border-2 border-white w-11 h-5 bg ${item.activeColor === 'blue' ? `bg-${item.activeColor}-900` : item.activeColor === 'no paint' ? 'bg-orange-200' : `bg-${item.activeColor}-500`} `}></div>
+                                                        <div className={`border-2 border-white w-11 h-5 bg ${item.activeColor === 'raw wood' ? 'bg-orange-200' : `bg-${item.activeColor}-500`} `}></div>
                                                     </div>
 
                                                     <p className="font-semibold">${item.price}</p>
