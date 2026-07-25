@@ -120,7 +120,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                     colors.map((item, index) => (
                                         <div className="flex flex-col gap-1">
                                             <div key={index} className={`h-9 ${activeColor === item ? 'border-b-2' : ''}`}>
-                                                <div className={`${colorTextStyles[index]} ${colorStyles[index]} w-30 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
+                                                <div className={`text-[1px] ${colorTextStyles[index]} ${colorStyles[index]} w-25 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
                                             </div>
                                             
                                             <div className="text-xs font-semibold capitalize">{item}</div>
