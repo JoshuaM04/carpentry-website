@@ -28,7 +28,7 @@ export default function About() {
                         </p>
 
                         <p className="font-light">
-                            We are based in San Marcos and are able to ship our products anywhere across the United States. We strive for excellence and we hope to expand our reach to other countries as well!
+                            We are based in San Marcos and are only allowing local pickup for our products for the time being. In the future we hope to be able to ship our products anywhere across the United States!
                         </p>
                         <Link to="/Home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
                     </section>
@@ -47,7 +47,8 @@ export default function About() {
                     <section className="flex flex-col gap-10">
                         <h2 className="text-3xl font-semibold">Our plans for the future</h2>
                         <p className="font-light">
-                            The future of our company will pertain to expanding the catalog to include different furniture pieces that are common in different areas of someone's home. That could be a lawn chair, a coffee table, or even an island for your kitchen.
+                            The future of our company will pertain to expanding the catalog to include different furniture pieces that are common in different areas of someone's home. That could be a lawn chair, a coffee table, or even an island for your kitchen. 
+                            We also hope to be able to offer the option of shipping in the future to reach a larger audience across the United States.
                         </p>
                     </section>
 
@@ -97,13 +98,13 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-two" className={`${panelTwo}`} aria-expanded={panelTwo === 'block'}>
-                                    <p className="font-light">Yes they are! We use a protective transparent coating to ensure the paint does not get damaged and the wood is able to last a long time.</p>
+                                    <p className="font-light">Yes they are! We use a protective transparent coating to ensure the stain does not get damaged and the wood is able to last a long time.</p>
                                 </div>
                             </div>
 
                             <div id="faq-panel-three" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">How long does a furniture piece take to make and ship?</div>
+                                    <div className="font-semibold">How long does a furniture piece take to craft?</div>
 
                                     <button
                                         onClick={() => panelThree === 'hidden' ? ( setPanelThree('block'), setPanelThreeIcon('/faq-minus-icon.svg') ) : ( setPanelThree('hidden'), setPanelThreeIcon('/faq-plus-icon.svg') )}
@@ -115,13 +116,13 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-three" className={`${panelThree}`} aria-expanded={panelThree === 'block'}>
-                                    <p className="font-light">The completion time of a furniture piece is dependent on which model it is. It can vary from 1 week to around 3 weeks depending on the furniture piece. Shipping time is entirely out of our control and depends on the shipping provider.</p>
+                                    <p className="font-light">The completion time of a furniture piece is dependent on which model it is. It can vary from 1 week to around 3 weeks depending on the complexity of the furniture piece.</p>
                                 </div>
                             </div>
 
                             <div id="faq-panel-four" className="flex flex-col gap-5 border-b pt-4 pb-4">
                                 <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Can I choose a paint finish that is not currently available?</div>
+                                    <div className="font-semibold">Can I choose a stain that is not currently available?</div>
 
                                     <button
                                         onClick={() => panelFour === 'hidden' ? ( setPanelFour('block'), setPanelFourIcon('/faq-minus-icon.svg') ) : ( setPanelFour('hidden'), setPanelFourIcon('/faq-plus-icon.svg') )}
@@ -133,7 +134,7 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-four" className={`${panelFour}`} aria-expanded={panelFour === 'block'}>
-                                    <p className="font-light">Absolutely! You can pick out a paint finish you prefer and add it in a contact form submission at our <Link to="/Contact" className="text-blue-500 underline">contact page</Link>.</p>
+                                    <p className="font-light">Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/Contact" className="text-blue-500 underline">contact page</Link>.</p>
                                 </div>
                             </div>
 
