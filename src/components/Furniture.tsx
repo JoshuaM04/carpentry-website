@@ -120,7 +120,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                     colors.map((item, index) => (
                                         <div className="flex flex-col gap-1">
                                             <div key={index} className={`h-9 ${activeColor === item ? 'border-b-2' : ''}`}>
-                                                <div className={`${colorTextStyles[index]} ${colorStyles[index]} w-20 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
+                                                <div className={`${colorTextStyles[index]} ${colorStyles[index]} w-30 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
                                             </div>
                                             
                                             <div className="text-xs font-semibold capitalize">{item}</div>
@@ -135,7 +135,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                         <div className="flex flex-col">
                             <div className="flex justify-between items-center bg-slate-100 p-2 -mt-2">
                                 <p className="text-black text-lg">${product.price}</p>
-                                <p className="font-light">$75 Shipping</p>
+                                <p className="font-light">Free Pickup</p>
                             </div>
 
                             <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className={`${activeColor === '' ? 'pointer-events-none select-none' : ''} font-semibold text-white bg-black p-2 hover:cursor-pointer`}>Add to cart</button>

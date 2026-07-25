@@ -6,8 +6,6 @@ import EarthWood from './pages/Catalog/Tables/EarthWood';
 import EarthWoodReview from './pages/Reviews/Tables/EarthWoodReview';
 import HazyNight from './pages/Catalog/Nightstands/HazyNight';
 import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
-import Vatano from './pages/Catalog/Nightstands/Vatano';
-import VatanoReview from './pages/Reviews/Nightstands/VatanoReview';
 import NavBar from './components/Navigation';
 import Cart from './components/Cart'
 import ScrollToTop from './components/ScrollToTop';
@@ -64,10 +62,8 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/EarthWood" element={<EarthWood addToCart={addToCart} />} />
         <Route path="/HazyNight" element={<HazyNight addToCart={addToCart} />} />
-        <Route path="/Vatano" element={<Vatano addToCart={addToCart} />} />
         <Route path="/EarthWoodReview" element={<EarthWoodReview />} />
         <Route path="/HazyNightReview" element={<HazyNightReview />} />
-        <Route path="/VatanoReview" element={<VatanoReview />} />
       </Routes>
     </div>
   );
