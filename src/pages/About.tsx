@@ -30,7 +30,7 @@ export default function About() {
                         <p className="font-light">
                             We are based in San Marcos and are only allowing local pickup for our products for the time being. In the future we hope to be able to ship our products anywhere across the United States!
                         </p>
-                        <Link to="/Home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
+                        <Link to="/home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
                     </section>
 
                     <section className="flex flex-col gap-10">
