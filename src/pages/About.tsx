@@ -134,7 +134,7 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-four" className={`${panelFour}`} aria-expanded={panelFour === 'block'}>
-                                    <p className="font-light">Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/Contact" className="text-blue-500 underline">contact page</Link>.</p>
+                                    <p className="font-light">Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/contact" className="text-blue-500 underline">contact page</Link>.</p>
                                 </div>
                             </div>
 
@@ -152,7 +152,7 @@ export default function About() {
                                 </div>
 
                                 <div id="panel-five" className={`${panelFive}`} aria-expanded={panelFive === 'block'}>
-                                    <p className="font-light">Yes! You can visit the <Link to="/Contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
+                                    <p className="font-light">Yes! You can visit the <Link to="/contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
                                 </div>
                             </div>
                         </div>
