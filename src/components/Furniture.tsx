@@ -154,7 +154,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                 <p className="micro capitalize">{activeColor === '' ? 'Select a finish' : activeColor}</p>
                             </div>
 
-                            <div className="flex flex-wrap gap-3">
+                            <div className="grid grid-cols-4 gap-3 w-max max-xsm:grid-cols-2">
                                 {
                                     colors.map((item, index) => (
                                         <button
@@ -162,7 +162,7 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                             onClick={() => setActiveColor(item)}
                                             className={`${activeColor === item ? 'border-bark-900' : 'border-transparent'} flex flex-col gap-2 border-b-2 pb-2 hover:cursor-pointer`}
                                         >
-                                            <span className={`${colorStyles[index]} block border border-bark-900/15 w-20 h-10`}></span>
+                                            <span className={`${colorStyles[index]} block border border-bark-900/15 w-full h-10`}></span>
                                             <span className="micro text-stone-500 capitalize">{item}</span>
                                         </button>
                                     ))
