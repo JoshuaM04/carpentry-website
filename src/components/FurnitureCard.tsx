@@ -17,13 +17,12 @@ interface FurnitureCardProps {
 export default function FurnitureCard({ product }: FurnitureCardProps) {
     const [data, setData] = useState<Review[]>([]);
     const colors  = [...product.colors];
-    const colorTextStyles = [...product.colorTextStyles];
     const colorStyles = [...product.colorStyles];
 
     useEffect(() => {
         if (!product?.reviewDB) return;
-        
-        fetch(`/api/reviews/${product?.reviewDB}`) 
+
+        fetch(`/api/reviews/${product?.reviewDB}`)
         .then(response => response.json())
         .then(responseData => {
             setData(responseData);
@@ -31,41 +30,50 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
         .catch(error => {
             console.error("Error fetching reviews:", error);
         });
-    }, [product?.reviewDB]); 
+    }, [product?.reviewDB]);
 
     const totalRatingSum = data.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = totalRatingSum / data.length;
 
     return (
-        <div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
-            <Link to={product.route} className="flex flex-col gap-5 w-60 h-fit shadow-xl/30 bg-linear-to-br from-white to-olive-300">
-                <img className="h-50" src={product.image} alt={product.name} />
+        <Link to={product.route} className="furniture-card flex flex-col gap-4 w-full">
+            <div className="img-frame aspect-[4/3] w-full relative">
+                <img className="w-full h-full object-cover" src={product.image} alt={product.name} />
 
-                <div className="flex flex-col gap-5 p-5 -mt-5">
-                    <div>
-                        <p className="text-lg font-semibold">{product.name}</p>
-                        <p>${product.price}</p>
+                <span className="eyebrow text-bone-50 bg-bark-900/80 px-2 py-1 top-3 left-3 absolute capitalize">{product.type}</span>
+            </div>
+
+            <div className="flex justify-between items-start gap-4 border-t border-bark-900/15 pt-4">
+                <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-1">
+                        <p className="display display-md">{product.name}</p>
+                        <p className="micro text-stone-500">{product.wood} · {product.width} × {product.height}</p>
                     </div>
-                
-                    <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
+
+                    <div className="flex items-center gap-3">
+                        <div className="flex gap-1">
                             {
                                 colors.map((item, index) => (
-                                    <div key={index} className={`${colorTextStyles[index]} ${colorStyles[index]} text-[1px] w-10 h-5 hover:cursor-pointer select-none`}>{item}</div>
+                                    <span key={index} className={`${colorStyles[index]} border border-bark-900/15 w-5 h-2.5`}>
+                                        <span className="sr-only">{item}</span>
+                                    </span>
                                 ))
                             }
                         </div>
 
-                        <p className="text-xs">{product.colors.length} color options</p>
+                        <p className="micro text-stone-500">{product.colors.length} finishes</p>
                     </div>
 
-                    <div>
-                        <p className={`${data.length === 0 ? 'hidden' : 'block'}`}>{averageRating.toFixed(1)} / 5.0</p>
-                        <p className={`${data.length === 0 ? 'block' : 'hidden'}`}>No reviews yet</p>
-                    </div>
-                    <p className="text-xs italic">Approximately <span className="font-bold">14 days</span> completion</p>
+                    <p className="micro text-stone-500">
+                        {data.length === 0 ? 'No reviews yet' : `${averageRating.toFixed(1)} / 5.0 · ${data.length} review${data.length === 1 ? '' : 's'}`}
+                    </p>
                 </div>
-            </Link>
-        </div>
+
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                    <p className="display display-md">${product.price}</p>
+                    <p className="micro text-stone-500">~14 days</p>
+                </div>
+            </div>
+        </Link>
     );
 }

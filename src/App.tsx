@@ -7,7 +7,6 @@ import EarthWoodReview from './pages/Reviews/Tables/EarthWoodReview';
 import HazyNight from './pages/Catalog/Nightstands/HazyNight';
 import HazyNightReview from './pages/Reviews/Nightstands/HazyNightReview';
 import NavBar from './components/Navigation';
-import Cart from './components/Cart'
 import ScrollToTop from './components/ScrollToTop';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -16,7 +15,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
-  
+
   const addToCart = (product: any, selectedColor: string) => {
     setCart((prevCart) => {
       let finalColor = '';
@@ -40,9 +39,9 @@ export default function App() {
       }
 
       return [
-        ...prevCart, 
-        { 
-          ...product, 
+        ...prevCart,
+        {
+          ...product,
           activeColor: finalColor,
           cartItemId: uniqueCartId,
           quantity: 1
@@ -52,14 +51,12 @@ export default function App() {
   };
 
   return (
-    <div className="root-container min-h-dvh font-roboto">
+    <div className="root-container flex flex-col min-h-dvh text-bark-900 bg-bone-50 font-sans">
       <Analytics />
       <SpeedInsights />
 
-      <NavBar />
+      <NavBar cart={cart} setCart={setCart} />
 
-      <Cart cart={cart} setCart={setCart} />
-      
       <ScrollToTop />
 
       <Routes>

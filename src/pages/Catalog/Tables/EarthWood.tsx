@@ -10,16 +10,14 @@ interface EarthWoodProps {
 export default function EarthWood({ addToCart }: EarthWoodProps) {
     const item = FURNITURE_CATALOG.find((product) => product.id === 'earth-wood')
 
-    if (!item) return <p>Product not found</p>;
-    
+    if (!item) return <p className="p-6">Product not found</p>;
+
     return (
-        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh w-full">
-            <main className="table-one-container flex flex-col w-fit max-2md:max-w-full gap-10 p-10">
-                <Furniture
-                    product={item}
-                    addToCart={addToCart}
-                />     
-            </main>
+        <div className="table-one-container flex flex-col min-h-dvh w-full">
+            <Furniture
+                product={item}
+                addToCart={addToCart}
+            />
 
             <Footer />
         </div>

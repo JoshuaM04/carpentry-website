@@ -4,17 +4,15 @@ import { FURNITURE_CATALOG } from '../../../utility/catalog';
 
 export default function EarthWoodReview() {
     return (
-        <div className="flex flex-col justify-between gap-20 min-h-dvh">
-            <main>
-                {
-                    FURNITURE_CATALOG.filter((item) => item.id === 'earth-wood').map((item) => (
-                        <Reviews
-                            key={item.id}
-                            product={item}
-                        />
-                    ))
-                }
-            </main>
+        <div className="earth-wood-review-container flex flex-col min-h-dvh w-full">
+            {
+                FURNITURE_CATALOG.filter((item) => item.id === 'earth-wood').map((item) => (
+                    <Reviews
+                        key={item.id}
+                        product={item}
+                    />
+                ))
+            }
 
             <Footer />
         </div>

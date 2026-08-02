@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import type { Product } from '../utility/catalog';
+import SectionHeading from './SectionHeading';
 
 interface ReviewType {
     _id: string;
@@ -23,25 +24,18 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     const [reviews, setReviews] = useState<ReviewType[]>([]);
     const [activeColor, setActiveColor] = useState('');
     const colors  = [...product.colors];
-    const colorTextStyles = [...product.colorTextStyles];
     const colorStyles = [...product.colorStyles];
     const [messageVisbility, setMessageVisibility] = useState('hidden');
     const [count, setCount] = useState(0);
     const imageGallery = [...product.imageGallery];
-    const galleryButton = [0, 1, 2];
     const [activeButton, setActiveButton] = useState(0);
-    const galleryPosition = [0, 1, 2];
 
-    useEffect(() => { 
-        console.log(imageGallery);
-
+    useEffect(() => {
         const fetchReviews = async () => {
             try {
                 const response = await fetch(`/api/reviews/${product.reviewDB}`);
                 const data = await response.json();
                 setReviews(data);
-
-                console.log("Data from Express backend:", data);
             } catch (err) {
                 console.error("Failed to pull reviews:", err);
             }
@@ -56,7 +50,6 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
     }
 
     useEffect(() => {
-        console.log(count);
         const timer = setTimeout(() => { setMessageVisibility('hidden'); setCount(0) }, 5000);
 
         return () => {
@@ -64,143 +57,190 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
         }
     }, [count])
 
+    const averageRating = reviews.length === 0 ? 0 : reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+
     return (
-        <main className="furniture-component flex flex-col gap-10 max-2md:gap-5">
-            <section className="flex flex-col gap-10 mt-80 w-full">
-                <div className="grid grid-cols-[29vw_1fr] gap-10 2md:w-full max-2md:flex max-2md:flex-col">
-                   <div className="flex flex-col items-center gap-5 max-w-189.25">
-                       <div className="img-container flex gap-10 overflow-hidden">
+        <main className="furniture-component flex flex-col">
+            <section className="flex flex-col gap-10 border-b border-bark-900/15 px-6 pt-(--header-h) pb-24 max-2md:pb-16">
+                <div className="flex items-center gap-3 eyebrow text-stone-500 pt-10">
+                    <Link to="/home" className="link-underline">Catalog</Link>
+                    <span>/</span>
+                    <span className="capitalize">{product.type}s</span>
+                    <span>/</span>
+                    <span className="text-bark-900">{product.name}</span>
+                </div>
+
+                <div className="grid grid-cols-[1.15fr_1fr] gap-16 w-full max-2md:grid-cols-1 max-2md:gap-10">
+                    <div className="flex flex-col gap-4">
+                        <div className="img-container img-frame flex gap-10 w-full overflow-hidden">
                             {
-                                imageGallery.map((item) => (
-                                    <img className="animated-gallery" style={{'--animation-duration': `2s`, '--galleryPosition': `${galleryPosition[activeButton]}`} as React.CSSProperties} src={item} alt={product.name} />
+                                imageGallery.map((item, index) => (
+                                    <img
+                                        key={index}
+                                        className="animated-gallery aspect-[4/3] w-full object-cover shrink-0"
+                                        style={{'--animation-duration': `0.7s`, '--galleryPosition': `${activeButton}`} as React.CSSProperties}
+                                        src={item}
+                                        alt={`${product.name} — view ${index + 1}`}
+                                    />
                                 ))
                             }
-                       </div>
-
-                       <div className="flex gap-2">
-                            {
-                                galleryButton.map((item, index) => (
-                                    <button key={index} onClick={() => setActiveButton(item)} 
-                                    aria-label="color-option"
-                                    className={`${activeButton === item ? 'bg-black text-black' : 'bg-slate-300 text-slate-300'} w-4 h-4 rounded-[50%] text-[1px]`}>{item}</button>
-                                ))
-                            }
-                       </div>
-                   </div>
-
-                    <div className="product-information-container flex flex-col gap-2 max-2md:min-h-132 relative">
-                        <div className="flex flex-col gap-2">
-                            <h2 className="text-3xl">{product.name}</h2>
-                            <p>${product.price}</p>
                         </div>
 
-                        <hr />
-
-                        <div>
-                            <p className="font-bold">Dimensions</p>
-                            <p>{product.width} - Width</p>
-                            <p>{product.height} - Height</p>
-                            <p>{product.diameter} - Diameter</p>
-                        </div>
-
-                        <hr />
-
-                        <div>
-                            <p className="font-bold">Wood</p>
-                            <p>{product.wood}</p>
-                        </div>
-
-                        <hr />
-
-                        <div className="flex flex-col gap-2 h-fit">
-                            <h3 className="font-bold">Color</h3>
-
-                            <div className="flex gap-2 overflow-x-scroll h-18.75 overflow-y-hidden">
-                               {
-                                    colors.map((item, index) => (
-                                        <div className="flex flex-col gap-1">
-                                            <div key={index} className={`h-9 ${activeColor === item ? 'border-b-2' : ''}`}>
-                                                <div className={`text-[1px] ${colorTextStyles[index]} ${colorStyles[index]} w-25 h-8 hover:cursor-pointer select-none`} key={index} onClick={() => { setActiveColor(item); console.log(item); }}>{item}</div>
-                                            </div>
-                                            
-                                            <div className="text-xs font-semibold capitalize">{item}</div>
-                                        </div>
+                        <div className="flex justify-between items-center gap-4">
+                            <div className="flex gap-2">
+                                {
+                                    imageGallery.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setActiveButton(index)}
+                                            aria-label={`Show image ${index + 1}`}
+                                            className={`${activeButton === index ? 'bg-bark-900' : 'bg-bark-900/25'} w-10 h-0.5 hover:cursor-pointer`}
+                                        ></button>
                                     ))
-                               }
+                                }
+                            </div>
+
+                            <p className="micro text-stone-500">0{activeButton + 1} / 0{imageGallery.length}</p>
+                        </div>
+                    </div>
+
+                    <div className="product-information-container flex flex-col gap-8">
+                        <div className="flex flex-col gap-4">
+                            <p className="eyebrow text-stone-500 capitalize">{product.type} · {product.wood}</p>
+
+                            <h1 className="display display-xl">{product.name}</h1>
+
+                            <div className="flex items-center gap-4">
+                                <p className="display display-md">${product.price}</p>
+
+                                {
+                                    reviews.length > 0 && (
+                                        <p className="micro text-stone-500">{averageRating.toFixed(1)} / 5.0 · {reviews.length} review{reviews.length === 1 ? '' : 's'}</p>
+                                    )
+                                }
                             </div>
                         </div>
 
-                        <hr />
+                        <div className="flex flex-col border-t border-bark-900/15">
+                            <div className="flex justify-between items-center border-b border-bark-900/15 py-3">
+                                <p className="eyebrow text-stone-500">Width</p>
+                                <p className="micro">{product.width}</p>
+                            </div>
+
+                            <div className="flex justify-between items-center border-b border-bark-900/15 py-3">
+                                <p className="eyebrow text-stone-500">Height</p>
+                                <p className="micro">{product.height}</p>
+                            </div>
+
+                            <div className="flex justify-between items-center border-b border-bark-900/15 py-3">
+                                <p className="eyebrow text-stone-500">Diameter</p>
+                                <p className="micro">{product.diameter}</p>
+                            </div>
+
+                            <div className="flex justify-between items-center border-b border-bark-900/15 py-3">
+                                <p className="eyebrow text-stone-500">Wood</p>
+                                <p className="micro">{product.wood}</p>
+                            </div>
+
+                            <div className="flex justify-between items-center border-b border-bark-900/15 py-3">
+                                <p className="eyebrow text-stone-500">Completion</p>
+                                <p className="micro">Approximately 14 days</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-4">
+                            <div className="flex justify-between items-center">
+                                <h2 className="eyebrow text-stone-500">Finish</h2>
+                                <p className="micro capitalize">{activeColor === '' ? 'Select a finish' : activeColor}</p>
+                            </div>
+
+                            <div className="flex flex-wrap gap-3">
+                                {
+                                    colors.map((item, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setActiveColor(item)}
+                                            className={`${activeColor === item ? 'border-bark-900' : 'border-transparent'} flex flex-col gap-2 border-b-2 pb-2 hover:cursor-pointer`}
+                                        >
+                                            <span className={`${colorStyles[index]} block border border-bark-900/15 w-20 h-10`}></span>
+                                            <span className="micro text-stone-500 capitalize">{item}</span>
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        </div>
 
                         <div className="flex flex-col">
-                            <div className="flex justify-between items-center bg-slate-100 p-2 -mt-2">
-                                <p className="text-black text-lg">${product.price}</p>
-                                <p className="font-light">Free Pickup</p>
+                            <div className="flex justify-between items-center bg-bone-200 px-4 py-3">
+                                <p className="display display-md">${product.price}</p>
+                                <p className="eyebrow text-stone-600">Free local pickup</p>
                             </div>
 
-                            <button onClick={() => { showMessage(); addToCart(product, activeColor) }} className={`${activeColor === '' ? 'pointer-events-none select-none' : ''} font-semibold text-white bg-black p-2 hover:cursor-pointer`}>Add to cart</button>
-                        </div>
+                            <button
+                                onClick={() => { showMessage(); addToCart(product, activeColor) }}
+                                disabled={activeColor === ''}
+                                className="btn btn-solid justify-center w-full"
+                            >
+                                {activeColor === '' ? 'Select a finish first' : 'Add to cart'}
+                            </button>
 
-                        <div className="h-10">
-                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit mt-3`}>
-                                <p>Added to cart</p>
-                                <div className="absolute top-118 left-33 text-white text-xs flex justify-center items-center bg-black rounded-[50%] w-6 p-1">{count}</div>
+                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} w-fit mt-4`}>
+                                <div className="flex items-center gap-3 bg-bark-900 text-bone-50 eyebrow px-4 h-9">
+                                    <p>Added to cart</p>
+                                    <span className="flex justify-center items-center bg-bone-50 text-bark-900 text-[0.625rem] font-semibold size-4">{count}</span>
+                                </div>
+
+                                <div key={count} className="bg-espresso-500 h-1 animate-timer-message"></div>
                             </div>
-
-                            <div key={count} className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-message'} bg-black h-1`}></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <hr />
+            <section className="flex flex-col gap-12 px-6 py-24 max-2md:py-16">
+                <SectionHeading eyebrow={`${reviews.length} total`} left="Customer" right="Reviews." />
 
-            <section className="flex flex-col gap-10 w-full">
-                <div className="flex flex-col gap-2">
-                    <Link className="text-sm font-semibold text-white bg-black p-2 w-fit" to={product.review}>Write a Review</Link>
-                </div>
+                <div className="reviews-container flex flex-col gap-10">
+                    <Link className="btn btn-ghost w-fit" to={product.review}>Write a review</Link>
 
-                <div className="reviews-container flex flex-col gap-5">
-                    <h3 className="text-lg">Customer Reviews <span className="font-semibold">({reviews.length})</span></h3>
+                    {
+                        reviews.length === 0 ? (
+                            <p className="text-sm text-stone-500">No reviews yet — be the first to write one.</p>
+                        ) : (
+                            <div className="flex flex-col">
+                                {
+                                    reviews.map((review) => (
+                                        <div key={review._id} className="flex flex-col gap-4 border-t border-bark-900/15 py-8">
+                                            <div className="flex flex-wrap justify-between items-baseline gap-4">
+                                                <p className="text-sm tracking-[0.2em]">{'★'.repeat(review.rating)}<span className="text-bark-900/25">{'★'.repeat(5 - review.rating)}</span></p>
+                                                <p className="micro text-stone-500">{new Date(review.timestamp).toLocaleDateString()}</p>
+                                            </div>
 
-                    <div className="flex flex-col gap-5">
-                        {
-                            reviews.map((review) => (
-                                <div key={review._id} className="flex flex-col gap-2">
-                                    <div className="flex justify-between">
-                                        <p>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)} ({review.rating}/5)</p>
-                                        <p>By <span className="font-semibold">{review.username}</span></p>
-                                    </div>
+                                            <div className="flex flex-col gap-2 max-w-3xl">
+                                                <h3 className="display display-md">{review.title}</h3>
+                                                <p className="text-base leading-relaxed text-stone-600">{review.comment}</p>
+                                                <p className="micro text-stone-500">By <span className="text-bark-900">{review.username}</span></p>
+                                            </div>
 
-                                    <div className="flex justify-between">
-                                        <h3 className="font-semibold">{review.title}</h3>
-                                        <p>{new Date(review.timestamp).toLocaleDateString()}</p>
-                                    </div>
-                                    
-                                    <p>{review.comment}</p>
-
-                                    <div className="media-upload-container">
-                                        {
-                                            review.imageUpload === '' && review.videoUpload === '' ? (
-                                                <div className="hidden"></div>
-                                            ) : 
-                                                review.imageUpload !== '' && review.videoUpload !== '' ? (
-                                                    <div>
-                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
-                                                        <video src={review.videoUpload} controls className="max-w-100" />
-                                                    </div>
-                                                ) :
+                                            <div className="media-upload-container flex flex-wrap gap-4">
+                                                {
                                                     review.imageUpload ? (
-                                                        <img src={review.imageUpload} alt={product.name} className="w-100" />
-                                                    ) : (
-                                                        <video src={review.videoUpload} controls className="w-100" />
-                                                    )
-                                        }
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                                                        <div className="img-frame w-80 max-w-full"><img src={review.imageUpload} alt={product.name} className="w-full h-full object-cover" /></div>
+                                                    ) : null
+                                                }
+
+                                                {
+                                                    review.videoUpload ? (
+                                                        <video src={review.videoUpload} controls className="w-80 max-w-full" />
+                                                    ) : null
+                                                }
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        )
+                    }
                 </div>
             </section>
         </main>

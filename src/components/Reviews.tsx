@@ -21,7 +21,6 @@ export default function Reviews({ product }: ReviewsProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        console.log(count);
         const timer = setTimeout(() => { setMessageVisibility('hidden'); setCount(0) }, 5000);
 
         return () => {
@@ -69,9 +68,6 @@ export default function Reviews({ product }: ReviewsProps) {
         setMessageVisibility('block');
         setCount((prevIndex) => prevIndex + 1);
 
-        console.log("Current product object:", product);
-        console.log("Value of product.reviewDB:", product?.reviewDB);
-
         const formData = new FormData();
 
         formData.append('title', title);
@@ -110,109 +106,122 @@ export default function Reviews({ product }: ReviewsProps) {
     }
 
     return (
-        <main className="table-one-review-container flex flex-col items-center min-h-dvh p-10">
-            <div className="flex flex-col gap-10 mt-80">
-                <div className="flex gap-5">
-                    <div className="img-container">
-                        <img className="w-60" src={product.image} alt={product.name} />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <h2 className="text-xl">Write a Review</h2>
-                        <Link to={product.route} className="text-blue-700 underline">{product.name}</Link>
-                    </div>
+        <main className="review-form-container flex flex-col">
+            <section className="flex flex-col gap-10 border-b border-bark-900/15 px-6 pt-(--header-h) pb-12">
+                <div className="flex items-center gap-3 eyebrow text-stone-500 pt-10">
+                    <Link to="/home" className="link-underline">Catalog</Link>
+                    <span>/</span>
+                    <Link to={product.route} className="link-underline">{product.name}</Link>
+                    <span>/</span>
+                    <span className="text-bark-900">Review</span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-10 min-w-full">
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold" htmlFor="title">Title<span className="text-red-500">*</span></label>
-                        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required className="border p-2" type="text" />
+                <div className="flex items-end gap-6 max-xsm:flex-col max-xsm:items-start">
+                    <div className="img-frame w-32 h-32 shrink-0">
+                        <img className="w-full h-full object-cover" src={product.image} alt={product.name} />
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label className="font-semibold" htmlFor="rating">Rating<span className="text-red-500">*</span></label>
-                
-                        <div className="flex gap-2">
+                        <p className="eyebrow text-stone-500 capitalize">{product.type} · ${product.price}</p>
+                        <h1 className="display display-xl">Write a review</h1>
+                        <Link to={product.route} className="link-underline micro w-fit">{product.name}</Link>
+                    </div>
+                </div>
+            </section>
+
+            <section className="flex justify-center px-6 py-24 max-2md:py-16">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-10 w-full max-w-3xl">
+                    <div className="flex flex-col gap-2">
+                        <label className="eyebrow text-stone-500" htmlFor="title">Title<span className="text-espresso-500">*</span></label>
+                        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required className="field" type="text" placeholder="Sums up your experience" />
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        <label className="eyebrow text-stone-500" htmlFor="rating">Rating<span className="text-espresso-500">*</span></label>
+
+                        <div className="flex items-center gap-2">
                             <input type="hidden" value={activeRating || 0 } name="rating" />
 
                             {
                                 rating.map((item, index) => {
                                     return (
-                                        <button type="button" key={index} onClick={() => setActiveRating(item)} className="hover:cursor-pointer">
-                                            <svg className={`w-10 ${activeRating >= item ? 'fill-yellow-200' : ''}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.245 4.174C11.4765 3.50808 11.5922 3.17513 11.7634 3.08285C11.9115 3.00298 12.0898 3.00298 12.238 3.08285C12.4091 3.17513 12.5248 3.50808 12.7563 4.174L14.2866 8.57639C14.3525 8.76592 14.3854 8.86068 14.4448 8.93125C14.4972 8.99359 14.5641 9.04218 14.6396 9.07278C14.725 9.10743 14.8253 9.10947 15.0259 9.11356L19.6857 9.20852C20.3906 9.22288 20.743 9.23007 20.8837 9.36432C21.0054 9.48051 21.0605 9.65014 21.0303 9.81569C20.9955 10.007 20.7146 10.2199 20.1528 10.6459L16.4387 13.4616C16.2788 13.5829 16.1989 13.6435 16.1501 13.7217C16.107 13.7909 16.0815 13.8695 16.0757 13.9507C16.0692 14.0427 16.0982 14.1387 16.1563 14.3308L17.506 18.7919C17.7101 19.4667 17.8122 19.8041 17.728 19.9793C17.6551 20.131 17.5108 20.2358 17.344 20.2583C17.1513 20.2842 16.862 20.0829 16.2833 19.6802L12.4576 17.0181C12.2929 16.9035 12.2106 16.8462 12.1211 16.8239C12.042 16.8043 11.9593 16.8043 11.8803 16.8239C11.7908 16.8462 11.7084 16.9035 11.5437 17.0181L7.71805 19.6802C7.13937 20.0829 6.85003 20.2842 6.65733 20.2583C6.49056 20.2358 6.34626 20.131 6.27337 19.9793C6.18915 19.8041 6.29123 19.4667 6.49538 18.7919L7.84503 14.3308C7.90313 14.1387 7.93218 14.0427 7.92564 13.9507C7.91986 13.8695 7.89432 13.7909 7.85123 13.7217C7.80246 13.6435 7.72251 13.5829 7.56262 13.4616L3.84858 10.6459C3.28678 10.2199 3.00588 10.007 2.97101 9.81569C2.94082 9.65014 2.99594 9.48051 3.11767 9.36432C3.25831 9.23007 3.61074 9.22289 4.31559 9.20852L8.9754 9.11356C9.176 9.10947 9.27631 9.10743 9.36177 9.07278C9.43726 9.04218 9.50414 8.99359 9.55657 8.93125C9.61593 8.86068 9.64887 8.76592 9.71475 8.57639L11.245 4.174Z" stroke="#000000" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                                        <button type="button" key={index} onClick={() => setActiveRating(item)} aria-label={`Rate ${item} out of 5`} className="hover:cursor-pointer">
+                                            <svg className={`${activeRating >= item ? 'fill-bark-900 text-bark-900' : 'fill-transparent text-bark-900/30'} w-8`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.245 4.174C11.4765 3.50808 11.5922 3.17513 11.7634 3.08285C11.9115 3.00298 12.0898 3.00298 12.238 3.08285C12.4091 3.17513 12.5248 3.50808 12.7563 4.174L14.2866 8.57639C14.3525 8.76592 14.3854 8.86068 14.4448 8.93125C14.4972 8.99359 14.5641 9.04218 14.6396 9.07278C14.725 9.10743 14.8253 9.10947 15.0259 9.11356L19.6857 9.20852C20.3906 9.22288 20.743 9.23007 20.8837 9.36432C21.0054 9.48051 21.0605 9.65014 21.0303 9.81569C20.9955 10.007 20.7146 10.2199 20.1528 10.6459L16.4387 13.4616C16.2788 13.5829 16.1989 13.6435 16.1501 13.7217C16.107 13.7909 16.0815 13.8695 16.0757 13.9507C16.0692 14.0427 16.0982 14.1387 16.1563 14.3308L17.506 18.7919C17.7101 19.4667 17.8122 19.8041 17.728 19.9793C17.6551 20.131 17.5108 20.2358 17.344 20.2583C17.1513 20.2842 16.862 20.0829 16.2833 19.6802L12.4576 17.0181C12.2929 16.9035 12.2106 16.8462 12.1211 16.8239C12.042 16.8043 11.9593 16.8043 11.8803 16.8239C11.7908 16.8462 11.7084 16.9035 11.5437 17.0181L7.71805 19.6802C7.13937 20.0829 6.85003 20.2842 6.65733 20.2583C6.49056 20.2358 6.34626 20.131 6.27337 19.9793C6.18915 19.8041 6.29123 19.4667 6.49538 18.7919L7.84503 14.3308C7.90313 14.1387 7.93218 14.0427 7.92564 13.9507C7.91986 13.8695 7.89432 13.7909 7.85123 13.7217C7.80246 13.6435 7.72251 13.5829 7.56262 13.4616L3.84858 10.6459C3.28678 10.2199 3.00588 10.007 2.97101 9.81569C2.94082 9.65014 2.99594 9.48051 3.11767 9.36432C3.25831 9.23007 3.61074 9.22289 4.31559 9.20852L8.9754 9.11356C9.176 9.10947 9.27631 9.10743 9.36177 9.07278C9.43726 9.04218 9.50414 8.99359 9.55657 8.93125C9.61593 8.86068 9.64887 8.76592 9.71475 8.57639L11.245 4.174Z" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                     )
                                 })
                             }
+
+                            <span className="micro text-stone-500 ml-2">{activeRating === 0 ? 'No rating yet' : `${activeRating} / 5`}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="comment" className="font-semibold">Product Comments<span className="text-red-500">*</span></label>
-                        <textarea id="comment" value={comment} onChange={(e) => setComment(e.target.value)} className="border resize-none h-40 p-2"></textarea>
+                        <label htmlFor="comment" className="eyebrow text-stone-500">Product comments<span className="text-espresso-500">*</span></label>
+                        <textarea id="comment" value={comment} onChange={(e) => setComment(e.target.value)} className="field resize-none h-48" placeholder="How does the piece hold up day to day?"></textarea>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="username" className="font-semibold">Display Name<span className="text-red-500">*</span></label>
-                        <input id="username" value={username} type="text" onChange={(e) => setUsername(e.target.value)} className="border p-2" />
+                    <div className="grid grid-cols-2 gap-8 max-xsm:grid-cols-1">
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="username" className="eyebrow text-stone-500">Display name<span className="text-espresso-500">*</span></label>
+                            <input id="username" value={username} type="text" onChange={(e) => setUsername(e.target.value)} className="field" placeholder="Shown with your review" />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="email" className="eyebrow text-stone-500">Email<span className="text-espresso-500">*</span></label>
+                            <input id="email" value={email} type="email" onChange={(e) => setEmail(e.target.value)} className="field" placeholder="Kept private" />
+                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-5 border-t border-bark-900/15 pt-8">
+                        <p className="eyebrow text-stone-500">Attachments</p>
+
                         <div className="img-submission-container flex flex-wrap items-center gap-5">
-                            <label htmlFor="imgUpload" className="text-sm font-semibold text-white bg-black min-w-27 p-2 hover:cursor-pointer">
-                                Upload Image
+                            <label htmlFor="imgUpload" className="btn btn-ghost">
+                                Upload image
                             </label>
 
-                            <input id="imgUpload" type="file" accept="image/*" onChange={handleImage} className="hidden" /> 
+                            <input id="imgUpload" type="file" accept="image/*" onChange={handleImage} className="hidden" />
 
-                            <div className="flex gap-5">
-                                <span>
-                                    {imageUpload}
-                                </span>
-                                
-                                <button onClick={() => setImageUpload('No file chosen')} className={`${imageUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
-                                    <svg className="size-5 stroke-red-500 fill-red-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
+                            <div className="flex items-center gap-3">
+                                <span className="micro text-stone-500">{imageUpload}</span>
+
+                                <button type="button" onClick={() => { setImageUpload('No file chosen'); setSelectedImageFile(null); }} aria-label="Clear selected image" className={`${imageUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
+                                    <svg className="size-4 fill-stone-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></svg>
                                 </button>
                             </div>
                         </div>
 
                         <div className="video-submission-container flex flex-wrap items-center gap-5">
-                            <label htmlFor="videoUpload" className="text-sm font-semibold text-white bg-black p-2 min-w-27 hover:cursor-pointer">
-                                Upload Video
+                            <label htmlFor="videoUpload" className="btn btn-ghost">
+                                Upload video
                             </label>
 
-                            <input id="videoUpload" type="file" accept="video/*" onChange={handleVideo} className="hidden" /> 
+                            <input id="videoUpload" type="file" accept="video/*" onChange={handleVideo} className="hidden" />
 
-                            <div className="flex gap-5">
-                                <span>
-                                    {videoUpload}
-                                </span>
-                                
-                                <button onClick={() => setVideoUpload('No file chosen')} className={`${videoUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
-                                    <svg className="size-5 stroke-red-500 fill-red-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></g></svg>
+                            <div className="flex items-center gap-3">
+                                <span className="micro text-stone-500">{videoUpload}</span>
+
+                                <button type="button" onClick={() => { setVideoUpload('No file chosen'); setSelectedVideoFile(null); }} aria-label="Clear selected video" className={`${videoUpload === 'No file chosen' ? 'hidden' : 'block'} hover:cursor-pointer`}>
+                                    <svg className="size-4 fill-stone-500" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"></path></svg>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="email" className="font-semibold">Email<span className="text-red-500">*</span></label>
-                        <input id="email" value={email} type="email" onChange={(e) => setEmail(e.target.value)} className="border p-2" />
-                    </div>
+                    <div className="flex items-start gap-5 border-t border-bark-900/15 pt-8">
+                        <button type="submit" className="btn btn-solid">Submit review</button>
 
-                    <div className="flex gap-5">
-                        <button type="submit" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-10 hover:cursor-pointer">Submit</button>
-                        
-                        <div>
-                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} font-semibold uppercase bg-green-100 p-2 w-fit h-9`}>
+                        <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block'} w-fit`}>
+                            <div className="flex items-center bg-bark-900 text-bone-50 eyebrow px-4 h-9">
                                 <p>Submitted</p>
                             </div>
 
-                            <div className={`${messageVisbility === 'hidden' ? 'hidden' : 'block animate-timer-forms-message'} bg-black h-1`}></div>
+                            <div key={count} className="bg-espresso-500 h-1 animate-timer-forms-message"></div>
                         </div>
                     </div>
                 </form>
-            </div>
+            </section>
         </main>
     );
 }
