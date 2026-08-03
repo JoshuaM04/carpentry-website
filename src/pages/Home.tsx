@@ -39,19 +39,15 @@ export default function Home() {
                         <div className="flex flex-col gap-8 max-w-lg">
                             <p className="display display-md">Hand crafted.<br />Real materials.<br />Family owned.</p>
 
-                            <Link to={featured.route} className="flex flex-col gap-3 bg-bone-50/95 text-bark-900 p-3 w-fit max-w-xs">
-                                <p className="eyebrow text-bone-50 bg-bark-900 px-2 py-1 w-fit">New arrival</p>
+                            <Link to={featured.route} className="flex items-center gap-4 bg-bone-50/95 text-bark-900 p-3 w-fit max-w-xs">
+                                <div className="img-frame w-16 h-16 shrink-0">
+                                    <img className="w-full h-full object-cover" src={featured.image} alt={featured.name} />
+                                </div>
 
-                                <div className="flex items-center gap-4">
-                                    <div className="img-frame w-16 h-16 shrink-0">
-                                        <img className="w-full h-full object-cover" src={featured.image} alt={featured.name} />
-                                    </div>
-
-                                    <div className="flex flex-col gap-1">
-                                        <p className="display text-sm">{featured.name}</p>
-                                        <p className="micro text-stone-500 capitalize">{featured.type} · {featured.wood}</p>
-                                        <p className="micro">${featured.price}</p>
-                                    </div>
+                                <div className="flex flex-col gap-1">
+                                    <p className="display text-sm">{featured.name}</p>
+                                    <p className="micro text-stone-500 capitalize">{featured.type} · {featured.wood}</p>
+                                    <p className="micro">${featured.price}</p>
                                 </div>
                             </Link>
                         </div>
