@@ -21,7 +21,6 @@ const PROCESS = [
 ];
 
 export default function Home() {
-    const featured = FURNITURE_CATALOG.find((item) => item.id === 'hazy-night') ?? FURNITURE_CATALOG[0];
     const tables = FURNITURE_CATALOG.filter((item) => item.type === "table");
     const nightstands = FURNITURE_CATALOG.filter((item) => item.type === "nightstand");
 
@@ -37,19 +36,7 @@ export default function Home() {
                         <h1 className="display display-xl text-center">Hand crafted.<br />Real materials.<br />Family owned.</h1>
                     </div>
 
-                    <div className="flex flex-wrap justify-between items-end gap-10 px-6 pb-10 relative max-2md:pb-8">
-                        <Link to={featured.route} className="flex items-center gap-4 bg-bone-50/95 text-bark-900 p-3 w-fit max-w-xs">
-                            <div className="img-frame w-16 h-16 shrink-0">
-                                <img className="w-full h-full object-cover" src={featured.image} alt={featured.name} />
-                            </div>
-
-                            <div className="flex flex-col gap-1">
-                                <p className="display text-sm">{featured.name}</p>
-                                <p className="micro text-stone-500 capitalize">{featured.type} · {featured.wood}</p>
-                                <p className="micro">${featured.price}</p>
-                            </div>
-                        </Link>
-
+                    <div className="flex flex-wrap justify-end items-end gap-10 px-6 pb-10 relative max-2md:pb-8">
                         <div className="flex flex-col gap-6 max-w-md">
                             <p className="text-sm leading-relaxed text-bone-100">
                                 Furniture made from honest wood, joined by hand and finished to last — built by a family in San Marcos who talk you through every detail from the first message to local pickup.
