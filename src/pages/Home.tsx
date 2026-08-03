@@ -33,7 +33,7 @@ export default function Home() {
                     <div className="bg-linear-to-b from-bark-950/75 via-bark-950/25 to-bark-950/85 top-0 left-0 w-full h-full absolute"></div>
 
                     <div className="flex justify-center items-center flex-1 px-6 relative">
-                        <h1 className="display display-xl text-center">Hand crafted.<br />Real materials.<br />Family owned.</h1>
+                        <h1 className="display display-xl text-center">Hand crafted<br />Real materials<br />Family owned</h1>
                     </div>
 
                     <div className="flex flex-wrap justify-end items-end gap-10 px-6 pb-10 relative max-2md:pb-8">
