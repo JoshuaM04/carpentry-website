@@ -170,8 +170,21 @@
 }
 
 .btn-ghost:hover {
-    background-color: currentColor;
+    background-color: var(--color-bark-900);
+    border-color: var(--color-bark-900);
     color: var(--color-bone-50);
+}
+
+/* Ghost button sitting on a dark surface — fills light, so the label
+   has to flip dark. */
+.btn-ghost-light {
+    color: var(--color-bone-50);
+}
+
+.btn-ghost-light:hover {
+    background-color: var(--color-bone-50);
+    border-color: var(--color-bone-50);
+    color: var(--color-bark-950);
 }
 
 .btn:disabled {

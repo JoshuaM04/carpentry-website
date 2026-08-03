@@ -59,7 +59,7 @@ export default function Home() {
 
                             <div className="flex flex-wrap gap-3">
                                 <a href="#furniture-menu" className="btn btn-solid bg-bone-50 text-bark-950 hover:bg-bone-200">Explore collection</a>
-                                <Link to="/about" className="btn btn-ghost text-bone-50 hover:text-bark-950">Our story</Link>
+                                <Link to="/about" className="btn btn-ghost btn-ghost-light">Our story</Link>
                             </div>
                         </div>
                     </div>

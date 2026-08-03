@@ -20,7 +20,7 @@ export default function Gallery() {
 
                     <div className="flex flex-wrap gap-3 border-t border-bone-50/15 pt-10">
                         <Link to="/home" className="btn btn-solid bg-bone-50 text-bark-950 hover:bg-bone-200">Browse the catalog</Link>
-                        <Link to="/contact" className="btn btn-ghost text-bone-50 hover:text-bark-950">Ask about a piece</Link>
+                        <Link to="/contact" className="btn btn-ghost btn-ghost-light">Ask about a piece</Link>
                     </div>
                 </div>
             </main>
