@@ -20,11 +20,11 @@ const FAQ = [
     },
     {
         question: 'Can I choose a stain that is not currently available?',
-        answer: <>Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/contact" className="link-underline font-medium">contact page</Link>.</>
+        answer: <>Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/contact" className="link-underline font-medium whitespace-nowrap">contact page</Link>.</>
     },
     {
         question: 'Can I commission a custom-made furniture piece?',
-        answer: <>Yes! You can visit the <Link to="/contact" className="link-underline font-medium">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</>
+        answer: <>Yes! You can visit the <Link to="/contact" className="link-underline font-medium whitespace-nowrap">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</>
     }
 ];
 

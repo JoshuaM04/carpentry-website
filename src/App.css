@@ -189,24 +189,23 @@
    Links, hairlines, image frames
    --------------------------------------------------------------- */
 
+/* Wipe-in underline. Drawn as a background rather than an absolutely
+   positioned ::after so it still works when an inline link wraps across
+   two lines — box-decoration-break gives each line its own rule. */
 .link-underline {
-    position: relative;
+    padding-bottom: 0.3rem;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.35s ease;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
 }
 
-.link-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.3rem;
-    width: 0;
-    height: 1px;
-    background-color: currentColor;
-    transition: width 0.35s ease;
-}
-
-.link-underline:hover::after,
-.link-underline:focus-visible::after {
-    width: 100%;
+.link-underline:hover,
+.link-underline:focus-visible {
+    background-size: 100% 1px;
 }
 
 .rule {
