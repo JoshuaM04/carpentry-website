@@ -70,7 +70,7 @@ export default function Home() {
                         <p className="eyebrow text-stone-500">Collections</p>
 
                         <p className="display display-xl max-w-4xl">
-                            <span>All,</span> <span className="text-stone-500">Tables, Nightstands, Chairs</span>
+                            <span>Tables, Nightstands, Chairs,</span> <span className="text-stone-500">and more</span>
                         </p>
                     </div>
 
