@@ -33,24 +33,22 @@ export default function Home() {
 
                     <div className="bg-linear-to-b from-bark-950/75 via-bark-950/25 to-bark-950/85 top-0 left-0 w-full h-full absolute"></div>
 
-                    <h1 className="display display-hero px-6 pt-6 relative max-2md:pt-4">WoodWork<br className="2md:hidden" /> Creations</h1>
+                    <div className="flex justify-center items-center flex-1 px-6 relative">
+                        <h1 className="display display-xl text-center">Hand crafted.<br />Real materials.<br />Family owned.</h1>
+                    </div>
 
                     <div className="flex flex-wrap justify-between items-end gap-10 px-6 pb-10 relative max-2md:pb-8">
-                        <div className="flex flex-col gap-8 max-w-lg">
-                            <p className="display display-md">Hand crafted.<br />Real materials.<br />Family owned.</p>
+                        <Link to={featured.route} className="flex items-center gap-4 bg-bone-50/95 text-bark-900 p-3 w-fit max-w-xs">
+                            <div className="img-frame w-16 h-16 shrink-0">
+                                <img className="w-full h-full object-cover" src={featured.image} alt={featured.name} />
+                            </div>
 
-                            <Link to={featured.route} className="flex items-center gap-4 bg-bone-50/95 text-bark-900 p-3 w-fit max-w-xs">
-                                <div className="img-frame w-16 h-16 shrink-0">
-                                    <img className="w-full h-full object-cover" src={featured.image} alt={featured.name} />
-                                </div>
-
-                                <div className="flex flex-col gap-1">
-                                    <p className="display text-sm">{featured.name}</p>
-                                    <p className="micro text-stone-500 capitalize">{featured.type} · {featured.wood}</p>
-                                    <p className="micro">${featured.price}</p>
-                                </div>
-                            </Link>
-                        </div>
+                            <div className="flex flex-col gap-1">
+                                <p className="display text-sm">{featured.name}</p>
+                                <p className="micro text-stone-500 capitalize">{featured.type} · {featured.wood}</p>
+                                <p className="micro">${featured.price}</p>
+                            </div>
+                        </Link>
 
                         <div className="flex flex-col gap-6 max-w-md">
                             <p className="text-sm leading-relaxed text-bone-100">
