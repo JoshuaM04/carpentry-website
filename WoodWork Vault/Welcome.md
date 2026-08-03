@@ -41,12 +41,12 @@ Open the **graph view** (`Ctrl+G`) to see the note network.
 | 07 | [[07 - MongoDB and Mongoose]] | review schema, serverless connection guard |
 | 08 | [[08 - Stripe Checkout Flow]] | hosted checkout, line items, redirects |
 | 09 | [[09 - Media Uploads]] | multer → Vercel Blob → Mongo URL |
-| 10 | [[10 - Tailwind Design System]] | v4 `@theme` tokens, keyframes, `clamp()` |
-| 11 | [[11 - Styling Conventions]] | utility ordering, `max-*` variants, house style |
+| 10 | [[10 - Tailwind Design System]] | palette, type scale, component classes, motion |
+| 11 | [[11 - Styling Conventions]] | class-or-utility, `max-*` variants, house style |
 | 12 | [[12 - Coding Style Guide]] | naming, typing, formatting, inconsistencies |
 | 13 | [[13 - Deployment and Configuration]] | every config file, env vars, deploy flow |
 | 14 | [[14 - Adding a New Product]] | end-to-end walkthrough |
-| 15 | [[15 - Known Gotchas and Tech Debt]] | 35 findings, prioritised |
+| 15 | [[15 - Known Gotchas and Tech Debt]] | 30 open findings, prioritised, plus what was fixed |
 
 ---
 

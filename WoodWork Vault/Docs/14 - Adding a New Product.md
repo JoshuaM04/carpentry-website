@@ -19,7 +19,7 @@ public/furniture/catalog/chairs/oak-rest/
 └── oak-rest-top.png
 ```
 
-Three views, in that order — `Furniture.tsx` hardcodes `galleryButton = [0, 1, 2]`, so exactly three images are navigable.
+Three views, in that order. `Furniture.tsx` maps its slides and its controls over `imageGallery`, so any count works — but every existing product ships three, and the `01 / 03` counter looks deliberate only when the catalog is consistent.
 
 ## Step 2 — Catalog entry
 
@@ -35,9 +35,9 @@ Append to `FURNITURE_CATALOG` in `src/utility/catalog.ts`:
     name: 'Oak Rest',
     price: 290,
     activeColor: '',
-    colors:          ['raw wood',        'stain - espresso',  'stain - olive',  'stain - gray'],
-    colorTextStyles: ['text-orange-200', 'text-espresso-500', 'text-olive-500', 'text-gray-500'],
-    colorStyles:     ['bg-orange-200',   'bg-espresso-500',   'bg-olive-500',   'bg-gray-500'],
+    colors:          ['raw wood',     'stain - espresso',  'stain - olive',  'stain - gray'],
+    colorTextStyles: ['text-raw-500', 'text-espresso-500', 'text-olive-500', 'text-gray-500'],
+    colorStyles:     ['bg-raw-500',   'bg-espresso-500',   'bg-olive-500',   'bg-gray-500'],
     stripePriceId: 'N/A',
     image: '/furniture/catalog/chairs/oak-rest/oak-rest-front.png',
     imageGallery: [
@@ -78,15 +78,15 @@ export default function OakRest({ addToCart }: OakRestProps) {
     if (!item) return <p>Product not found</p>;
 
     return (
-        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh w-full">
-            <main className="table-one-container flex flex-col w-fit max-2md:max-w-full gap-10 p-10">
-                <Furniture product={item} addToCart={addToCart} />
-            </main>
+        <div className="chair-one-container flex flex-col min-h-dvh w-full">
+            <Furniture product={item} addToCart={addToCart} />
             <Footer />
         </div>
     );
 }
 ```
+
+The leading class is a devtools label with no CSS behind it — name it after *this* product's category, not the one you copied from. See [[11 - Styling Conventions]].
 
 ## Step 4 — Review page
 
@@ -99,19 +99,19 @@ import { FURNITURE_CATALOG } from '../../../utility/catalog';
 
 export default function OakRestReview() {
     return (
-        <div className="flex flex-col justify-between gap-20 min-h-dvh">
-            <main>
-                {
-                    FURNITURE_CATALOG.filter((item) => item.id === 'oak-rest').map((item) => (
-                        <Reviews key={item.id} product={item} />
-                    ))
-                }
-            </main>
+        <div className="oak-rest-review-container flex flex-col min-h-dvh w-full">
+            {
+                FURNITURE_CATALOG.filter((item) => item.id === 'oak-rest').map((item) => (
+                    <Reviews key={item.id} product={item} />
+                ))
+            }
             <Footer />
         </div>
     );
 }
 ```
+
+No `<main>` wrapper — `Reviews` renders its own, as does `Furniture`. Both shared components also own their `pt-(--header-h)`, so neither page contributes spacing.
 
 ## Step 5 — Register the routes
 
@@ -131,14 +131,25 @@ The detail route needs `addToCart`; the review route doesn't.
 
 ## Step 6 — Surface it on the home page
 
-`Home.tsx` has a hardcoded "Chairs" section currently showing a **Coming Soon** tile. Replace the placeholder with the same filter/map used by the other categories:
+`Home.tsx` has a hardcoded "Chairs" block currently showing a **Coming Soon** tile. Add the filter alongside the other two at the top of the component:
 
 ```tsx
-<p className="text-2xl font-bold max-xsm:text-center">Chairs</p>
+const chairs = FURNITURE_CATALOG.filter((item) => item.type === "chair");
+```
 
-<div className="flex flex-wrap items-center gap-10 max-xsm:justify-center">
+Then replace the placeholder tile with the same grid the other categories use, and swap the header's right-hand label from the static `In the workshop` to a count:
+
+```tsx
+<div className="flex items-center gap-4">
+    <p className="eyebrow text-stone-500">03</p>
+    <p className="display display-md">Chairs</p>
+    <span className="bg-bark-900/15 flex-1 h-px"></span>
+    <p className="micro text-stone-500">{chairs.length} piece{chairs.length === 1 ? '' : 's'}</p>
+</div>
+
+<div className="grid grid-cols-3 gap-10 max-2md:grid-cols-2 max-xsm:grid-cols-1">
     {
-        FURNITURE_CATALOG.filter((item) => item.type === "chair").map((item) => (
+        chairs.map((item) => (
             <FurnitureCard key={item.id} product={item} />
         ))
     }
@@ -146,6 +157,11 @@ The detail route needs `addToCart`; the review route doesn't.
 ```
 
 Note the filter string `"chair"` must match `type` in the catalog exactly — it's an untyped string on both sides.
+
+Two other places name the category, and both are easy to miss:
+
+- the collections line in the hero-adjacent section (`Tables, Nightstands, Chairs, and more`)
+- the footer's **Collection** column, which maps `FURNITURE_CATALOG` — that one updates itself, but the hardcoded `Chairs — coming soon` line beneath it does not
 
 ---
 
@@ -157,6 +173,7 @@ Note the filter string `"chair"` must match `type` in the catalog exactly — it
 - [ ] `pages/Reviews/Chairs/OakRestReview.tsx`
 - [ ] Two imports + two `<Route>`s in `App.tsx`
 - [ ] Category section in `Home.tsx` renders from the catalog
+- [ ] Footer's `Chairs — coming soon` line removed
 - [ ] `npm run build` passes (`tsc -b` will catch a missing `Product` field)
 - [ ] Click through: home tile → detail → colour select → add to cart → cart badge → review link
 
@@ -168,10 +185,10 @@ npm run dev
 
 Then check, in order:
 
-1. `/` — the tile appears in its category, image loads, price is right
-2. `/OakRest` — gallery dots move all three images; colour swatches render
-3. Add to cart with **no colour selected** — button should be inert (`pointer-events-none`)
-4. Select a colour, add twice — badge shows `2`, one line item with quantity 2
+1. `/` — the tile appears in its category, image loads, price is right, and the count beside the category name reads `1 piece`
+2. `/OakRest` — the gallery bars move all three images and the `01 / 03` counter tracks them; the finish swatches render in their real colours and all sit at the same width
+3. Add to cart with **no finish selected** — the button reads `Select a finish first` and is `disabled`, so it is unreachable by keyboard too
+4. Select a finish, add twice — badge shows `2`, one line item with quantity 2, and the cart swatch matches the finish you chose
 5. Add a *different* colour — a **second** line item (composite `cartItemId`, see [[04 - State Management Patterns]])
 6. `/OakRestReview` — submit a review, then reload `/OakRest` and confirm it appears
 
@@ -181,7 +198,7 @@ Step 6 requires the API. `npm run dev` alone won't reach it — see the local-de
 
 ## What this reveals about the architecture
 
-Steps 3–5 are **pure boilerplate**: two 26-line files and two route lines that contain no logic, only a product `id`. The information content of the whole change is the catalog entry from step 2.
+Steps 3–5 are **pure boilerplate**: two 25-line files and two route lines that contain no logic, only a product `id`. The information content of the whole change is the catalog entry from step 2.
 
 A single parameterised route would collapse it:
 

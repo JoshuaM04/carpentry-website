@@ -208,12 +208,6 @@
     background-size: 100% 1px;
 }
 
-.rule {
-    border: 0;
-    border-top: 1px solid currentColor;
-    opacity: 0.18;
-}
-
 .img-frame {
     overflow: hidden;
     background-color: var(--color-bone-200);
@@ -249,19 +243,6 @@ a:hover .img-frame img {
 .field:focus {
     outline: none;
     border-color: var(--color-bark-900);
-}
-
-.field-dark {
-    border-color: rgb(247 244 238 / 0.2);
-    color: var(--color-bone-50);
-}
-
-.field-dark::placeholder {
-    color: rgb(247 244 238 / 0.45);
-}
-
-.field-dark:focus {
-    border-color: var(--color-bone-50);
 }
 
 /* ---------------------------------------------------------------

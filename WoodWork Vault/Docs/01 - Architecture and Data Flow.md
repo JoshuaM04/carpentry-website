@@ -127,7 +127,7 @@ Prices are **not** read from Stripe. `stripePriceId` in the catalog is literally
 
 ## State ownership, in one line
 
-Cart state lives in `App.tsx` (the router's parent) because two sibling subtrees need it: the **product pages** write to it and the **`Cart` modal** reads it. See [[04 - State Management Patterns]].
+Cart state lives in `App.tsx` (the router's parent) because two sibling subtrees need it: the **product pages** write to it and the **`Cart` modal** reads it. `Cart` is now rendered by `Navigation` rather than by `App` directly, so `App` hands `cart`/`setCart` to `NavBar` and `NavBar` passes them straight through — one more hop, no change of ownership. See [[04 - State Management Patterns]] and [[03 - Component Network]].
 
 ## What is *not* in this architecture
 

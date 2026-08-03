@@ -41,7 +41,13 @@ interface FurnitureProps {
 
 Not exported, not shared, not in a `types/` directory. The only cross-file type is `Product` in `utility/catalog.ts`. For a codebase this size the locality wins; the cost shows up when a shape needs to match across files (see the two hand-mirrored review interfaces in [[07 - MongoDB and Mongoose]]).
 
-`interface` is used throughout, never `type`.
+`interface` is used throughout, with one deliberate exception. `Navigation` exists only to pass `cart` and `setCart` to `Cart`, so it derives the shape instead of restating it:
+
+```tsx
+type NavigationProps = React.ComponentProps<typeof Cart>;
+```
+
+That requires a `type` alias — `interface` cannot alias a mapped type. It also means the two components can never drift apart, which is the point: a hand-copied `{ cart: any[]; setCart: ... }` in `Navigation.tsx` would be a third place to edit when the cart is finally typed.
 
 ## File and directory organisation
 
@@ -224,27 +230,28 @@ app.post('/api/reviews/:productKey', connectDB, upload.fields([...]), async (req
 
 These aren't errors — they're drift from copy-paste evolution, and knowing them prevents confusion:
 
-**Lowercase component function names.** Three components declare a lowercase function while the file and every import site use PascalCase:
+**Lowercase component function names.** Two components still declare a lowercase function while the file and every import site use PascalCase:
 
 ```tsx
 export default function cart({ cart, setCart }: CartProps)   // Cart.tsx
-export default function navigation()                          // Navigation.tsx
 export default function footer()                              // Footer.tsx
 ```
 
-Default exports rename freely at the import site, so this works — but React DevTools shows `cart`, and `Cart.tsx` has a function named `cart` whose first parameter is also named `cart`.
+Default exports rename freely at the import site, so this works — but React DevTools shows `cart`, and `Cart.tsx` has a function named `cart` whose first parameter is also named `cart`. `Navigation.tsx` was the third; it is now `Navigation`, because adding hooks to a lowercase function makes `react-hooks/rules-of-hooks` fail — ESLint identifies components by capitalisation.
 
 **The `messageVisbility` typo** (missing `i`) is replicated identically in `Furniture.tsx`, `Reviews.tsx`, and `Contact.tsx` — evidence the toast block was copied wholesale rather than extracted.
 
-**Stale semantic names**: `table-one-container` on the nightstand page, `table-one-review-container` on all review pages.
+**Stale semantic names**, mostly corrected: the nightstand page now says `nightstand-one-container` and the review pages carry their own product names. `table-one-container` remains on the Earth Wood page, where it is accurate.
 
-**`console.log` left in production paths** — `Furniture.tsx` logs the image gallery and fetched review data on every mount; `Navigation.tsx` logs `navHover[0]` on every mouse enter and leave for all four links; the toast effect logs `count`. These ship to users.
+**Section id `#video-showcase`** on the home hero, which has held a still image rather than a video for some time. The anchor is referenced only by itself, so renaming it is free.
 
-**Missing `key` props** on several `.map()` calls: the gallery `<img>` in `Furniture.tsx`, the colour swatch wrapper, the `About.tsx` studio images, and the cart item `<div>` in `Cart.tsx`. React warns in the console and reconciliation falls back to index matching.
+Fixed during the visual overhaul, and worth knowing were once wrong:
 
-**Duplicate `key` in `Furniture.tsx`'s colour map** — `key={index}` is set on both the outer and inner `<div>` of the same iteration, while the actual list root (the wrapping `<div className="flex flex-col gap-1">`) has none.
+- **`console.log` in production paths** — `Furniture.tsx` logged the image gallery and every fetched review on mount, `Navigation.tsx` logged a hover flag on every mouse enter *and* leave across four links, and the toast effect logged `count`. All removed.
+- **Missing `key` props** on the gallery `<img>` and colour swatches in `Furniture.tsx`, the studio images in `About.tsx`, and the cart line `<div>` in `Cart.tsx` — the last now keyed by `item.cartItemId`, which is the correct identity rather than an index.
+- **A duplicate `key`** in `Furniture.tsx`'s colour map, set on two nested `<div>`s of the same iteration while the list root had none.
 
-All catalogued in [[15 - Known Gotchas and Tech Debt]].
+Remaining items are catalogued in [[15 - Known Gotchas and Tech Debt]].
 
 ## Linting
 
@@ -267,4 +274,12 @@ Run with:
 npm run lint
 ```
 
-Linting is **not** wired into `npm run build`, so warnings don't block a deploy.
+Linting is **not** wired into `npm run build`, so warnings don't block a deploy — and the repo does not currently pass. `npm run lint` reports seven problems, all of them long-standing:
+
+| Count | Rule | Where |
+|---|---|---|
+| 4 | `@typescript-eslint/no-explicit-any` | the `any[]` cart in `App.tsx` and `Cart.tsx` |
+| 2 | `no-useless-assignment` | `finalColor` in `addToCart`, `absoluteImageUrl` in `handleCheckout` |
+| 1 | `react-hooks/exhaustive-deps` | `Furniture.tsx`'s `[]` dependency array |
+
+Every one of them is a symptom of something in [[15 - Known Gotchas and Tech Debt]] rather than a style nit, which is why they are worth reading rather than silencing.
