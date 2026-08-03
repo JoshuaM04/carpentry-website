@@ -74,14 +74,18 @@ export default function Home() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-6 gap-3 max-2md:grid-cols-3 max-xsm:grid-cols-2">
-                        {
-                            COLLECTION_IMAGES.map((item, index) => (
-                                <div key={index} className="img-frame aspect-[4/5]">
-                                    <img className="w-full h-full object-cover" src={item} alt="Finished furniture piece" loading="lazy" />
-                                </div>
-                            ))
-                        }
+                    <div className="flex flex-col gap-3">
+                        <div className="grid grid-cols-6 gap-3 max-2md:grid-cols-3 max-xsm:grid-cols-2">
+                            {
+                                COLLECTION_IMAGES.map((item, index) => (
+                                    <div key={index} className="img-frame aspect-[4/5]">
+                                        <img className="w-full h-full object-cover" src={item} alt="Stock photograph of a wooden furniture piece" loading="lazy" />
+                                    </div>
+                                ))
+                            }
+                        </div>
+
+                        <p className="micro text-stone-500 text-center">Stock imagery shown for inspiration — these are not pieces from our catalog.</p>
                     </div>
                 </section>
 
