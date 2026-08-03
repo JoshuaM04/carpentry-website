@@ -1,85 +1,112 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { DialogTrigger, Modal, Dialog, Heading, Button } from 'react-aria-components/Modal';
+import Cart from './Cart';
 
-export default function navigation() {
-    const [navHover, setNavHover] = useState(["false", "false", "false", "false"]);
+const LINKS = [
+    { to: '/home', label: 'home' },
+    { to: '/gallery', label: 'gallery' },
+    { to: '/contact', label: 'contact' },
+    { to: '/about', label: 'about' }
+];
+
+type NavigationProps = React.ComponentProps<typeof Cart>;
+
+export default function Navigation({ cart, setCart }: NavigationProps) {
+    const location = useLocation();
+    const [scrolled, setScrolled] = useState(false);
+
+    const isHomePage = location.pathname === '/' || location.pathname === '/home';
+    const isTransparent = isHomePage && !scrolled;
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 40);
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    const brand = (
+        <div className="flex flex-col items-center leading-none">
+            <p className="display text-[0.8125rem] tracking-[0.3em]">WoodWork</p>
+            <p className="display text-[0.8125rem] tracking-[0.3em]">Creations</p>
+        </div>
+    );
 
     return (
         <header>
-            <nav className={`navigation-component absolute left-[50%] translate-x-[-50%] w-full text-white bg-black text-sm font-semibold uppercase p-5 z-1 max-2md:text-white max-2md:bg-black max-2md:p-10`}>
-                <div className="desktop-layout flex justify-center items-center gap-40 max-2md:hidden max-2md:aria-hidden">
-                    <div className="flex gap-20">
-                        <div>
-                            <Link to="/home" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["true", "false", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
-                                <span>home</span>
-                                <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[0] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                            </Link>
-                        </div>
-
-                        <div>
-                            <Link to="/gallery" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "true", "false", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
-                                <span>gallery</span>
-                                <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[1] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                            </Link>
-                        </div>
+            <nav className={`${isTransparent ? 'bg-transparent border-transparent' : 'bg-bark-900/95 border-bone-50/10 backdrop-blur-sm'} navigation-component fixed top-0 left-0 text-bone-50 border-b w-full h-(--header-h) z-30 transition-colors duration-500`}>
+                <div className="desktop-layout flex justify-between items-center h-full px-8 relative max-2md:hidden">
+                    <div className="flex gap-12">
+                        {
+                            LINKS.slice(0, 2).map((item) => (
+                                <Link key={item.to} to={item.to} className="link-underline eyebrow">{item.label}</Link>
+                            ))
+                        }
                     </div>
 
-                    <div className="flex flex-col items-center text-xl font-bold border-t-4 border-b-4 pt-2 pb-2 pl-6 pr-6">
-                        <p>WoodWork </p>
-                        <p>Creations</p>
-                    </div>
+                    <Link to="/home" className="left-[50%] translate-x-[-50%] absolute" aria-label="WoodWork Creations home">{brand}</Link>
 
-                    <div className="flex gap-20">
-                        <div>
-                            <Link to="/contact" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "false", "true", "false"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
-                                <span>contact</span>
-                                <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[2] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                            </Link>
-                        </div>
+                    <div className="flex items-center gap-12">
+                        {
+                            LINKS.slice(2).map((item) => (
+                                <Link key={item.to} to={item.to} className="link-underline eyebrow">{item.label}</Link>
+                            ))
+                        }
 
-                        <div>
-                            <Link to="/about" onMouseEnter={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "true"]) }} onMouseLeave={() => { console.log(navHover[0]); setNavHover(["false", "false", "false", "false"]) }} className="relative">
-                                <span>about</span>
-                                <div className={`absolute bottom-0 left-0 bg-white w-0 h-0.5 ${navHover[3] === "true" ? 'w-full transition-all' : 'w-0'}`}></div>
-                            </Link>
-                        </div>
+                        <Cart cart={cart} setCart={setCart} />
                     </div>
                 </div>
 
-                <div className="mobile-layout bg-black flex justify-between items-center gap-10 2md:hidden 2md:aria-hidden">
-                    <div className="flex flex-col items-center text-xl font-bold border-t-4 border-b-4 pt-2 pb-2 pl-6 pr-6">
-                        <p>WoodWork</p>
-                        <p>Creations</p>
+                <div className="mobile-layout flex justify-between items-center h-full gap-10 px-6 2md:hidden">
+                    <Link to="/home" aria-label="WoodWork Creations home">{brand}</Link>
+
+                    <div className="flex items-center gap-6">
+                        <Cart cart={cart} setCart={setCart} />
+
+                        <DialogTrigger>
+                            <Button aria-label="Open drop-down menu navigation" className="hover:cursor-pointer">
+                                <svg className="stroke-bone-50 w-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 7L4 7" strokeWidth="1.5" strokeLinecap="round"></path><path d="M20 12L4 12" strokeWidth="1.5" strokeLinecap="round"></path><path d="M20 17L4 17" strokeWidth="1.5" strokeLinecap="round"></path></svg>
+                            </Button>
+
+                            <Modal className="modal-display fixed left-[50%] top-[50%] translate-[-50%] text-bone-50 bg-bark-950 w-full h-full p-6 font-sans z-40">
+                                <Dialog className="flex flex-col justify-between h-full outline-none">
+                                    <div className="flex flex-col gap-16">
+                                        <div className="flex justify-between items-center">
+                                            <Heading className="flex flex-col leading-none">
+                                                <span className="display text-[0.8125rem] tracking-[0.3em]">WoodWork</span>
+                                                <span className="display text-[0.8125rem] tracking-[0.3em]">Creations</span>
+                                            </Heading>
+
+                                            <Button aria-label="Close drop-down menu navigation" className="hover:cursor-pointer" slot="close">
+                                                <svg className="stroke-bone-50 w-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L16.8995 7.10051" strokeLinecap="round" strokeLinejoin="round"></path><path d="M7 7.00001L16.8995 16.8995" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                                            </Button>
+                                        </div>
+
+                                        <div className="flex flex-col">
+                                            {
+                                                LINKS.map((item) => (
+                                                    <Button key={item.to} className="flex justify-between items-center border-b border-bone-50/15 py-5 w-full text-left hover:cursor-pointer" slot="close">
+                                                        <Link to={item.to} className="display display-lg">{item.label}</Link>
+                                                        <span className="eyebrow text-clay-400">0{LINKS.indexOf(item) + 1}</span>
+                                                    </Button>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2 text-clay-400">
+                                        <p className="eyebrow">San Marcos · Local pickup</p>
+                                        <p className="eyebrow">Hand crafted · Real materials · Family owned</p>
+                                    </div>
+                                </Dialog>
+                            </Modal>
+                        </DialogTrigger>
                     </div>
-
-                    <DialogTrigger>
-                        <Button aria-label="Open drop-down menu navigation" className="hover:cursor-pointer"><svg className="w-10 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L4 7" strokeWidth="1.5" strokeLinecap="round"></path> <path d="M20 12L4 12" strokeWidth="1.5" strokeLinecap="round"></path> <path d="M20 17L4 17" strokeWidth="1.5" strokeLinecap="round"></path> </g></svg></Button>
-
-                        <Modal className="modal-display z-2 bg-black fixed left-[50%] top-[50%] translate-[-50%] w-full h-full p-10 font-roboto">
-                            <Dialog className="flex flex-col gap-20">
-                                <div className="flex justify-between">
-                                    <Heading className="text-white uppercase flex flex-col items-center text-xl font-bold border-t-4 border-b-4 pt-2 pb-2 pl-6 pr-6">
-                                        <p>WoodWork</p>
-                                        <p>Creations</p>
-                                    </Heading>
-
-                                    <Button aria-label="Close drop-down menu navigation" className="hover:cursor-pointer" slot="close">
-                                        <svg className="stroke-white w-10 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 17L16.8995 7.10051" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-                                    </Button>
-                                </div>
-
-                                <div className="text-white text-xl font-semibold flex flex-col gap-10">
-                                    <Button className="uppercase w-fit" slot="close"><Link to="/home">home</Link></Button>
-                                    <Button className="uppercase w-fit" slot="close"><Link to="/gallery">gallery</Link></Button>
-                                    <Button className="uppercase w-fit" slot="close"><Link to="/contact">contact</Link></Button>
-                                    <Button className="uppercase w-fit" slot="close"><Link to="/about">about</Link></Button>
-                                </div>
-                            </Dialog>
-                        </Modal>
-                    </DialogTrigger>
-                </div>  
-            </nav>    
+                </div>
+            </nav>
         </header>
     );
 }

@@ -1,170 +1,144 @@
 import Footer from'../components/Footer';
+import SectionHeading from '../components/SectionHeading';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function About() {
-    const gallery = ['/about-media/workStation1.png', '/about-media/workStation2.png', '/about-media/workStation3.png', '/about-media/workStation4.png'];
-    const [panelOne, setPanelOne] = useState('hidden');
-    const [panelOneIcon, setPanelOneIcon] = useState('/faq-plus-icon.svg');
-    const [panelTwo, setPanelTwo] = useState('hidden');
-    const [panelTwoIcon, setPanelTwoIcon] = useState('/faq-plus-icon.svg');
-    const [panelThree, setPanelThree] = useState('hidden');
-    const [panelThreeIcon, setPanelThreeIcon] = useState('/faq-plus-icon.svg');
-    const [panelFour, setPanelFour] = useState('hidden');
-    const [panelFourIcon, setPanelFourIcon] = useState('/faq-plus-icon.svg');
-    const [panelFive, setPanelFive] = useState('hidden');
-    const [panelFiveIcon, setPanelFiveIcon] = useState('/faq-plus-icon.svg');
+const GALLERY = ['/about-media/workStation1.png', '/about-media/workStation2.png', '/about-media/workStation3.png', '/about-media/workStation4.png'];
 
+const FAQ = [
+    {
+        question: 'Do you source and use real wood for your products?',
+        answer: <>Yes! We source our wood from Lowes and Home Depot to build our products. We may also source wood from a local lumber supplier for any custom projects. We do <strong className="font-semibold">NOT</strong> use any cheap lamination, particle board, or fake prints.</>
+    },
+    {
+        question: 'Are the furniture pieces water resistant?',
+        answer: <>Yes they are! We use a protective transparent coating to ensure the stain does not get damaged and the wood is able to last a long time.</>
+    },
+    {
+        question: 'How long does a furniture piece take to craft?',
+        answer: <>The completion time of a furniture piece is dependent on which model it is. It can vary from 1 week to around 3 weeks depending on the complexity of the furniture piece.</>
+    },
+    {
+        question: 'Can I choose a stain that is not currently available?',
+        answer: <>Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/contact" className="link-underline font-medium whitespace-nowrap">contact page</Link>.</>
+    },
+    {
+        question: 'Can I commission a custom-made furniture piece?',
+        answer: <>Yes! You can visit the <Link to="/contact" className="link-underline font-medium whitespace-nowrap">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</>
+    }
+];
+
+export default function About() {
+    const [openPanels, setOpenPanels] = useState<number[]>([]);
+
+    const togglePanel = (index: number) => {
+        setOpenPanels((prevPanels) =>
+            prevPanels.includes(index)
+            ? prevPanels.filter((item) => item !== index)
+            : [...prevPanels, index]
+        );
+    };
 
     return (
-        <div className="about-container flex flex-col gap-20">
-            <div className="flex flex-col items-center">
-                <main className="flex flex-col gap-20 p-10 mt-60 w-[90vw] min-h-dvh">
-                    <section className="flex flex-col gap-10">
-                        <h2 className="text-3xl font-semibold">Creating hand-made furniture to last</h2>
-                        <p className="font-light">
+        <div className="about-container flex flex-col">
+            <main className="flex flex-col">
+                <section className="flex flex-col justify-end gap-10 text-bone-50 bg-bark-950 min-h-[70vh] px-6 pt-(--header-h) pb-14 relative overflow-hidden">
+                    <img className="top-0 left-0 w-full h-full object-cover opacity-35 absolute" src="/about-media/workStation1.png" alt="" aria-hidden="true" />
+
+                    <div className="flex flex-col gap-6 pt-16 relative">
+                        <p className="eyebrow text-clay-400">Our story</p>
+                        <h1 className="display display-hero max-w-5xl">Creating hand-made furniture to last</h1>
+                    </div>
+                </section>
+
+                <section className="reveal grid grid-cols-[1fr_1.2fr] gap-16 px-6 py-24 max-2md:grid-cols-1 max-2md:gap-10 max-2md:py-16">
+                    <p className="eyebrow text-stone-500">A family business</p>
+
+                    <div className="flex flex-col gap-8">
+                        <p className="text-base leading-relaxed">
                             We are a family-business with our sights on quality and care pertaining to our products. We source our wood from Home Depot or Lowes and can order specific pieces from suppliers if a custom request is made for a furniture piece.
                             From the very start, we ensure communication is thorough when covering product details and at the very end we ensure that the product is properly delivered.
                         </p>
 
-                        <p className="font-light">
+                        <p className="text-base leading-relaxed text-stone-600">
                             We are based in San Marcos and are only allowing local pickup for our products for the time being. In the future we hope to be able to ship our products anywhere across the United States!
                         </p>
-                        <Link to="/home" className="text-sm font-semibold text-white bg-black pt-2 pb-2 pl-5 pr-6 w-fit h-fit hover:cursor-pointer">Explore our catalog</Link>
-                    </section>
 
-                    <section className="flex flex-col gap-10">
-                        <h2 className="text-3xl font-semibold">A glimpse into the studio</h2>
-                        <div className="flex flex-wrap gap-10">
-                            {
-                                gallery.map((item) => (
-                                    <img className="max-lg:w-full max-2xl:w-(--gallery-item-sm) w-(--gallery-item)" src={item} alt="Workstation" />
-                                ))
-                            }
-                        </div>
-                    </section>
-                    
-                    <section className="flex flex-col gap-10">
-                        <h2 className="text-3xl font-semibold">Our plans for the future</h2>
-                        <p className="font-light">
-                            The future of our company will pertain to expanding the catalog to include different furniture pieces that are common in different areas of someone's home. That could be a lawn chair, a coffee table, or even an island for your kitchen. 
+                        <Link to="/home" className="btn btn-solid w-fit">Explore our catalog</Link>
+                    </div>
+                </section>
+
+                <section className="reveal flex flex-col gap-12 border-t border-bark-900/15 px-6 py-24 max-2md:py-16">
+                    <SectionHeading eyebrow="Inside the workshop" left="A glimpse" right="Into the studio." />
+
+                    <div className="grid grid-cols-4 gap-3 max-2md:grid-cols-2 max-xsm:grid-cols-1">
+                        {
+                            GALLERY.map((item, index) => (
+                                <div key={index} className="img-frame aspect-[4/5]">
+                                    <img className="w-full h-full object-cover" src={item} alt="Workstation" loading="lazy" />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
+
+                <section className="reveal flex flex-col gap-12 border-t border-bark-900/15 px-6 py-24 max-2md:py-16">
+                    <SectionHeading eyebrow="What comes next" left="Our plans" right="For the future." />
+
+                    <div className="grid grid-cols-[1fr_1.2fr] gap-16 max-2md:grid-cols-1 max-2md:gap-8">
+                        <p className="eyebrow text-stone-500">Expanding the catalog</p>
+
+                        <p className="text-base leading-relaxed">
+                            The future of our company will pertain to expanding the catalog to include different furniture pieces that are common in different areas of someone's home. That could be a lawn chair, a coffee table, or even an island for your kitchen.
                             We also hope to be able to offer the option of shipping in the future to reach a larger audience across the United States.
                         </p>
-                    </section>
+                    </div>
+                </section>
 
-                    <section className="flex flex-col gap-10">
-                        <h2 className="text-3xl font-semibold">Behind the scenes</h2>
+                <section className="reveal flex flex-col gap-12 border-t border-bark-900/15 px-6 py-24 max-2md:py-16">
+                    <SectionHeading eyebrow="In progress" left="Behind" right="The scenes." />
 
-                        <div className="flex flex-col justify-center gap-10 max-xsm:justify-center">
-                            <div className="flex justify-center items-center text-xl uppercase font-bold text-white bg-black size-50">
-                                Coming Soon
-                            </div> 
+                    <div className="grid grid-cols-3 gap-10 max-2md:grid-cols-2 max-xsm:grid-cols-1">
+                        <div className="flex justify-center items-center border border-dashed border-bark-900/25 text-stone-500 aspect-[4/3]">
+                            <p className="eyebrow">Coming soon</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section className="flex flex-col gap-5">
-                        <h3 className="text-xl font-semibold">Frequently asked questions</h3>
+                <section className="reveal flex flex-col gap-12 border-t border-bark-900/15 px-6 py-24 max-2md:py-16">
+                    <SectionHeading eyebrow="Good to know" left="Frequently" right="Asked questions." />
 
-                        <div>
-                            <div id="faq-panel-one" className="flex flex-col gap-5 border-b pt-4 pb-4">
-                                <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Do you source and use real wood for your products?</div>
+                    <div className="flex flex-col">
+                        {
+                            FAQ.map((item, index) => {
+                                const isOpen = openPanels.includes(index);
 
-                                    <button
-                                        onClick={() => panelOne === 'hidden' ? ( setPanelOne('block'), setPanelOneIcon('/faq-minus-icon.svg') ) : ( setPanelOne('hidden'), setPanelOneIcon('/faq-plus-icon.svg') )}
-                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
-                                        aria-controls="panel-one"
-                                    >
-                                        <img className="min-w-3" src={panelOneIcon} />
-                                    </button>
-                                </div>
+                                return (
+                                    <div key={index} id={`faq-panel-${index}`} className="flex flex-col border-b border-bark-900/15 first:border-t py-6">
+                                        <div className="flex justify-between items-start gap-8">
+                                            <p className="display display-md max-w-3xl">{item.question}</p>
 
-                                <div id="panel-one" className={`${panelOne}`} aria-expanded={panelOne === 'block'}>
-                                    <p className="font-light">Yes! We source our wood from Lowes and Home Depot to build our products. We may also source wood from a local lumber supplier for any custom projects. We do <strong>NOT</strong> use any cheap lamination, particle board, or fake prints.</p>
-                                </div>
-                            </div>
+                                            <button
+                                                onClick={() => togglePanel(index)}
+                                                className="flex justify-center items-center bg-bark-900 size-8 p-2.5 shrink-0 hover:bg-bark-700 hover:cursor-pointer"
+                                                aria-controls={`panel-${index}`}
+                                                aria-expanded={isOpen}
+                                                aria-label={isOpen ? 'Collapse answer' : 'Expand answer'}
+                                            >
+                                                <img className="w-full" src={isOpen ? '/faq-minus-icon.svg' : '/faq-plus-icon.svg'} alt="" />
+                                            </button>
+                                        </div>
 
-                            <div id="faq-panel-two" className="flex flex-col gap-5 border-b pt-4 pb-4">
-                                <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Are the furniture pieces water resistant?</div>
-
-                                    <button
-                                        onClick={() => panelTwo === 'hidden' ? ( setPanelTwo('block'), setPanelTwoIcon('/faq-minus-icon.svg') ) : ( setPanelTwo('hidden'), setPanelTwoIcon('/faq-plus-icon.svg') )}
-                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
-                                        aria-controls="panel-two"
-                                    >
-                                        <img className="min-w-3" src={panelTwoIcon} />
-                                    </button>
-                                </div>
-
-                                <div id="panel-two" className={`${panelTwo}`} aria-expanded={panelTwo === 'block'}>
-                                    <p className="font-light">Yes they are! We use a protective transparent coating to ensure the stain does not get damaged and the wood is able to last a long time.</p>
-                                </div>
-                            </div>
-
-                            <div id="faq-panel-three" className="flex flex-col gap-5 border-b pt-4 pb-4">
-                                <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">How long does a furniture piece take to craft?</div>
-
-                                    <button
-                                        onClick={() => panelThree === 'hidden' ? ( setPanelThree('block'), setPanelThreeIcon('/faq-minus-icon.svg') ) : ( setPanelThree('hidden'), setPanelThreeIcon('/faq-plus-icon.svg') )}
-                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
-                                        aria-controls="panel-three"
-                                    >
-                                        <img className="min-w-3" src={panelThreeIcon} />
-                                    </button>
-                                </div>
-
-                                <div id="panel-three" className={`${panelThree}`} aria-expanded={panelThree === 'block'}>
-                                    <p className="font-light">The completion time of a furniture piece is dependent on which model it is. It can vary from 1 week to around 3 weeks depending on the complexity of the furniture piece.</p>
-                                </div>
-                            </div>
-
-                            <div id="faq-panel-four" className="flex flex-col gap-5 border-b pt-4 pb-4">
-                                <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Can I choose a stain that is not currently available?</div>
-
-                                    <button
-                                        onClick={() => panelFour === 'hidden' ? ( setPanelFour('block'), setPanelFourIcon('/faq-minus-icon.svg') ) : ( setPanelFour('hidden'), setPanelFourIcon('/faq-plus-icon.svg') )}
-                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
-                                        aria-controls="panel-four"
-                                    >
-                                        <img className="min-w-3" src={panelFourIcon} />
-                                    </button>
-                                </div>
-
-                                <div id="panel-four" className={`${panelFour}`} aria-expanded={panelFour === 'block'}>
-                                    <p className="font-light">Absolutely! You can pick out a stain you prefer and add it in a contact form submission at our <Link to="/contact" className="text-blue-500 underline">contact page</Link>.</p>
-                                </div>
-                            </div>
-
-                            <div id="faq-panel-five" className="flex flex-col gap-5 pt-4 pb-4">
-                                <div className="flex justify-between items-center gap-5">
-                                    <div className="font-semibold">Can I commission a custom-made furniture piece?</div>
-                                    
-                                    <button
-                                        onClick={() => panelFive === 'hidden' ? ( setPanelFive('block'), setPanelFiveIcon('/faq-minus-icon.svg') ) : ( setPanelFive('hidden'), setPanelFiveIcon('/faq-plus-icon.svg') )}
-                                        className="flex justify-center items-center bg-black rounded-[50%] size-7 p-2 hover:cursor-pointer"
-                                        aria-controls="panel-five"
-                                    >
-                                        <img className="min-w-3" src={panelFiveIcon} />
-                                    </button>
-                                </div>
-
-                                <div id="panel-five" className={`${panelFive}`} aria-expanded={panelFive === 'block'}>
-                                    <p className="font-light">Yes! You can visit the <Link to="/contact" className="text-blue-500 underline">contact page</Link> and submit a request about commissioning a custom-made furniture piece.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="flex justify-center items-center">
-                        <div className="flex flex-col justify-center items-center gap-2 w-fit">
-                            <p className="text-lg uppercase flex gap-2">Created by Joshua M.</p>
-                        </div>
-                    </section>
-                </main>
-            </div>
+                                        <div id={`panel-${index}`} className={`${isOpen ? 'block' : 'hidden'} pt-5 max-w-3xl`}>
+                                            <p className="text-base leading-relaxed text-stone-600">{item.answer}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                </section>
+            </main>
 
             <Footer />
         </div>

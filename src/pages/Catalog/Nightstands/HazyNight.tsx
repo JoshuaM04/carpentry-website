@@ -10,16 +10,14 @@ interface HazyNightProps {
 export default function HazyNight({ addToCart }: HazyNightProps) {
     const item = FURNITURE_CATALOG.find((product) => product.id === 'hazy-night')
 
-    if (!item) return <p>Product not found</p>;
+    if (!item) return <p className="p-6">Product not found</p>;
 
     return (
-        <div className="flex flex-col justify-between items-center gap-20 min-h-dvh">
-            <main className="table-one-container flex flex-col w-fit 2md:max-w-[2500px] gap-10 p-10 max-xsm:w-100">
-                <Furniture
-                    product={item}
-                    addToCart={addToCart}
-                />
-            </main>
+        <div className="nightstand-one-container flex flex-col min-h-dvh w-full">
+            <Furniture
+                product={item}
+                addToCart={addToCart}
+            />
 
             <Footer />
         </div>
