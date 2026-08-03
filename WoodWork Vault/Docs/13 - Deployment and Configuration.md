@@ -139,20 +139,28 @@ Because the app is a client-rendered SPA, **every route shares this one title an
 
 `public/hammer-favicon.svg` exists but `favicon.svg` is the one referenced.
 
-`favicon.svg` is hand-written rather than downloaded — a 32×32 `bark-950` tile with a `bone-50` monogram over a baseline rule, drawn as one stroked path and one rect:
+`favicon.svg` is hand-written rather than downloaded — a 32×32 tradesman's badge: a `bark-950` tile, a `bone-50` ring, a `raw-500` disc, and a claw hammer knocked out of the disc in `bark-950`.
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="WoodWork Creations">
     <rect width="32" height="32" fill="#16110E"/>
-    <path d="M5 7 L10.5 22 L16 12 L21.5 22 L27 7" fill="none" stroke="#F7F4EE"
-          stroke-width="4.5" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="10"/>
-    <rect x="5" y="25.5" width="22" height="1.5" fill="#F7F4EE"/>
+    <circle cx="16" cy="16" r="13" fill="none" stroke="#F7F4EE" stroke-width="1.2"/>
+    <circle cx="16" cy="16" r="11.8" fill="#E7CFA6"/>
+    <path d="M23.0 5.6 L23.0 13.2 L19.2 13.2 L18.6 26.2 L14.6 26.2 L14.0 13.2
+             L7.2 13.2 L11.6 10.2 L6.0 7.6 L9.2 5.6 Z" fill="#16110E"/>
 </svg>
 ```
 
-It repeats the header exactly — dark bar, light wordmark, squared, with a hairline underneath — so the browser tab reads as part of the same system. The colours are the literal hex values of `--color-bark-950` and `--color-bone-50`; an SVG in `public/` is served verbatim and never passes through Tailwind, so the tokens cannot be referenced by name. **If those two tokens change, this file has to be edited by hand.**
+Four shapes, no gradients, no text. The colours are the literal hex values of `--color-bark-950`, `--color-bone-50`, and `--color-raw-500`; an SVG in `public/` is served verbatim and never passes through Tailwind, so the tokens cannot be referenced by name. **If those three tokens change, this file has to be edited by hand.**
 
-`stroke-linejoin="miter"` is what keeps the joins sharp at 16px; rounded joins turn the monogram to mush at tab size.
+Everything about the drawing is a concession to 16px:
+
+- **The hammer is one closed path, not a head plus a handle.** Overlapping shapes develop seams when the renderer snaps them to a pixel grid.
+- **The claw is a single wedge cut from the left of the head**, wide enough to survive downscaling. Two thin prongs with a real slot between them — closer to the badge it is drawn from — merge into a smudge below 32px.
+- **The head sits left of the handle's centreline.** A symmetric head over a centred handle reads as the letter T at tab size; the offset is what makes the silhouette a hammer.
+- **The disc is `raw-500`, not `clay-400`.** Clay is the system's neutral, but it is greige — against a dark tile and a dark hammer it loses contrast at 16px, where the warmer, lighter raw-wood tone holds.
+
+There is no `.ico` fallback and no `apple-touch-icon`. `type="image/svg+xml"` covers every current browser, but a client that asks for `/favicon.ico` will not find one — the catch-all rewrite in `vercel.json` sends any non-`/api/` path that isn't a real file to `index.html`.
 
 ## Environment variables
 
