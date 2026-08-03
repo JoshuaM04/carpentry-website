@@ -29,7 +29,7 @@ export default function Navigation({ cart, setCart }: NavigationProps) {
     }, []);
 
     const brand = (
-        <div className="flex flex-col items-center leading-none">
+        <div className="flex flex-col leading-none">
             <p className="display text-[0.8125rem] tracking-[0.3em]">WoodWork</p>
             <p className="display text-[0.8125rem] tracking-[0.3em]">Creations</p>
         </div>
