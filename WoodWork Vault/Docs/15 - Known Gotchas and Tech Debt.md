@@ -4,48 +4,13 @@ Observations from reading the code, ordered by consequence. Each links back to t
 
 Nothing here is a crisis — the app works. These are the sharp edges to know about before changing something near them.
 
+A round of these were closed out during the visual overhaul; they are listed at the bottom under [Recently fixed](#recently-fixed) rather than deleted, because knowing a thing *used* to be broken is how you avoid reintroducing it.
+
 ---
 
 ## Correctness — things that are currently wrong
 
-### 1. `olive` colour classes generate nothing
-`catalog.ts` uses `bg-olive-500`, `text-olive-500`, and `FurnitureCard.tsx` uses `to-olive-300` — but there is **no `--color-olive-*` token** in the `@theme` block and Tailwind has no built-in `olive` palette.
-
-Result: the olive swatch on every product card and detail page renders with no background, and the card's gradient (`bg-linear-to-br from-white to-olive-300`) has no end colour.
-
-Fix — one line in `src/App.css`:
-```css
-@theme {
-    --color-olive-300: #a3b18a;
-    --color-olive-500: #6b7a4f;
-}
-```
-See [[10 - Tailwind Design System]].
-
-### 2. Dynamic class construction in the cart
-```tsx
-// Cart.tsx
-className={`... ${item.activeColor === 'raw wood' ? 'bg-orange-200' : `bg-${item.activeColor}-500`}`}
-```
-Tailwind scans source **text**; it cannot evaluate `bg-${item.activeColor}-500`. That class never exists in the output CSS, so every non-raw-wood swatch in the cart is transparent.
-
-Fix: carry the class from the catalog instead of rebuilding it — store the chosen `colorStyles[index]` on the cart item in `addToCart`. See [[05 - Catalog Data Model]].
-
-### 3. Clearing a file doesn't clear the file
-```tsx
-// Reviews.tsx
-<button onClick={() => setImageUpload('No file chosen')}>
-```
-This resets the *display name* only. `selectedImageFile` still holds the `File`, and `handleSubmit` appends it based on that state — so a "cleared" file uploads anyway.
-
-Fix: also call `setSelectedImageFile(null)`. Same for video. See [[09 - Media Uploads]].
-
-### 4. Clear buttons submit the form
-The clear buttons in `Reviews.tsx` and `Contact.tsx` have no `type` attribute. Inside a `<form>`, a button defaults to `type="submit"` — so clicking "clear file" submits the review or contact form.
-
-Fix: `type="button"`. (The star-rating buttons already do this correctly, which is how the pattern is known to be understood.)
-
-### 5. `localCart` can contain `undefined`
+### 1. `localCart` can contain `undefined`
 ```tsx
 const localCart = cart.map(item => {
     if (item.image && !item.image.includes('...')) {
@@ -58,27 +23,15 @@ The `return` is inside the `if`. Any item failing the guard becomes `undefined`,
 
 Also: `!item.image.includes('...')` tests for a literal three-dot substring — apparently a leftover of the filename-truncation convention from the upload UI, which has nothing to do with catalog image paths. See [[08 - Stripe Checkout Flow]].
 
-### 6. Missing `key` props
-React needs a `key` on the **outermost element** returned by a `.map()`:
-
-| File | Element |
-|---|---|
-| `Furniture.tsx` | gallery `<img className="animated-gallery">` |
-| `Furniture.tsx` | colour swatch wrapper `<div className="flex flex-col gap-1">` — `key={index}` is on the two *inner* divs instead, and duplicated between them |
-| `Cart.tsx` | cart line `<div>` (should be `key={item.cartItemId}`) |
-| `About.tsx` | studio gallery `<img>` |
-
-Console warnings today; incorrect reconciliation once lists reorder.
-
-### 7. `substring(8)` depends on an exact prefix
+### 2. `substring(8)` depends on an exact prefix
 ```tsx
 finalColor = selectedColor.substring(8);   // 'stain - espresso' → 'espresso'
 ```
-Works only because `"stain - "` is exactly 8 characters. A colour labelled `'oil - teak'` or `'Stain - Walnut'` silently produces garbage that then flows into the `cartItemId` and the Stripe line-item name.
+Works only because `"stain - "` is exactly 8 characters. A colour labelled `'oil - teak'` or `'Stain - Walnut'` silently produces garbage that then flows into the `cartItemId`, the Stripe line-item name, **and now the cart's swatch lookup** — `SWATCH_STYLES` is keyed by the post-`substring` value, so a mis-sliced string also loses its colour chip.
 
-Fix: `selectedColor.replace(/^stain - /, '')`, or store a separate `colorValue` in the catalog. See [[04 - State Management Patterns]].
+Fix: `selectedColor.replace(/^stain - /, '')`, or store a separate `colorValue` in the catalog. Better still, carry `colorStyles[index]` onto the cart item in `addToCart` and delete the lookup table entirely. See [[04 - State Management Patterns]] and [[05 - Catalog Data Model]].
 
-### 8. CORS origins have trailing slashes
+### 3. CORS origins have trailing slashes
 ```js
 origin: ['https://woodwork-creations.com/', 'http://localhost:5173/']
 ```
@@ -88,98 +41,121 @@ A browser's `Origin` header never has a trailing slash, so neither entry can mat
 
 ## Security and privacy
 
-### 9. Prices come from the client
+### 4. Prices come from the client
 `POST /api/checkout` builds `unit_amount: Math.round(item.price * 100)` from the request body. A crafted POST can set any price and Stripe honours the session.
 
 Fix: look up price server-side by `item.id`, or use real Stripe Price objects via the (currently unused) `stripePriceId`. See [[08 - Stripe Checkout Flow]].
 
-### 10. Reviewer emails are served publicly
-`GET /api/reviews/:productKey` returns whole documents including `email`. Nothing renders it, but it's in the JSON every visitor downloads on a product page.
+### 5. Reviewer emails are served publicly
+`GET /api/reviews/:productKey` returns whole documents including `email`. Nothing renders it, but it's in the JSON every visitor downloads on a product page — and the home page now issues one such request per product tile.
 
 Fix: `.find({...}).select('-email')`. See [[07 - MongoDB and Mongoose]].
 
-### 11. The review endpoint is unauthenticated and unthrottled
+### 6. The review endpoint is unauthenticated and unthrottled
 No auth, no rate limit, no CAPTCHA, no moderation — and it accepts 50 MB public file uploads to Vercel Blob. That's the shape of a storage-cost and spam problem the moment it's discovered.
 
 Minimum viable mitigations: rate limit by IP, cap uploads far below 50 MB, and require review approval before display. See [[09 - Media Uploads]].
 
-### 12. No server-side validation beyond `required`
-`rating` has no `min`/`max`, so `{ rating: 9999 }` persists and `'★'.repeat(9999)` renders. `comment` and `title` are stored unsanitised.
+### 7. No server-side validation beyond `required`, and an out-of-range rating crashes the page
+`rating` has no `min`/`max`, so `{ rating: 9999 }` persists — and the renderer cannot survive it:
 
-Fix: `rating: { type: Number, required: true, min: 1, max: 5 }` plus length caps.
+```tsx
+<p>{'★'.repeat(review.rating)}<span className="text-bark-900/25">{'★'.repeat(5 - review.rating)}</span></p>
+```
+
+`String.prototype.repeat` **throws a `RangeError` on a negative count**. Any stored rating above 5 makes `5 - rating` negative, the exception is thrown during render, and React unmounts the whole tree — a blank product page, not a malformed one. A rating below 1 is merely ugly; a rating of 6 is fatal.
+
+This is reachable by anyone who can POST to the unauthenticated review endpoint (#6), which makes it the sharpest edge in this file.
+
+Fix, at both ends:
+```js
+rating: { type: Number, required: true, min: 1, max: 5 }   // reviewSchema
+```
+```tsx
+const stars = Math.max(0, Math.min(5, review.rating));      // Furniture.tsx
+```
+`comment` and `title` are stored unsanitised too, with no length caps.
 
 ---
 
 ## Robustness
 
-### 13. Orphaned blobs on failed writes
+### 8. Orphaned blobs on failed writes
 If `ReviewCollection.create` throws after a successful upload, the blob persists with no document referencing it and no cleanup path.
 
-### 14. The toast lies
-`setMessageVisibility('block')` runs at the **top** of `handleSubmit`, before the network call. "Submitted" appears even when the POST fails — the failure only reaches `console.error`. Same in `Contact.tsx`. See [[04 - State Management Patterns]].
+### 9. The toast lies
+`setMessageVisibility('block')` runs at the **top** of `handleSubmit`, before the network call. "Submitted" appears even when the POST fails — the failure only reaches `console.error`. Same in `Contact.tsx`, and the same shape in `Furniture.tsx`, where `showMessage()` fires on click rather than on a confirmed cart write. See [[04 - State Management Patterns]].
 
-### 15. No user-facing error or loading states anywhere
+### 10. No user-facing error or loading states anywhere
 Every failure path terminates in `console.error`. A visitor sees an empty review list or an unresponsive button with no explanation. `handleCheckout` has no pending flag, so a slow network invites repeat clicks and duplicate Stripe sessions.
 
-### 16. No webhook, no order record
+### 11. No webhook, no order record
 Nothing listens for `checkout.session.completed`. Orders exist only in the Stripe dashboard; the app has no record a purchase occurred. `success_url` and `cancel_url` are both the homepage, so the user gets no confirmation and the app cannot distinguish the two outcomes.
 
-### 17. The contact form's image upload goes nowhere
+### 12. The contact form's image upload goes nowhere
 `Contact.tsx` collects a filename into state, but `handleSubmit` posts JSON containing only `name`, `email`, `phone`, `message`. The UI promises an attachment the request never carries. Either wire it up or remove the control.
 
-### 18. `Contact.tsx` never checks failure
+### 13. `Contact.tsx` never checks failure
 `if (response.ok) { ...reset... }` with no `else`. A rejected Formspree submission leaves the form populated and the user told "Submitted".
 
 ---
 
 ## Maintainability
 
-### 19. Per-product routes and pages
-Every product needs two hand-written files and two route registrations that contain no logic beyond a hardcoded `id`. `EarthWood.tsx` and `HazyNight.tsx` differ by one string and two Tailwind classes.
+### 14. Per-product routes and pages
+Every product needs two hand-written files and two route registrations that contain no logic beyond a hardcoded `id`. `EarthWood.tsx` and `HazyNight.tsx` differ by one string and one devtools class name.
 
 Fix: one `/product/:productId` route with `useParams()`. Detailed in [[14 - Adding a New Product]].
 
-### 20. The toast block is copied three times
+### 15. The toast block is copied three times
 Identical 8-line `useState`/`useEffect` pair in `Furniture.tsx`, `Reviews.tsx`, and `Contact.tsx` — including the `messageVisbility` typo, which is the tell.
 
-Fix: `useTimedMessage()` custom hook.
+Fix: `useTimedMessage()` custom hook. This is now the **only** surviving instance of state holding a CSS class string; extracting it would retire the pattern from the codebase entirely. See [[04 - State Management Patterns]].
 
-### 21. `handleImage` and `handleVideo` are the same function
+### 16. `handleImage` and `handleVideo` are the same function
 Byte-identical apart from the words `image`/`video`. Fix: one factory taking the setter pair.
 
-### 22. Manual `mt-*` compensation on every page
-`mt-30`, `mt-40`, `mt-60`, `mt-80` across pages, all working around the absolutely-positioned nav. A shared layout route (or a non-absolute nav) replaces four magic numbers with one rule. See [[11 - Styling Conventions]].
-
-### 23. `About.tsx` has ten state variables for five FAQ panels
-Two `useState` per panel (visibility + icon path), plus a comma-expression ternary per toggle. An array of `{ question, answer }` with a single `openIndex` collapses the whole section — and the FAQ markup is currently repeated five times.
-
-### 24. `any[]` for the cart erases type safety on the checkout path
+### 17. `any[]` for the cart erases type safety on the checkout path
 Cart items are `Product` plus `activeColor`, `cartItemId`, `quantity` — and `imageUrl` is bolted on in a fourth place. Four lines fix it:
 ```ts
 interface CartItem extends Product { cartItemId: string; quantity: number; }
 ```
-See [[12 - Coding Style Guide]].
+`Navigation` derives its props from `Cart` with `React.ComponentProps<typeof Cart>`, so typing `Cart` fixes both at once. See [[12 - Coding Style Guide]].
 
-### 25. Review document shapes are hand-mirrored
+### 18. Review document shapes are hand-mirrored
 `Furniture.tsx` declares `ReviewType` (9 fields), `FurnitureCard.tsx` declares `Review` (5 fields), and `reviewSchema` is the actual source of truth in a `.js` file no tsconfig covers. Three definitions, no link between them.
 
-### 26. Average rating is computed client-side
+### 19. Average rating is computed client-side
 `FurnitureCard.tsx` downloads every review document to display one number, and the home page issues one such request per product tile. An aggregation endpoint returning `{ count, average }` would scale.
 
-Note `averageRating` is `NaN` when `data.length === 0` — masked by the paired `hidden`/`block` elements, but the value is computed regardless.
+`averageRating` is still `NaN` when `data.length === 0` in `FurnitureCard` — the ternary never renders it, but the value is computed regardless. `Furniture.tsx` guards the same expression properly (`reviews.length === 0 ? 0 : ...`); the two should agree.
 
-### 27. `console.log` in production paths
-`Furniture.tsx` logs the gallery array and full review payload on every mount. `Navigation.tsx` logs `navHover[0]` on every mouse enter *and* leave, on all four links. The toast effect logs `count`. All ship to users.
+### 20. `colorTextStyles` is populated but never read
+The array existed for the `text-[1px]` swatch-label trick. Both surfaces that used it now render the label properly, so nothing consumes it — yet it is still in the `Product` interface and still hand-maintained in lockstep with two other arrays for every new product. Delete it, or collapse all three into an array of objects. See [[05 - Catalog Data Model]].
 
-### 28. State stores CSS class strings
-`useState('hidden')` / `useState('block')` typed as `string` — a typo like `'blok'` type-checks fine and silently does nothing. Boolean state with a derived class is one variable instead of two and is type-safe. See [[04 - State Management Patterns]].
+### 21. Marketing copy lives in components
+`Home.tsx` holds `PROCESS` — four objects of prose describing sourcing, craft, finishing, and pickup — plus `COLLECTION_IMAGES`, and `About.tsx` holds the whole `FAQ` array. These are content, not layout, and editing them means editing a component.
+
+They are at least *hoisted* to module scope with SCREAMING_SNAKE names, which keeps them out of the render body and makes them easy to lift into a content module later.
+
+### 22. Two facts about the catalog are hardcoded in the footer
+The **Collection** column maps `FURNITURE_CATALOG` and stays current, but the `Chairs — coming soon` line beneath it is literal text, as is the `03 / Chairs / In the workshop` block on the home page. Both need a manual edit the day a chair ships. See [[14 - Adding a New Product]].
+
+### 23. The hero section is still called `#video-showcase`
+It has held a still image, not a video, for some time. The id is referenced only by itself, so renaming it costs nothing.
+
+### 24. Ghost buttons carry their surface in the class list
+`.btn-ghost` fills dark on hover; `.btn-ghost-light` fills light. Putting a `btn-ghost-light` on a bone section, or forgetting it on a bark one, produces a hover state with no contrast. The two rules must be read together — see [[10 - Tailwind Design System]].
+
+### 25. The finish selector assumes short labels
+The swatch row is `grid grid-cols-4 w-max`, so its width is four times the **longest** finish name. `"Stain - Espresso"` fits comfortably; something like `"Hand-rubbed walnut oil"` would push the row past the column on narrow screens. The `max-xsm:grid-cols-2` fallback covers phones but not the 534–900px band. See [[11 - Styling Conventions]].
 
 ---
 
 ## Configuration
 
-### 29. No dev proxy for the API
-`vite.config.ts` has no `server.proxy`, and `vercel.json` rewrites don't apply locally. `fetch('/api/...')` from `npm run dev` hits Vite on `:5173`, not Express on `:8080`.
+### 26. No dev proxy for the API
+`vite.config.ts` has no `server.proxy`, and `vercel.json` rewrites don't apply locally. `fetch('/api/...')` from `npm run dev` hits Vite on `:5173`, not Express on `:8080` — which is why the console fills with `Unexpected token '<'` on any page that loads reviews: the SPA fallback returns `index.html` and `.json()` chokes on it.
 
 Fix — either use `vercel dev`, or add:
 ```ts
@@ -187,62 +163,68 @@ server: { proxy: { '/api': 'http://localhost:8080' } }
 ```
 See [[13 - Deployment and Configuration]].
 
-### 30. Animation start widths are hardcoded pixel measurements
-```css
-@keyframes timer-message      { 0% { width: 144.34px; } 100% { width: 0%; } }
-@keyframes timer-forms-message{ 0% { width: 91.77px;  } 100% { width: 0%; } }
-```
-Measured from the specific toast boxes. Change the word "Submitted" and the bar no longer matches its container. `100% → 0%` is self-maintaining. The 5s duration is also duplicated between CSS and the `setTimeout` in JS.
+### 27. The toast duration is duplicated
+`5s` in the two `--animate-timer-*` tokens, `5000` in three `setTimeout` calls. The keyframes themselves are no longer measured in pixels, but the timing still lives in two languages.
 
-### 31. Unused theme tokens and dependencies
-- Seven `--color-svg*` tokens referenced nowhere in `src/`
-- `Share+Tech` font fetched by the Google Fonts `@import`, never assigned
-- `.about-img-element` declared in CSS, never applied
+### 28. Unused dependencies and assets
 - `@stripe/stripe-js` in `package.json`, never imported
 - `stripePriceId: 'N/A'` on every product, never read
 - `const origin = request.headers.origin || ...` computed in `/api/checkout`, never used
-- `public/furniture/gallery/img1-6.avif` and `about-media/woodWorkSample.mp4` unreferenced
+- `public/hammer-favicon.svg` — superseded, never referenced
+- `public/about-media/woodWorkSample.mp4` and `woodworkPoster.webp` — unreferenced since the hero became a still image
+- `public/furniture/catalog/nightstands/vatano/*` and `tables/earth-wood.{jpg,png}` — assets for products not in the catalog
 
-### 32. Global bare-element CSS
-```css
-h1   { font-size: clamp(2rem, 3vw, 3.75rem); }
-form { width: clamp(1rem, 50vw, 87.5rem); }
-```
-`form` sets the width of **every** form on the site with no opt-out. Scope to a class if a form ever needs a different width.
-
-### 33. SEO is single-page
+### 29. SEO is single-page
 One `<title>` and one `<meta name="description">` for all nine routes, no Open Graph tags. Every shared link previews identically. Client-side rendering also means crawlers see an empty `#root` until JS executes.
 
-### 34. Accessibility gaps
-- `aria-expanded` in `About.tsx` is on the **panel**, not the controlling `<button>` — the attribute belongs on the control
-- The FAQ toggle `<img>` elements have no `alt`
-- `max-2md:aria-hidden` is a Tailwind variant, not an attribute; it does nothing (the `hidden` class handles it correctly anyway)
-- The disabled add-to-cart button uses `pointer-events-none` rather than the `disabled` attribute, so keyboard users can still activate it with no colour selected
+The `<h1>` situation did improve: each page now has exactly one, and it describes the page rather than repeating the company name.
 
-Credit where due: React Aria handles focus trapping and dismissal correctly, every icon-only button has an explicit `aria-label`, and every form input is properly associated with its label.
+### 30. No tests, no CI
+`tsc -b` in the build script is the only automated check between a commit and production. `npm run lint` is not wired in and does not currently pass — see the table in [[12 - Coding Style Guide]].
 
-### 35. No tests, no CI
-`tsc -b` in the build script is the only automated check between a commit and production.
+---
+
+## Recently fixed
+
+Closed during the visual overhaul. Left here as a record of what the code used to do.
+
+| Was | Now |
+|---|---|
+| `bg-olive-500` / `text-olive-500` referenced with no token behind them — the olive swatch rendered transparent | `--color-olive-500` and `--color-olive-300` defined in `@theme`; `--color-raw-500` added for raw wood |
+| `` `bg-${item.activeColor}-500` `` in `Cart.tsx` — a class Tailwind never generated | `SWATCH_STYLES` lookup with literal class names |
+| Clearing a file reset the display name only, so a "cleared" file still uploaded | `setSelectedImageFile(null)` alongside it |
+| Clear buttons had no `type`, so clicking one submitted the form | `type="button"` on all of them |
+| Missing `key` props on four `.map()` calls; a duplicate `key` on two nested divs of one iteration | keyed, with the cart line keyed by `cartItemId` |
+| `mt-30` / `mt-40` / `mt-60` / `mt-80` per page to clear the absolute nav | one `--header-h`, consumed by the nav and every page |
+| `h1 { }` and `form { }` as global element rules | class-based sizing, opted into |
+| Keyframes starting at measured pixel widths (`144.34px`, `91.77px`) | `100% → 0%` against a `w-fit` parent |
+| Ten `useState` calls for five FAQ panels, markup repeated five times | one `number[]` over a `FAQ` array |
+| A four-element `"true"`/`"false"` array tracking nav hover | `.link-underline`, pure CSS |
+| `console.log` on every mount, every hover, and every toast | removed |
+| `pointer-events-none` for the disabled add-to-cart, reachable by keyboard | the `disabled` attribute, plus a label that states the precondition |
+| `aria-expanded` on the FAQ panel rather than its button; no `alt` on the toggle icons; `max-2md:aria-hidden` no-op classes | attributes on the controls, decorative `alt=""`, no-ops removed |
+| `text-[1px]` to hide swatch labels | `sr-only`, or a visible caption |
+| Seven `--color-svg*` tokens, a `Share+Tech` webfont, and `.about-img-element` — all unreferenced | removed from `App.css` |
+| `public/furniture/gallery/img1-6.avif` unreferenced | used by the home collections strip, and labelled as stock photography |
 
 ---
 
 ## Suggested order of work
 
-**Fix first — visible or exploitable**
-1. Add `--color-olive-*` (#1) — visual bug on every product
-2. `type="button"` on clear buttons (#4) — breaks two forms
-3. Clear the `File` state (#3)
-4. Server-side prices (#9) and `.select('-email')` (#10)
-5. Fix the cart swatch class (#2)
+**Fix first — exploitable or user-visible**
+1. Server-side prices (#4) and `.select('-email')` (#5)
+2. Rate limit and validate the review endpoint (#6, #7)
+3. Move the toast to *after* a successful response (#9)
+4. Handle the Formspree failure path (#13) and either wire up or remove the contact attachment (#12)
 
 **Then — robustness**
-6. Move the toast to *after* a successful response (#14)
-7. Rate-limit and validate the review endpoint (#11, #12)
-8. Add the missing `key` props (#6)
-9. Real error and loading states (#15)
+5. Real error and loading states (#10)
+6. Guard `localCart` against `undefined` (#1)
+7. Replace `substring(8)` with something that can't mis-slice (#2)
+8. A dev proxy, so local development exercises the API at all (#26)
 
 **Then — structure, if the catalog grows**
-10. `/product/:productId` route (#19)
-11. `useTimedMessage()` hook (#20)
-12. `CartItem` type (#24)
-13. Shared layout route to kill the `mt-*` numbers (#22)
+9. `/product/:productId` route (#14)
+10. `useTimedMessage()` hook (#15) — retires the last class-string state
+11. `CartItem` type (#17), which also types `Navigation`
+12. Collapse the three colour arrays into one array of objects (#20)

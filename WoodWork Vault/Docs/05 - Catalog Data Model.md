@@ -19,7 +19,7 @@ export interface Product {
     price: number;                   // 400 — dollars, not cents
     activeColor: string;             // '' — placeholder, overwritten in cart
     colors: Array<string>;           // display labels
-    colorTextStyles: Array<string>;  // Tailwind text-* classes, index-aligned
+    colorTextStyles: Array<string>;  // Tailwind text-* classes, index-aligned — no longer read
     colorStyles: Array<string>;      // Tailwind bg-* classes, index-aligned
     stripePriceId: string;           // 'N/A' — unused
     image: string;                   // primary/thumbnail path
@@ -39,9 +39,9 @@ export const FURNITURE_CATALOG: Product[] = [
         id: 'earth-wood', type: 'table',
         route: '/EarthWood', review: '/EarthWoodReview', reviewDB: 'earth-wood',
         name: 'Earth Wood', price: 400, activeColor: '',
-        colors:          ['raw wood',       'stain - espresso',  'stain - olive',  'stain - gray'],
-        colorTextStyles: ['text-orange-200','text-espresso-500', 'text-olive-500', 'text-gray-500'],
-        colorStyles:     ['bg-orange-200',  'bg-espresso-500',   'bg-olive-500',   'bg-gray-500'],
+        colors:          ['raw wood',      'stain - espresso',  'stain - olive',  'stain - gray'],
+        colorTextStyles: ['text-raw-500',  'text-espresso-500', 'text-olive-500', 'text-gray-500'],
+        colorStyles:     ['bg-raw-500',    'bg-espresso-500',   'bg-olive-500',   'bg-gray-500'],
         stripePriceId: 'N/A',
         image: '/furniture/catalog/tables/earth-wood/earth-wood-front.png',
         imageGallery: [ /* front, side, top */ ],
@@ -112,21 +112,39 @@ The `.filter().map()` form avoids the null check by rendering nothing on a miss.
 
 ```tsx
 colors.map((item, index) => (
-    <div className={`... ${colorTextStyles[index]} ${colorStyles[index]} ...`}>{item}</div>
+    <button ...>
+        <span className={`${colorStyles[index]} block border border-bark-900/15 w-full h-10`}></span>
+        <span className="micro text-stone-500 capitalize">{item}</span>
+    </button>
 ))
 ```
 
-Adding a colour means editing three arrays in lockstep, in both products. An array of objects (`{ label, textClass, bgClass }`) would make the grouping structural rather than positional. The trade taken was keeping the literal Tailwind class strings visible in the data file — which matters, because Tailwind must see complete class names in source to generate them.
+Adding a colour means editing the arrays in lockstep, in both products. An array of objects (`{ label, textClass, bgClass }`) would make the grouping structural rather than positional. The trade taken was keeping the literal Tailwind class strings visible in the data file — which matters, because Tailwind must see complete class names in source to generate them.
+
+**`colorTextStyles` is now vestigial.** It existed for the `text-[1px]` trick, where the swatch's label was rendered inside the swatch at one pixel and tinted to match. Both surfaces that used it — `FurnitureCard` and `Furniture` — now show the label properly (as `sr-only` text and as a visible caption respectively), so nothing reads the array. It is still populated and still index-aligned, so it can be deleted whenever the `Product` interface is next touched.
 
 ### Tailwind classes stored as data
 
-Storing `'bg-espresso-500'` in a data file couples the catalog to the styling layer, but it does keep the class scannable by Tailwind's compiler. The pattern breaks in `Cart.tsx`, which *constructs* one:
+Storing `'bg-espresso-500'` in a data file couples the catalog to the styling layer, but it does keep the class scannable by Tailwind's compiler.
+
+The pattern used to break in `Cart.tsx`, which *constructed* one:
 
 ```tsx
 className={`... ${item.activeColor === 'raw wood' ? 'bg-orange-200' : `bg-${item.activeColor}-500`}`}
 ```
 
-`bg-${item.activeColor}-500` is never generated, because Tailwind scans text and cannot evaluate a template literal. See [[15 - Known Gotchas and Tech Debt]].
+`bg-${item.activeColor}-500` was never generated, because Tailwind scans text and cannot evaluate a template literal — so every non-raw-wood swatch in the cart rendered transparent. It is now a lookup with literal values on both sides:
+
+```tsx
+const SWATCH_STYLES: Record<string, string> = {
+    'raw wood': 'bg-raw-500', 'espresso': 'bg-espresso-500',
+    'olive': 'bg-olive-500',  'gray': 'bg-gray-500'
+};
+```
+
+Note the shape of the keys: this map is indexed by `activeColor`, which is the **post-`substring(8)`** value (`'espresso'`, not `'stain - espresso'`), so it is coupled to that string surgery — see [[04 - State Management Patterns]]. Carrying the chosen `colorStyles[index]` onto the cart item inside `addToCart` would remove both the map and the coupling.
+
+The `--color-raw-500` token was added alongside this: the raw-wood swatch used Tailwind's built-in `orange-200`, which read as apricot rather than pale timber. `--color-olive-*` was added at the same time, having been referenced by this file with no token behind it since the catalog was written. See [[10 - Tailwind Design System]].
 
 ### `reviewDB` is the foreign key
 
@@ -160,4 +178,12 @@ public/furniture/catalog/<type-plural>/<product-id>/<product-id>-<view>.png
 
 Paths in the catalog are **absolute from `public/`** (leading `/`), so Vite serves them unhashed and the browser resolves them against the site root. This is what lets `Cart.tsx` turn them into absolute URLs for Stripe with `new URL(cleanPath, productionUrl)`.
 
-Gallery order is **front → side → top** and `Furniture.tsx` indexes it positionally via `galleryPosition = [0, 1, 2]` and `galleryButton = [0, 1, 2]` — both hardcoded to three, so a fourth image would render but be unreachable by the dot controls.
+Gallery order is **front → side → top**. `Furniture.tsx` used to index it through two hardcoded `[0, 1, 2]` arrays, so a fourth image would render but be unreachable by the controls. Both slides and controls now map over `imageGallery` itself:
+
+```tsx
+imageGallery.map((_, index) => (
+    <button onClick={() => setActiveButton(index)} aria-label={`Show image ${index + 1}`} ... />
+))
+```
+
+Any number of views works, and the `01 / 03` counter beside the controls reads its total from `imageGallery.length`. Three remains the convention for new products — see [[14 - Adding a New Product]] — but it is now a convention rather than a constraint.

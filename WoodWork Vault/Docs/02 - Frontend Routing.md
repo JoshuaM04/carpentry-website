@@ -30,11 +30,10 @@ Note the non-null assertion `getElementById('root')!` — a deliberate escape ha
 `App.tsx` is the shell: it renders persistent chrome, then the route outlet.
 
 ```tsx
-<div className="root-container min-h-dvh font-roboto">
+<div className="root-container flex flex-col min-h-dvh text-bark-900 bg-bone-50 font-sans">
   <Analytics />        {/* Vercel — no visual output */}
   <SpeedInsights />    {/* Vercel — no visual output */}
-  <NavBar />           {/* persistent across all routes */}
-  <Cart cart={cart} setCart={setCart} />
+  <NavBar cart={cart} setCart={setCart} />   {/* persistent; renders Cart itself */}
   <ScrollToTop />      {/* returns null; side-effect only */}
 
   <Routes> ... </Routes>
@@ -64,9 +63,9 @@ Note the non-null assertion `getElementById('root')!` — a deliberate escape ha
 <Link to={product.review}>     // Furniture.tsx
 ```
 
-**No 404 route.** An unmatched path renders the chrome (nav + cart) with an empty content area rather than a not-found page.
+**No 404 route.** An unmatched path renders the chrome (the header) with an empty content area rather than a not-found page.
 
-**`Cart` is mounted outside `<Routes>`** so its modal state and the cart badge survive navigation.
+**`Cart` is mounted inside `NavBar`, which is outside `<Routes>`** — so its modal state and the badge survive navigation. `App` still owns the cart array and hands `cart`/`setCart` to `NavBar` purely to pass them along. This is one more layer of prop threading than the original shape, bought in exchange for the cart trigger being a normal child of the header row instead of an absolutely positioned element that had to know which route it was on. See [[03 - Component Network]].
 
 ## `ScrollToTop` — the null-rendering component
 
@@ -82,24 +81,32 @@ A pure side-effect component. `BrowserRouter` preserves scroll position on navig
 
 ## Layout responsibility is per-page, not shared
 
-There is **no shared layout route**. Each page renders its own `<Footer />` and its own top spacing:
+There is still **no shared layout route**. Each page renders its own `<Footer />`:
 
 ```tsx
 // Home.tsx, Gallery.tsx, About.tsx, Contact.tsx, EarthWood.tsx, ...
-<div className="...-container flex flex-col gap-20">
+<div className="...-container flex flex-col">
     <main>...</main>
     <Footer />
 </div>
 ```
 
-Consequence: the fixed navigation bar is compensated for with **manual top margins that differ per page** — `mt-30`, `mt-40`, `mt-60`, `mt-80`. Covered in [[11 - Styling Conventions]].
+What changed is the top spacing. The header is `fixed`, so it occupies no layout space and every page must clear it — but each page used to do that with its own hand-tuned margin (`mt-30` on Home, `mt-40` on Gallery, `mt-60` on About and Contact, `mt-80` on the product and review pages). Four magic numbers for one problem, none of which matched the nav's actual height.
+
+They are now one shared token. `Navigation` sets `h-(--header-h)`, and each page's first section pads by the same variable:
+
+```tsx
+<section className="... pt-(--header-h)">
+```
+
+A layout route would still be the better answer — it would put `<Footer />` in one place too — but the offset is no longer duplicated knowledge. Covered in [[11 - Styling Conventions]].
 
 ```mermaid
 flowchart TD
     M[main.tsx] --> BR[BrowserRouter]
     BR --> A[App.tsx<br/>owns cart state]
-    A --> NAV[NavBar]
-    A --> CRT[Cart]
+    A --> NAV[NavBar<br/><i>cart, setCart</i>]
+    NAV --> CRT[Cart]
     A --> STT[ScrollToTop]
     A --> RT{Routes}
     RT --> H[Home]

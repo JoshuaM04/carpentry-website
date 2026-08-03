@@ -45,7 +45,8 @@ This vault documents the codebase at `carpentry-website/`. Every note is standal
 | **R**eact | React 19 + React Router 7 | `src/` |
 | **N**ode | Node runtime on Vercel (`@vercel/node`) | build target |
 | Build | Vite 8 + `@vitejs/plugin-react` | `vite.config.ts` |
-| Styling | Tailwind CSS v4 (CSS-first config) | `src/App.css` |
+| Styling | Tailwind CSS v4 (CSS-first config) + a small component layer | `src/App.css` |
+| Type | Archivo (display) + Inter (body), Google Fonts | `@import` in `src/App.css` |
 | Payments | Stripe Checkout (hosted) | `/api/checkout` |
 | File storage | Vercel Blob | `/api/reviews/:productKey` |
 | Contact form | Formspree (third-party) | `src/pages/Contact.tsx` |
@@ -62,7 +63,7 @@ carpentry-website/
 ├── src/
 │   ├── main.tsx               # createRoot + StrictMode + BrowserRouter
 │   ├── App.tsx                # cart state owner + route table
-│   ├── App.css                # Tailwind import + @theme design tokens
+│   ├── App.css                # Tailwind import + @theme tokens + component classes
 │   ├── components/            # reusable, prop-driven
 │   ├── pages/                 # route targets
 │   │   ├── Catalog/<Type>/    # product detail pages
@@ -74,6 +75,12 @@ carpentry-website/
 
 ## The one thing to understand first
 
-There is no database of products. `src/utility/catalog.ts` is a hardcoded TypeScript array, and **every product surface in the app derives from it** — the home grid, the detail page, the cart line item, the Stripe line item, and the Mongo query key. MongoDB stores *only customer reviews*.
+There is no database of products. `src/utility/catalog.ts` is a hardcoded TypeScript array, and **every product surface in the app derives from it** — the home grid, the detail page, the cart line item, the Stripe line item, the footer's collection column, and the Mongo query key. MongoDB stores *only customer reviews*.
 
 Read [[05 - Catalog Data Model]] before anything else.
+
+## The look
+
+The interface is a warm, near-monochrome editorial layout: bone paper, bark ink, condensed uppercase display type, squared corners, hairline rules, and full-bleed photography carrying all the colour. Every heading is a `.display` class, every label is `.eyebrow`, and the header height is one CSS variable the whole site pads against.
+
+If you are changing anything visual, [[10 - Tailwind Design System]] is the contract and [[11 - Styling Conventions]] is the house style.
