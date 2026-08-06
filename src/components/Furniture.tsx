@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import type { Product } from '../utility/catalog';
 import SectionHeading from './SectionHeading';
 
+/* Mirrors what GET /api/reviews/:productKey actually returns — the reviewer's
+   email is stored but never served, so it is absent here. */
 interface ReviewType {
     _id: string;
     title: string;
@@ -11,9 +13,11 @@ interface ReviewType {
     username: string;
     imageUpload: string;
     videoUpload: string;
-    email: string;
     timestamp: string;
 }
+
+/* Keeps a stored rating inside the range the star row can render. */
+const clampStars = (rating: number) => Math.max(0, Math.min(5, Math.round(rating) || 0));
 
 interface FurnitureProps {
     product: Product;
@@ -212,7 +216,10 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
                                     reviews.map((review) => (
                                         <div key={review._id} className="flex flex-col gap-4 border-t border-bark-900/15 py-8">
                                             <div className="flex flex-wrap justify-between items-baseline gap-4">
-                                                <p className="text-sm tracking-[0.2em]">{'★'.repeat(review.rating)}<span className="text-bark-900/25">{'★'.repeat(5 - review.rating)}</span></p>
+                                                {/* Clamped before it reaches repeat() — a negative count throws a
+                                                    RangeError, which would unmount the whole page. The schema bounds
+                                                    this too; this covers rows written before it did. */}
+                                                <p className="text-sm tracking-[0.2em]">{'★'.repeat(clampStars(review.rating))}<span className="text-bark-900/25">{'★'.repeat(5 - clampStars(review.rating))}</span></p>
                                                 <p className="micro text-stone-500">{new Date(review.timestamp).toLocaleDateString()}</p>
                                             </div>
 

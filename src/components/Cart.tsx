@@ -22,23 +22,14 @@ export default function cart({ cart, setCart }: CartProps) {
             const productionUrl = 'https://woodwork-creations.com/';
             const baseUrl = window.location.hostname === 'localhost' ? '' : productionUrl;
 
-            const localCart = cart.map(item => {
-                let absoluteImageUrl = '';
-
-                if (item.image && !item.image.includes('...')) {
-                    if (item.image.startsWith('http')) {
-                        absoluteImageUrl = item.image;
-                    } else {
-                        const cleanPath = item.image.startsWith('/') ? item.image : `/${item.image}`;
-                        absoluteImageUrl = new URL(cleanPath, productionUrl).href;
-                    }
-
-                    return {
-                        ...item,
-                        imageUrl: absoluteImageUrl
-                    };
-                };
-            });
+            /* Send only what the server cannot know: which product, which
+               finish, how many. Price, display name, and image are resolved
+               server-side from the catalog so the client cannot set them. */
+            const localCart = cart.map((item) => ({
+                id: item.id,
+                activeColor: item.activeColor,
+                quantity: item.quantity
+            }));
 
             const response = await fetch(`${baseUrl}/api/checkout`, {
                 method: 'POST',

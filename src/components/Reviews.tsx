@@ -18,6 +18,7 @@ export default function Reviews({ product }: ReviewsProps) {
     const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
     const [selectedVideoFile, setSelectedVideoFile] = useState<File | null>(null);
     const [messageVisbility, setMessageVisibility] = useState('hidden');
+    const [errorMessage, setErrorMessage] = useState('');
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -65,8 +66,14 @@ export default function Reviews({ product }: ReviewsProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        setMessageVisibility('block');
-        setCount((prevIndex) => prevIndex + 1);
+        setErrorMessage('');
+
+        /* The endpoint requires 1–5, so catch the unrated case here rather than
+           letting it come back as a rejected request. */
+        if (activeRating < 1) {
+            setErrorMessage('Please choose a rating from 1 to 5.');
+            return;
+        }
 
         const formData = new FormData();
 
@@ -96,11 +103,19 @@ export default function Reviews({ product }: ReviewsProps) {
 
                 setSelectedImageFile(null);
                 setSelectedVideoFile(null);
+
+                // Confirmation only after the write is confirmed.
+                setMessageVisibility('block');
+                setCount((prevIndex) => prevIndex + 1);
             } else {
-                const errorData = await response.json();
-                console.error("Backend validation error:", errorData.error);
+                // An error response is not guaranteed to be JSON — a proxy or a
+                // crashed function can return HTML or nothing at all.
+                const errorData = await response.json().catch(() => null);
+                setErrorMessage(errorData?.error || 'That review could not be saved.');
+                console.error("Backend error:", errorData?.error ?? response.status);
             }
         } catch (error) {
+            setErrorMessage('Could not reach the server. Please try again.');
             console.error("Failed to submit review:", error);
         }
     }
@@ -219,6 +234,10 @@ export default function Reviews({ product }: ReviewsProps) {
 
                             <div key={count} className="bg-espresso-500 h-1 animate-timer-forms-message"></div>
                         </div>
+
+                        {errorMessage && (
+                            <p role="alert" className="flex items-center text-espresso-500 micro h-9">{errorMessage}</p>
+                        )}
                     </div>
                 </form>
             </section>

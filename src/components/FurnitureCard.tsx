@@ -2,12 +2,13 @@ import { type Product } from '../utility/catalog'
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+/* The reviewer's email is stored but never served — see the projection on
+   GET /api/reviews/:productKey. */
 interface Review {
   title: string;
   rating: number;
   comment: string;
   username: string;
-  email: string;
 }
 
 interface FurnitureCardProps {
@@ -33,7 +34,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
     }, [product?.reviewDB]);
 
     const totalRatingSum = data.reduce((sum, review) => sum + review.rating, 0);
-    const averageRating = totalRatingSum / data.length;
+    const averageRating = data.length === 0 ? 0 : totalRatingSum / data.length;
 
     return (
         <Link to={product.route} className="furniture-card flex flex-col gap-4 w-full">
