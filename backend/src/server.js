@@ -42,7 +42,8 @@ const MAX_REVIEWS_PER_WINDOW = 3;
 const MAX_CHAT_MESSAGES = 20;
 const MAX_CHAT_MESSAGE_LENGTH = 2000;
 const CHAT_SYSTEM_PROMPT = `You are the helpful AI assistant for WoodWork Creations, a family-owned carpentry business.
-Only answer questions about WoodWork Creations, its furniture catalog, product options, ordering, pickup, delivery, care, or custom commissions.
+Only answer questions about WoodWork Creations, its business, furniture catalog, product options, ordering, pickup, delivery, care, or custom commissions.
+WoodWork Creations is family-owned and based in San Marcos, Texas. Do not invent the names of the owners or other business details not provided here.
 We do not offer shipping at this time. We currently offer local pickup only. We hope to offer shipping in the future.
 Use the catalog facts supplied below as the source of truth for product names, prices, approximate completion times, materials, dimensions, and finishes.
 Treat products listed in the catalog as available to inquire about, but do not claim real-time stock or guaranteed availability.
@@ -56,13 +57,38 @@ CATALOG:
 
 const CHAT_OFF_TOPIC_RESPONSE = "I can help with WoodWork Creations furniture, product options, ordering, pickup, delivery, care, and custom commissions. What would you like to know?";
 const CHAT_SHIPPING_RESPONSE = "We do not offer shipping at this time. We currently offer local pickup only, and we hope to offer shipping in the future.";
+const CHAT_GREETING_RESPONSE = "Hi! I'm doing well, thanks for asking. I can tell you about WoodWork Creations' furniture, finishes, pricing, pickup, or custom commissions. What would you like to explore?";
+const CHAT_BUSINESS_RESPONSE = "WoodWork Creations is a family-owned carpentry business based in San Marcos, Texas. I can also tell you about our furniture, finishes, pricing, pickup, or custom commissions.";
 const CHAT_TOPIC_TERMS = [
     'woodwork', 'furniture', 'catalog', 'product', 'piece', 'table', 'nightstand',
     'earth wood', 'hazy night', 'wood', 'finish', 'stain', 'espresso', 'olive',
-    'gray', 'price', 'cost', 'buy', 'order', 'cart', 'checkout', 'available',
+    'gray', 'price', 'cost', 'cheapest', 'expensive', 'lowest', 'highest',
+    'affordable', 'buy', 'order', 'cart', 'checkout', 'available',
     'availability', 'pickup', 'delivery', 'shipping', 'commission', 'custom',
     'care', 'material', 'poplar', 'pine', 'dimension', 'size', 'width', 'height',
     'diameter', 'contact'
+];
+
+const CHAT_INVENTORY_PATTERNS = [
+    /\bdo you (sell|carry|offer)\b/i,
+    /\bdo you have\b/i,
+    /\bhow many\b.{0,40}\b(do you have|are available|are there)\b/i,
+    /\b(in stock|inventory|items? available)\b/i
+];
+
+const CHAT_BUSINESS_PATTERNS = [
+    /\bwho('?s| is) the (business )?owners?\b/i,
+    /\bwho are the (business )?owners?\b/i,
+    /\bwho (runs|owns) (this |the )?(business|company|shop|store)\b/i,
+    /\bwhere is (this |the |your )?(business|company|shop|store) located\b/i,
+    /\bwhat('?s| is) the (business|company|shop|store)'?s location\b/i,
+    /\b(business|company|shop|store) address\b/i,
+    /\bwhere (are|is) you (located|based)\b/i
+];
+
+const CHAT_GREETING_PATTERNS = [
+    /^(hi|hello|hey)\b(?:[!,. ]|$)/i,
+    /^(hi|hello|hey)\b.{0,40}\bhow are you\b/i
 ];
 
 const CHAT_PROMPT_INJECTION_PATTERNS = [
@@ -80,7 +106,10 @@ const isPromptInjection = (text) => CHAT_PROMPT_INJECTION_PATTERNS
 const isOnTopic = (messageContent) => {
     const text = messageContent.toLowerCase();
 
-    return CHAT_TOPIC_TERMS.some((term) => text.includes(term));
+    return CHAT_TOPIC_TERMS.some((term) => text.includes(term))
+        || CHAT_INVENTORY_PATTERNS.some((pattern) => pattern.test(text))
+        || CHAT_BUSINESS_PATTERNS.some((pattern) => pattern.test(text))
+        || CHAT_GREETING_PATTERNS.some((pattern) => pattern.test(text));
 };
 
 const getCatalogPrompt = () => getCatalog()
@@ -338,6 +367,18 @@ app.post('/api/chat', async (request, response) => {
     }
 
     const normalizedLatestMessage = latestMessage.toLowerCase();
+
+    if (CHAT_GREETING_PATTERNS.some((pattern) => pattern.test(latestMessage))) {
+        return response.status(200).json({
+            message: { role: 'assistant', content: CHAT_GREETING_RESPONSE }
+        });
+    }
+
+    if (CHAT_BUSINESS_PATTERNS.some((pattern) => pattern.test(latestMessage))) {
+        return response.status(200).json({
+            message: { role: 'assistant', content: CHAT_BUSINESS_RESPONSE }
+        });
+    }
 
     if (/\bshipping\b|\bship\b/.test(normalizedLatestMessage)) {
         return response.status(200).json({
