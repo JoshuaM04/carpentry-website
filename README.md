@@ -89,9 +89,9 @@ A dozen small commits after each pass are me reviewing the output and correcting
 
 **Obsidian for project memory.** A new AI session starts with no memory of the last one, so I keep a vault of linked notes documenting the architecture, the conventions, and the known tech debt. Pointing a fresh session at the relevant notes means it starts with the context I already have, instead of inferring conventions from whichever files it happened to read first. It turned out to be just as useful to me. The tech debt note is where half the improvements above came from, and I'd forgotten several of them. That's the habit I'd carry into the next project regardless of tooling: documentation that explains *why*, kept close enough to the code that it actually gets updated.
 
-## 09/20/2026 AI Assistant added
+## 09/20/2026 | AI Assistant added
 
-The Grain Guide AI Assistant was added as a catalog-aware chat window that appears after the hero section leaves the viewport. It can answer questions about the available furniture, pricing, pickup, and approximate completion times, with those product details now stored alongside each catalog item instead of being hardcoded in the card component. The chat also gained automatic scrolling, themed scrollbars, and production rate limiting backed by Upstash Redis to help prevent excessive token usage.
+An AI Assistant was added as a catalog-aware chat window that appears after the hero section leaves the viewport. It can answer questions about the available furniture, pricing, pickup, and approximate completion times, with those product details now stored alongside each catalog item instead of being hardcoded in the card component. The chat also gained automatic scrolling, themed scrollbars, and production rate limiting backed by Upstash Redis to help prevent excessive token usage.
 
 ---
 
