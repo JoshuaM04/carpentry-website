@@ -65,10 +65,20 @@ const CHAT_TOPIC_TERMS = [
     'diameter', 'contact'
 ];
 
-const isOnTopic = (messages) => {
-    const text = messages
-        .map((message) => message.content.toLowerCase())
-        .join(' ');
+const CHAT_PROMPT_INJECTION_PATTERNS = [
+    /\bignore\b.{0,40}\b(previous|prior|earlier|above|all)\b.{0,40}\binstructions?\b/i,
+    /\bdisregard\b.{0,40}\b(previous|prior|earlier|above|all)\b.{0,40}\binstructions?\b/i,
+    /\bforget\b.{0,40}\b(previous|prior|earlier|above|all)\b.{0,40}\binstructions?\b/i,
+    /\b(system prompt|developer message|hidden instructions?)\b/i,
+    /\b(jailbreak|do anything now|dan mode)\b/i,
+    /\b(?:you are|act as|pretend to be)\b.{0,40}\b(?:instead|unrestricted|different|another)\b/i
+];
+
+const isPromptInjection = (text) => CHAT_PROMPT_INJECTION_PATTERNS
+    .some((pattern) => pattern.test(text));
+
+const isOnTopic = (messageContent) => {
+    const text = messageContent.toLowerCase();
 
     return CHAT_TOPIC_TERMS.some((term) => text.includes(term));
 };
@@ -316,15 +326,20 @@ app.post('/api/chat', async (request, response) => {
         return response.status(400).json({ error: "That chat message is not valid." });
     }
 
-    if (!isOnTopic(messages)) {
+    const latestMessage = messages[messages.length - 1].content.trim();
+
+    // Keep instruction overrides and unrelated requests out of the model path.
+    // This is intentionally deterministic so a model cannot be prompted to
+    // ignore the application's topic restrictions.
+    if (isPromptInjection(latestMessage) || !isOnTopic(latestMessage)) {
         return response.status(200).json({
             message: { role: 'assistant', content: CHAT_OFF_TOPIC_RESPONSE }
         });
     }
 
-    const latestMessage = messages[messages.length - 1].content.toLowerCase();
+    const normalizedLatestMessage = latestMessage.toLowerCase();
 
-    if (/\bshipping\b|\bship\b/.test(latestMessage)) {
+    if (/\bshipping\b|\bship\b/.test(normalizedLatestMessage)) {
         return response.status(200).json({
             message: { role: 'assistant', content: CHAT_SHIPPING_RESPONSE }
         });
