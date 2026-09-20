@@ -24,9 +24,21 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
         if (!product?.reviewDB) return;
 
         fetch(`/api/reviews/${product?.reviewDB}`)
-        .then(response => response.json())
+        .then(async response => {
+            const responseData: unknown = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    responseData && typeof responseData === 'object' && 'error' in responseData
+                        ? String(responseData.error)
+                        : 'Could not load reviews.'
+                );
+            }
+
+            return responseData;
+        })
         .then(responseData => {
-            setData(responseData);
+            setData(Array.isArray(responseData) ? responseData : []);
         })
         .catch(error => {
             console.error("Error fetching reviews:", error);

@@ -7,11 +7,18 @@ type ChatMessage = {
     role: 'assistant' | 'user';
 };
 
+type ChatResponse = {
+    message?: ChatMessage;
+    error?: string;
+};
+
 const STARTER_PROMPTS = [
     'Which piece would suit my space?',
     'How does local pickup work?',
     'I have a question about a commission.'
 ];
+
+const ASSISTANT_NAME = 'AI Assistant';
 
 export default function AIChatbot() {
     const { pathname } = useLocation();
@@ -20,6 +27,8 @@ export default function AIChatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [draft, setDraft] = useState('');
     const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [isSending, setIsSending] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (!isHomePage) {
@@ -49,16 +58,49 @@ export default function AIChatbot() {
         return () => observer.disconnect();
     }, [isHomePage]);
 
-    const submitMessage = (event: FormEvent<HTMLFormElement>) => {
+    const submitMessage = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const content = draft.trim();
 
-        if (!content) {
+        if (!content || isSending) {
             return;
         }
 
-        setMessages((currentMessages) => [...currentMessages, { content, role: 'user' }]);
+        const userMessage: ChatMessage = { content, role: 'user' };
+        const nextMessages = [...messages, userMessage];
+
+        setMessages(nextMessages);
         setDraft('');
+        setError('');
+        setIsSending(true);
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: nextMessages })
+            });
+            const responseText = await response.text();
+            let result: ChatResponse = {};
+
+            try {
+                result = responseText ? JSON.parse(responseText) : {};
+            } catch {
+                throw new Error('The server returned an invalid response.');
+            }
+
+            const assistantMessage = result.message;
+
+            if (!response.ok || !assistantMessage) {
+                throw new Error(result.error || 'The AI assistant could not respond.');
+            }
+
+            setMessages((currentMessages) => [...currentMessages, assistantMessage]);
+        } catch (requestError) {
+            setError(requestError instanceof Error ? requestError.message : 'The AI assistant could not respond.');
+        } finally {
+            setIsSending(false);
+        }
     };
 
     if (isHomePage && !isAvailable) {
@@ -71,8 +113,12 @@ export default function AIChatbot() {
                 <section className="ai-chatbot-panel" aria-label="AI assistant chat">
                     <div className="ai-chatbot-header">
                         <div className="flex items-center gap-3">
-                            <span className="ai-chatbot-sparkle" aria-hidden="true">✦</span>
-                            <h2 className="display text-base">AI assistant</h2>
+                            <span className="ai-chatbot-sparkle" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2.5 14.5 9.5 21.5 12l-7 2.5-2.5 7-2.5-7-7-2.5 7-2.5L12 2.5Z" />
+                                </svg>
+                            </span>
+                            <h2 className="display text-base">{ASSISTANT_NAME}</h2>
                         </div>
 
                         <button
@@ -81,7 +127,9 @@ export default function AIChatbot() {
                             onClick={() => setIsOpen(false)}
                             aria-label="Close AI assistant"
                         >
-                            <span aria-hidden="true">×</span>
+                            <svg className="ai-chatbot-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m5 5 14 14M19 5 5 19" />
+                            </svg>
                         </button>
                     </div>
 
@@ -113,6 +161,18 @@ export default function AIChatbot() {
                                 ))}
                             </div>
                         )}
+
+                        {isSending && (
+                            <p className="text-sm text-stone-500" aria-label="AI assistant is typing">
+                                Thinking...
+                            </p>
+                        )}
+
+                        {error && (
+                            <p className="text-sm text-red-700" role="alert">
+                                {error}
+                            </p>
+                        )}
                     </div>
 
                     <form className="ai-chatbot-form" onSubmit={submitMessage}>
@@ -125,7 +185,7 @@ export default function AIChatbot() {
                             placeholder="Send a message"
                             autoComplete="off"
                         />
-                        <button type="submit" className="ai-chatbot-send" aria-label="Send message">
+                        <button type="submit" className="ai-chatbot-send" aria-label="Send message" disabled={isSending || !draft.trim()}>
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="m4 4 16 8-16 8 3-8-3-8Z" />
                                 <path d="M7 12h13" />
@@ -142,7 +202,15 @@ export default function AIChatbot() {
                 aria-label={isOpen ? 'Close AI assistant' : 'Open AI assistant'}
                 aria-expanded={isOpen}
             >
-                {isOpen ? '×' : '✦'}
+                {isOpen ? (
+                    <svg className="ai-chatbot-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m5 5 14 14M19 5 5 19" />
+                    </svg>
+                ) : (
+                    <svg className="ai-chatbot-icon ai-chatbot-sparkle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2.5 14.5 9.5 21.5 12l-7 2.5-2.5 7-2.5-7-7-2.5 7-2.5L12 2.5Z" />
+                    </svg>
+                )}
             </button>
         </div>
     );

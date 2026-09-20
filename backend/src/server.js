@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -5,9 +6,13 @@ import Stripe from 'stripe';
 import multer from 'multer';
 import crypto from 'crypto';
 import { put } from '@vercel/blob'
-import { getProduct, ALLOWED_FINISHES, MAX_QUANTITY_PER_ITEM } from './catalog.js';
+import { getProduct, getCatalog, ALLOWED_FINISHES, MAX_QUANTITY_PER_ITEM } from './catalog.js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+dotenv.config({ path: new URL('../../.env', import.meta.url) });
+
+const stripe = process.env.STRIPE_SECRET_KEY
+    ? new Stripe(process.env.STRIPE_SECRET_KEY)
+    : null;
 
 const app = express();
 // Automatically intercepts incoming JSON strings and parses them automatically.
@@ -33,6 +38,47 @@ const MAX_VIDEO_BYTES = 25 * 1024 * 1024;
    anything above this is a script. */
 const REVIEW_WINDOW_MS = 60 * 60 * 1000;
 const MAX_REVIEWS_PER_WINDOW = 3;
+const MAX_CHAT_MESSAGES = 20;
+const MAX_CHAT_MESSAGE_LENGTH = 2000;
+const CHAT_SYSTEM_PROMPT = `You are the helpful AI assistant for WoodWork Creations, a family-owned carpentry business.
+Only answer questions about WoodWork Creations, its furniture catalog, product options, ordering, pickup, delivery, care, or custom commissions.
+We do not offer shipping at this time. We currently offer local pickup only. We hope to offer shipping in the future.
+Use the catalog facts supplied below as the source of truth for product names, prices, materials, dimensions, and finishes.
+Treat products listed in the catalog as available to inquire about, but do not claim real-time stock or guaranteed availability.
+Never calculate or guess prices, delivery dates, policies, or inventory beyond those facts.
+If the catalog does not answer a product question, say that you do not have that information and suggest contacting the business directly.
+Do not answer general knowledge, math, coding, political, medical, legal, or unrelated questions.
+Be concise, warm, and honest.
+
+CATALOG:
+{{CATALOG}}`;
+
+const CHAT_OFF_TOPIC_RESPONSE = "I can help with WoodWork Creations furniture, product options, ordering, pickup, delivery, care, and custom commissions. What would you like to know?";
+const CHAT_SHIPPING_RESPONSE = "We do not offer shipping at this time. We currently offer local pickup only, and we hope to offer shipping in the future.";
+const CHAT_TOPIC_TERMS = [
+    'woodwork', 'furniture', 'catalog', 'product', 'piece', 'table', 'nightstand',
+    'earth wood', 'hazy night', 'wood', 'finish', 'stain', 'espresso', 'olive',
+    'gray', 'price', 'cost', 'buy', 'order', 'cart', 'checkout', 'available',
+    'availability', 'pickup', 'delivery', 'shipping', 'commission', 'custom',
+    'care', 'material', 'poplar', 'pine', 'dimension', 'size', 'width', 'height',
+    'diameter', 'contact'
+];
+
+const isOnTopic = (messages) => {
+    const text = messages
+        .map((message) => message.content.toLowerCase())
+        .join(' ');
+
+    return CHAT_TOPIC_TERMS.some((term) => text.includes(term));
+};
+
+const getCatalogPrompt = () => getCatalog()
+    .map((product) => [
+        `- ${product.name} (${product.type}): $${product.price.toFixed(2)}`,
+        `  Material: ${product.wood}; dimensions: ${product.dimensions};`,
+        `  finishes: ${product.finishes.join(', ')}.`
+    ].join('\n'))
+    .join('\n');
 
 const FIELD_LIMITS = {
     title: 120,
@@ -250,7 +296,94 @@ app.get('/api/reviews/:productKey', connectDB, async (request, response) => {
     }
 });
 
+app.post('/api/chat', async (request, response) => {
+    const { messages } = request.body || {};
+
+    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_CHAT_MESSAGES) {
+        return response.status(400).json({ error: "Chat messages are required." });
+    }
+
+    const validMessages = messages.every((message) => (
+        message
+        && (message.role === 'user' || message.role === 'assistant')
+        && typeof message.content === 'string'
+        && message.content.trim().length > 0
+        && message.content.length <= MAX_CHAT_MESSAGE_LENGTH
+    ));
+
+    if (!validMessages || messages[messages.length - 1].role !== 'user') {
+        return response.status(400).json({ error: "That chat message is not valid." });
+    }
+
+    if (!isOnTopic(messages)) {
+        return response.status(200).json({
+            message: { role: 'assistant', content: CHAT_OFF_TOPIC_RESPONSE }
+        });
+    }
+
+    const latestMessage = messages[messages.length - 1].content.toLowerCase();
+
+    if (/\bshipping\b|\bship\b/.test(latestMessage)) {
+        return response.status(200).json({
+            message: { role: 'assistant', content: CHAT_SHIPPING_RESPONSE }
+        });
+    }
+
+    if (!process.env.HF_TOKEN) {
+        console.error("Chat request rejected: HF_TOKEN is not configured.");
+        return response.status(503).json({ error: "The AI assistant is not configured." });
+    }
+
+    try {
+        const providerResponse = await fetch('https://router.huggingface.co/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.HF_TOKEN}`
+            },
+            body: JSON.stringify({
+                model: 'meta-llama/Llama-3.1-8B-Instruct:novita',
+                messages: [
+                    { role: 'system', content: CHAT_SYSTEM_PROMPT.replace('{{CATALOG}}', getCatalogPrompt()) },
+                    ...messages.map((message) => ({
+                        role: message.role,
+                        content: message.content.trim()
+                    }))
+                ],
+                max_tokens: 300,
+                temperature: 0.2
+            })
+        });
+
+        if (!providerResponse.ok) {
+            const providerError = await providerResponse.text();
+            console.error("Chat provider error:", providerResponse.status, providerError);
+            return response.status(502).json({ error: "The AI assistant could not respond." });
+        }
+
+        const completion = await providerResponse.json();
+        const content = completion.choices?.[0]?.message?.content;
+
+        if (typeof content !== 'string' || content.trim().length === 0) {
+            console.error("Chat provider returned no assistant message.");
+            return response.status(502).json({ error: "The AI assistant returned an invalid response." });
+        }
+
+        return response.status(200).json({
+            message: { role: 'assistant', content: content.trim() }
+        });
+    } catch (error) {
+        console.error("Chat request error:", error);
+        return response.status(502).json({ error: "The AI assistant could not respond." });
+    }
+});
+
 app.post('/api/checkout', async (request, response) => {
+    if (!stripe) {
+        console.error("Checkout request rejected: STRIPE_SECRET_KEY is not configured.");
+        return response.status(503).json({ error: "Checkout is not configured." });
+    }
+
     try {
         const { cartItems } = request.body;
 

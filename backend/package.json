@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
   "dependencies": {
     "@vercel/blob": "^2.6.1",
     "cors": "^2.8.5",
+    "dotenv": "^18.0.1",
     "express": "^4.19.2",
     "mongoose": "^8.0.0",
     "multer": "^2.2.0",

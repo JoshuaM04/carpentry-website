@@ -38,15 +38,24 @@ export default function Furniture({ product, addToCart }: FurnitureProps) {
         const fetchReviews = async () => {
             try {
                 const response = await fetch(`/api/reviews/${product.reviewDB}`);
-                const data = await response.json();
-                setReviews(data);
+                const data: unknown = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data && typeof data === 'object' && 'error' in data
+                            ? String(data.error)
+                            : 'Could not load reviews.'
+                    );
+                }
+
+                setReviews(Array.isArray(data) ? data : []);
             } catch (err) {
                 console.error("Failed to pull reviews:", err);
             }
         };
 
         fetchReviews();
-    }, []);
+    }, [product.reviewDB]);
 
     const showMessage = () => {
         setMessageVisibility('block');

@@ -313,14 +313,14 @@ a:hover .img-frame img {
 .ai-chatbot-toggle {
     display: grid;
     place-items: center;
+    box-sizing: border-box;
+    flex: none;
     width: 3.5rem;
     height: 3.5rem;
     border: 1px solid var(--color-bark-900);
     border-radius: 999px;
     background-color: var(--color-bark-900);
     color: var(--color-bone-50);
-    font-size: 1.75rem;
-    line-height: 1;
     cursor: pointer;
     box-shadow: 0 0.75rem 2rem rgb(22 17 14 / 0.2);
     transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
@@ -334,7 +334,23 @@ a:hover .img-frame img {
 }
 
 .ai-chatbot-toggle-open {
-    font-size: 2rem;
+    background-color: var(--color-bark-900);
+}
+
+.ai-chatbot-icon {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.ai-chatbot-sparkle-icon {
+    fill: currentColor;
+    stroke: none;
 }
 
 .ai-chatbot-panel {
@@ -361,14 +377,27 @@ a:hover .img-frame img {
 }
 
 .ai-chatbot-sparkle {
+    display: grid;
+    place-items: center;
+    flex: none;
     color: var(--color-clay-400);
-    font-size: 1.25rem;
+}
+
+.ai-chatbot-sparkle svg {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
 }
 
 .ai-chatbot-close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
     color: var(--color-bone-50);
-    font-size: 2rem;
-    line-height: 0.8;
     cursor: pointer;
 }
 

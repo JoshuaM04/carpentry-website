@@ -17,12 +17,20 @@ export const MAX_QUANTITY_PER_ITEM = 99;
 const CATALOG = {
     'earth-wood': {
         name: 'Earth Wood',
+        type: 'table',
         price: 400,
+        wood: 'Poplar',
+        dimensions: '36" wide x 25" high x 14" diameter',
+        finishes: ['raw wood', 'espresso', 'olive', 'gray'],
         image: '/furniture/catalog/tables/earth-wood/earth-wood-front.png'
     },
     'hazy-night': {
         name: 'Hazy Night',
+        type: 'nightstand',
         price: 535,
+        wood: 'Poplar & Pine',
+        dimensions: '24.5" wide x 31" high x 16" diameter',
+        finishes: ['raw wood', 'espresso', 'olive', 'gray'],
         image: '/furniture/catalog/nightstands/hazy-night/hazy-night-front.png'
     }
 };
@@ -39,3 +47,13 @@ export const getProduct = (id) => {
 
     return { ...product, imageUrl: `${SITE_ORIGIN}${product.image}` };
 };
+
+export const getCatalog = () => Object.entries(CATALOG).map(([id, product]) => ({
+    id,
+    name: product.name,
+    type: product.type,
+    price: product.price,
+    wood: product.wood,
+    dimensions: product.dimensions,
+    finishes: [...product.finishes],
+}));
