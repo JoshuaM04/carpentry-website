@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import AIChatbot from './components/AIChatbot';
 
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
@@ -58,6 +59,7 @@ export default function App() {
       <NavBar cart={cart} setCart={setCart} />
 
       <ScrollToTop />
+      <AIChatbot />
 
       <Routes>
         <Route path="/" element={<Home />} />
