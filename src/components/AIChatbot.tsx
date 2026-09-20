@@ -161,7 +161,6 @@ export default function AIChatbot() {
                                 ))}
                             </div>
                         )}
-
                         {isSending && (
                             <p className="text-sm text-stone-500" aria-label="AI assistant is typing">
                                 Thinking...
