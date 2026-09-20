@@ -6,6 +6,7 @@ export interface Product {
     reviewDB: string;
     name: string;
     price: number;
+    completionTime: string;
     activeColor: string;
     colors: Array<string>;
     colorTextStyles: Array<string>;
@@ -28,6 +29,7 @@ export const FURNITURE_CATALOG: Product[] = [
         reviewDB: 'earth-wood',
         name: 'Earth Wood',
         price: 400,
+        completionTime: '7 days',
         activeColor: '',
         colors: ['raw wood', 'stain - espresso', 'stain - olive', 'stain - gray'],
         colorTextStyles: ['text-raw-500', 'text-espresso-500', 'text-olive-500', 'text-gray-500'],
@@ -48,6 +50,7 @@ export const FURNITURE_CATALOG: Product[] = [
         reviewDB: 'hazy-night',
         name: 'Hazy Night',
         price: 535,
+        completionTime: '14 days',
         activeColor: '',
         colors: ['raw wood', 'stain - espresso', 'stain - olive', 'stain - gray'],
         colorTextStyles: ['text-raw-500', 'text-espresso-500', 'text-olive-500', 'text-gray-500'],

@@ -7,6 +7,7 @@ import multer from 'multer';
 import crypto from 'crypto';
 import { put } from '@vercel/blob'
 import { getProduct, getCatalog, ALLOWED_FINISHES, MAX_QUANTITY_PER_ITEM } from './catalog.js';
+import { checkChatRateLimit } from './chatRateLimiter.js';
 
 dotenv.config({ path: new URL('../../.env', import.meta.url) });
 
@@ -43,7 +44,7 @@ const MAX_CHAT_MESSAGE_LENGTH = 2000;
 const CHAT_SYSTEM_PROMPT = `You are the helpful AI assistant for WoodWork Creations, a family-owned carpentry business.
 Only answer questions about WoodWork Creations, its furniture catalog, product options, ordering, pickup, delivery, care, or custom commissions.
 We do not offer shipping at this time. We currently offer local pickup only. We hope to offer shipping in the future.
-Use the catalog facts supplied below as the source of truth for product names, prices, materials, dimensions, and finishes.
+Use the catalog facts supplied below as the source of truth for product names, prices, approximate completion times, materials, dimensions, and finishes.
 Treat products listed in the catalog as available to inquire about, but do not claim real-time stock or guaranteed availability.
 Never calculate or guess prices, delivery dates, policies, or inventory beyond those facts.
 If the catalog does not answer a product question, say that you do not have that information and suggest contacting the business directly.
@@ -74,7 +75,7 @@ const isOnTopic = (messages) => {
 
 const getCatalogPrompt = () => getCatalog()
     .map((product) => [
-        `- ${product.name} (${product.type}): $${product.price.toFixed(2)}`,
+        `- ${product.name} (${product.type}): $${product.price.toFixed(2)}; approximate completion time: ${product.completionTime}`,
         `  Material: ${product.wood}; dimensions: ${product.dimensions};`,
         `  finishes: ${product.finishes.join(', ')}.`
     ].join('\n'))
@@ -332,6 +333,23 @@ app.post('/api/chat', async (request, response) => {
     if (!process.env.HF_TOKEN) {
         console.error("Chat request rejected: HF_TOKEN is not configured.");
         return response.status(503).json({ error: "The AI assistant is not configured." });
+    }
+
+    const rateLimit = await checkChatRateLimit({
+        identity: hashClientIp(request),
+        messages
+    });
+
+    if (rateLimit.status === 'limited') {
+        response.set('Retry-After', String(rateLimit.retryAfterSeconds));
+        return response.status(429).json({
+            error: "You've reached the chat usage limit. Please try again later."
+        });
+    }
+
+    if (rateLimit.status === 'unavailable') {
+        console.error("Chat request rejected:", rateLimit.error);
+        return response.status(503).json({ error: "Chat protection is temporarily unavailable." });
     }
 
     try {

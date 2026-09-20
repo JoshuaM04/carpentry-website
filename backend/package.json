@@ -8,6 +8,7 @@
     "start": "node src/server.js"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.4",
     "@vercel/blob": "^2.6.1",
     "cors": "^2.8.5",
     "dotenv": "^18.0.1",

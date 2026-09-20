@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -29,6 +29,7 @@ export default function AIChatbot() {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isSending, setIsSending] = useState(false);
     const [error, setError] = useState('');
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!isHomePage) {
@@ -57,6 +58,10 @@ export default function AIChatbot() {
 
         return () => observer.disconnect();
     }, [isHomePage]);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, [messages, isSending, error]);
 
     const submitMessage = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -172,6 +177,8 @@ export default function AIChatbot() {
                                 {error}
                             </p>
                         )}
+
+                        <div ref={messagesEndRef} aria-hidden="true" />
                     </div>
 
                     <form className="ai-chatbot-form" onSubmit={submitMessage}>

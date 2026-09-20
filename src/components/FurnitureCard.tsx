@@ -84,7 +84,7 @@ export default function FurnitureCard({ product }: FurnitureCardProps) {
 
                 <div className="flex flex-col items-end gap-1 shrink-0">
                     <p className="display display-md">${product.price}</p>
-                    <p className="micro text-stone-500">~14 days</p>
+                    <p className="micro text-stone-500">~{product.completionTime}</p>
                 </div>
             </div>
         </Link>
